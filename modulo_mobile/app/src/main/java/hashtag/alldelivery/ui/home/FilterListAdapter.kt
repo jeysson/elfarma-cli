@@ -12,8 +12,11 @@ import hashtag.alldelivery.core.models.Filter
 import kotlinx.android.synthetic.main.filter_bar_button.view.*
 import java.util.ArrayList
 
-class FilterListAdapter internal constructor(list: List<Filter>): RecyclerView.Adapter<FilterListAdapter.FilterItemViewHolder>(),
-    View.OnClickListener  {
+class FilterListAdapter(
+    private val list: List<Filter>,
+    private val listener: (Filter) -> Unit
+) :
+    RecyclerView.Adapter<FilterListAdapter.FilterItemViewHolder>(){
 
     private var filters: List<Filter> = list
 
@@ -31,13 +34,13 @@ class FilterListAdapter internal constructor(list: List<Filter>): RecyclerView.A
         val item = filters?.get(position)
 
         holder.title.text = item!!.name
+
+//        onClick listener
+        holder.itemView.setOnClickListener { listener(item) }
     }
 
     override fun getItemCount(): Int = filters!!.size
 
-    override fun onClick(v: View?) {
-
-    }
 
     fun setFilter(list: List<Filter>) {
         filters = list

@@ -20,6 +20,7 @@ import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
+import hashtag.alldelivery.ui.filter.FiltersActivity
 import hashtag.alldelivery.ui.lojas.StoresListItemAdapter
 import hashtag.alldelivery.ui.lojas.StoresViewModel
 import kotlinx.android.synthetic.main.filter_bar_container.*
@@ -39,6 +40,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var homeViewModel: HomeViewModel
     private var isConnected: Boolean = false
+    private lateinit var myView: View
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -47,6 +49,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        myView = view
 
         loading.visibility = View.VISIBLE
 
@@ -108,14 +112,12 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun carregarFiltros() = GlobalScope.async{
         var list = ArrayList<Filter>()
-        var f1 = Filter("nome 1")
+        var f1 = Filter(getString(R.string.filtros))
         list.add(f1)
-        var f2 = Filter("nome 2")
-        list.add(f2)
-        var f3 = Filter("nome 3")
-        list.add(f3)
 
-        var adapter = FilterListAdapter(list)
+        var adapter = FilterListAdapter(list) {
+            startActivity(Intent(myView.context, FiltersActivity::class.java))
+        }
         adapter.setFilter(list)
         quick_filters.adapter = adapter
         quick_filters.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

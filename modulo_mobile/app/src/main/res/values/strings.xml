@@ -83,7 +83,7 @@
     <string name="subtotal_label">Subtotal</string>
     <string name="payment_coupon">Cupom</string>
     <string name="payment_delivery_fee">Taxa de entrega</string>
-    <string name ="delivery_fee_info_content_description">Informações sobre taxa de entrega</string>
+    <string name="delivery_fee_info_content_description">Informações sobre taxa de entrega</string>
     <string name="payment_movilepay_balance">Saldo da carteira</string>
     <string name="payment_total">Total</string>
     <string name="payment_minimum_price">O pedido mínimo para este restaurante é de %s, não inclusa a taxa de entrega.</string>
@@ -97,4 +97,5 @@
     <string name="checkout_payment_options_debit">Débito</string>
     <string name="divider_simbol_store_item">•</string>
     <string name="km">km</string>
+    <string name="filtros">Filtros</string>
 </resources>

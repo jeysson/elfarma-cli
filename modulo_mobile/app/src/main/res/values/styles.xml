@@ -2,6 +2,11 @@
 
     <style name="ElFarmaTextViewStyle"></style>
 
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/deprecated_white_transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textViewStyle">@style/ElFarmaTextViewStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
