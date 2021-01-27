@@ -1,8 +1,0 @@
-<resources>
-    <declare-styleable name="Loading">
-        <attr name="exampleString" format="string" />
-        <attr name="exampleDimension" format="dimension" />
-        <attr name="lv_color" format="color" />
-        <attr name="exampleDrawable" format="color|reference" />
-    </declare-styleable>
-</resources>

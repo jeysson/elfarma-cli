@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:gravity="center" android:orientation="horizontal" android:id="@+id/nearby_group_banner_item_view" android:tag="layout/nearby_groups_banner_item_0" android:background="@color/bubblegum" android:padding="@dimen/padding_group_buying_banner_item" android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView android:textColor="@color/black" android:id="@+id/group_buying_banner_item_order" android:layout_width="wrap_content" android:layout_height="wrap_content" android:drawablePadding="@dimen/padding_group_buying_banner_components" style="@style/TextAppearance.DesignSystem.Paragraph.P2"/>
-</LinearLayout>
