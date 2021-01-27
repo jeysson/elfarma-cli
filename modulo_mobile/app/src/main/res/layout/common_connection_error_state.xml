@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:tag="layout/common_connection_error_state_0"
+    android:background="@color/white"
+    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="32dp" android:paddingEnd="32dp">
+
+    <ImageView android:id="@+id/image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@mipmap/ic_connection_error"
+        android:importantForAccessibility="no"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/title"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="200dp"/>
+
+    <TextView android:gravity="center"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/common_connection_error_state_title"
+        app:layout_constraintBottom_toTopOf="@+id/message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P1"/>
+
+    <TextView android:textColor="@color/deprecated_medium_grey"
+        android:gravity="center_horizontal"
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/common_connection_error_state_description"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/try_again_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P3"/>
+
+    <TextView android:textColor="@color/clickable_text"
+        android:id="@+id/try_again_button"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="@string/try_again"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        style="@style/TextAppearance.DesignSystem.Button.B1"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

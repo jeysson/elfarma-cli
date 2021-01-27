@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt"
+    android:tag="layout/checkout_fragment_toolbar_0"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/checkout_toolbar_height">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back_button"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        app:srcCompat="@drawable/ic_arrow_down"
+        app:tint="@color/colorPrimary"/>
+
+    <TextView
+        android:textSize="14sp"
+        android:textColor="@color/deprecated_dark_grey"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/checkout_title"
+        android:maxLines="1"
+        android:layout_centerInParent="true"
+        android:textAllCaps="true"
+        android:fontFamily="@font/sul_sans_medium"
+        android:layout_toStartOf="@+id/clear_bag"
+        android:layout_toEndOf="@+id/back_button"/>
+
+    <TextView
+        android:id="@+id/clear_bag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:text="Limpar"
+        android:textColor="@color/colorPrimary"
+        style="@style/Text.Body2"/>
+
+    <View
+        android:id="@+id/divider"
+        android:background="@color/deprecated_light_grey"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

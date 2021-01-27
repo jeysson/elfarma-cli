@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:tag="layout/filter_bar_container_0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:orientation="horizontal"
+        android:id="@+id/quick_filters"
+        android:tag="binding_1"
+        android:clipToPadding="false"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView android:textColor="@color/heavy_grey"
+        android:id="@+id/results"
+        android:tag="binding_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/clear_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quick_filters"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P4"/>
+
+    <TextView android:textColor="@color/colorPrimary"
+        android:id="@+id/clear_button"
+        android:tag="binding_3"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/clear_filters"
+        android:maxLines="1"
+        android:contentDescription="@string/clear_filters_content_description"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quick_filters"
+        style="@style/TextAppearance.DesignSystem.Button.B3"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

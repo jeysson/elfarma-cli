@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="horizontal"
+    android:background="@drawable/search_rounded_background"
+    android:paddingLeft="4dp"
+    android:paddingTop="2dp"
+    android:paddingRight="4dp"
+    android:paddingBottom="2dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp">
+
+    <ImageView android:id="@+id/delivery_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/ic_scheduling_available"
+        android:importantForAccessibility="no"/>
+
+    <TextView android:textColor="@color/heavy_grey"
+        android:ellipsize="end"
+        android:id="@+id/delivery_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/merchant_list_item_scheduling_available"
+        android:maxLines="1"
+        android:contentDescription="@string/merchant_list_item_scheduling_available"
+        android:layout_marginStart="4dp"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P4"/>
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+
+    android:background="@color/white"
+    android:paddingBottom="31dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title"
+        app:srcCompat="@drawable/product_observation_icon"/>
+
+    <TextView android:textColor="@color/deprecated_greyish_brown"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/product_observation_title"
+        app:layout_constraintLeft_toRightOf="@+id/icon"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Text.Link4"/>
+
+    <TextView android:textSize="14sp"
+        android:textColor="@color/heavy_grey"
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/title"/>
+
+    <EditText android:textSize="14sp"
+        android:textColorHint="@color/deprecated_medium_grey"
+        android:id="@+id/edit"
+        android:background="@drawable/shape_side_input_background"
+        android:focusable="false"
+        android:visibility="visible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:hint="@string/product_observation_hint"
+        android:maxLength="50"
+        android:inputType="textMultiLine"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/icon"
+        app:layout_constraintRight_toRightOf="@+id/counter"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        style="@style/Text.Link_6"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt"
+    android:id="@+id/checkout_container"
+    android:tag="layout/checkout_fragment_0"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="36dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:tag="binding_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/bag_fragment_toolbar"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/scroll_view_child"
+                android:tag="binding_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/content_delivery"
+                    layout="@layout/bag_content_delivery" />
+
+                <View
+                    android:background="@color/deprecated_light_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+
+                <TextView
+                    android:textColor="@color/deprecated_dark_grey"
+                    android:id="@+id/restaurant_name"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"/>
+
+                <View
+                    android:background="@color/deprecated_light_grey"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"/>
+
+                <include
+                    android:id="@+id/content_list_item"
+                    layout="@layout/bag_content_list_item"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/content_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <TextView
+                    android:textColor="@color/colorAccent"
+                    android:layout_gravity="center"
+                    android:id="@+id/add_more_items"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payment_add_items"
+                    style="@style/Text.Link"/>
+
+                <FrameLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:background="@color/deprecated_light_grey"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
+                </FrameLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/container_to_hide_on_delivery_fee_error"
+                    android:tag="binding_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:id="@+id/content_details"
+                        layout="@layout/bag_content_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include
+                        android:id="@+id/content_authentication"
+                        android:visibility="gone"
+                        layout="@layout/checkout_content_authentication"/>
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/content_voucher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/container_to_hide_on_payments_error"
+                        android:tag="binding_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:background="@color/deprecated_light_grey"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"/>
+
+                        <include
+                            android:id="@+id/content_payment"
+                            layout="@layout/payment_content_header"/>
+                    </LinearLayout>
+                    <include
+                        android:layout_gravity="center"
+                        android:id="@+id/payments_error"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/common_error_state"/>
+
+                </LinearLayout>
+                <include
+                    android:layout_gravity="center"
+                    android:id="@+id/delivery_fee_error"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/common_error_state"/>
+
+                <include
+                    android:id="@+id/action_button_container_not_fixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/checkout_button"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <include
+            android:id="@+id/action_button_container_fixed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/checkout_button" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/lock_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</FrameLayout>

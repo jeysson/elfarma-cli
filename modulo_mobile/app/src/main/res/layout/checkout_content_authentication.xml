@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:tag="layout/checkout_content_authentication_0"
+    android:background="@color/white"
+    android:paddingLeft="20dp"
+    android:paddingTop="24dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="29dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:textColor="@color/deprecated_greyish_brown"
+        android:id="@+id/authentication_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_authentication_title"
+        style="@style/Text.Subtitle"/>
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/authentication_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/payment_authentication_description"
+        style="@style/Text.Description"/>
+
+    <FrameLayout
+        android:id="@+id/authentication_options_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
