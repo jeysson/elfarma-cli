@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:tag="layout/address_list_item_0"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground">
+
+    <ImageView android:id="@+id/icon_address"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
+        android:tint="@color/deprecated_medium_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_pin"/>
+
+    <LinearLayout android:gravity="start"
+        android:orientation="vertical"
+        android:id="@+id/info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/icon_address"
+        app:layout_constraintRight_toLeftOf="@+id/selected_icon"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView android:textColor="@color/deprecated_dark_grey"
+            android:id="@+id/title_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.ListTitleSmall"/>
+
+        <TextView android:textColor="@color/deprecated_medium_grey"
+            android:id="@+id/description_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            style="@style/Text"/>
+
+        <TextView android:textColor="@color/deprecated_medium_grey"
+            android:id="@+id/second_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            style="@style/Text.Description2"/>
+
+    </LinearLayout>
+
+    <ImageView android:id="@+id/selected_icon"
+        android:visibility="invisible"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="15dp"
+        android:tint="@color/colorPrimary"
+        android:layout_marginStart="15dp"
+        app:layout_constraintRight_toLeftOf="@+id/kebab"
+        app:layout_constraintTop_toTopOf="@+id/info"
+        app:srcCompat="@drawable/ic_check_circle"/>
+
+    <ImageView android:id="@+id/kebab"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:tint="@color/colorPrimary"
+        android:contentDescription="@string/address_list_more_options"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_kebab"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

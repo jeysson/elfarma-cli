@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/payment_header"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingLeft="20dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="20dp"
+    android:paddingRight="20dp"
+    android:tag="layout/payment_content_header_0">
+
+</LinearLayout>
+
+
