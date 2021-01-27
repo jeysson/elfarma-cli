@@ -2,6 +2,7 @@ package hashtag.alldelivery.ui.lojas
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
@@ -43,13 +44,22 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
 
             val name = item.nomeFantasia
 
+//            Mudando a visibilidade dos itens
+            holder.rating.visibility = GONE
+            holder.starIcon.visibility = GONE
+            holder.categoryType.visibility = GONE
+            holder.dividerCategoryDistance.visibility = GONE
+            holder.dividerRatingCategory.visibility = GONE
+
+
+
 
 
             holder.name.text = name
             holder.rating.text = "4,5"
             holder.categoryDistance.text = "${item.distancia}"
             holder.deliveryTime.text = "${item.tempoMinimo} - ${item.tempoMaximo} min"
-            holder.deliveryFree.text = "R$ 10,00"
+            holder.deliveryFree.text = "${item.taxaEntrega}"
             holder.categoryType.text = "Farmácia"
 
             holder.card.setTag(position)
@@ -80,6 +90,10 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
         val deliveryTime = view.delivery_time
         val deliveryFree = view.delivery_free
         val categoryType = view.category_store_item
+
+        val starIcon = view.star_icon
+        val dividerRatingCategory = view.divider_rating_category
+        val dividerCategoryDistance = view.divider_category_distance
     }
 
     override fun onClick(view: View?) {
