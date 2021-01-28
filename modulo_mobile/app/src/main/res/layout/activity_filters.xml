@@ -19,16 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.AppCompat.Button.Borderless"
+            <ImageView
                 android:id="@+id/btn_back_filters"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="16dp"
-                app:backgroundTint="@color/colorPrimary"
-                android:rotation="90"
-                android:singleLine="true"
-                android:background="@drawable/ic_arrow_stroke"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/content_description_back"
+                app:srcCompat="@drawable/ic_arrow_back"
+                app:tint="@color/colorPrimary"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

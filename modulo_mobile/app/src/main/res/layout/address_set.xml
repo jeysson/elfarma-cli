@@ -7,8 +7,7 @@
     android:tag="layout/address_map_fragment_0"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="38dp">
+    android:layout_height="match_parent">
     <!--
     <fragment android:name="p102br.com.ifood.address.search.view.CustomMapFragment"
         android:id="@+id/search_map"
