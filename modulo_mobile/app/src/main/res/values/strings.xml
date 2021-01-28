@@ -100,4 +100,8 @@
     <string name="filtros">Filtros</string>
     <string name="limpar">Limpar</string>
     <string name="ordenar_por">Ordenar por</string>
+    <string name="oderna_o_padr_o">Ordenação padrão</string>
+    <string name="localiza_o">Localização</string>
+    <string name="tempo_de_entrega">Tempo de entrega</string>
+    <string name="taxa_de_entrega">Taxa de entrega</string>
 </resources>
