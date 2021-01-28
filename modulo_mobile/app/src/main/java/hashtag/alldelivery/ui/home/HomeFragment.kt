@@ -76,7 +76,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun setupObservers() {
-        viewModel.eventoErro.observe(this, androidx.lifecycle.Observer<BusinessEvent> {
+        viewModel.eventoErro.observe(viewLifecycleOwner, androidx.lifecycle.Observer<BusinessEvent> {
             it?.let {
                 toast(it.message.toString())
             }
@@ -87,7 +87,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun carregarLojas()
     {
-        viewModel.getActiveStores().observe(this, Observer<List<Store>> {
+        viewModel.getActiveStores().observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
                 var x = arrayListOf<Store>(Store())
                 x.addAll(it)

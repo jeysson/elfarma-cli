@@ -39,7 +39,9 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
             .findFragmentById(R.id.search_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        supportActionBar!!.hide()
+
+//        Quebrando aplicação quando exibe o mapa
+//        supportActionBar!!.hide()
 
         back_button.setOnClickListener{
             finish()

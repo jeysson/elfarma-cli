@@ -29,6 +29,8 @@ class Store{
     @SerializedName("tempoMaximo") val tempoMaximo : Int? = null
     @SerializedName("hAbre") val hAbre : Int? = null
     @SerializedName("hFecha") val hFecha : Int? = null
+    @SerializedName("lat") val lat : String? = null
+    @SerializedName("long") val long : String? = null
     @SerializedName("taxaEntrega") val taxaEntrega : Float? = null
     @SerializedName("distancia") val distancia : String? = null
 
