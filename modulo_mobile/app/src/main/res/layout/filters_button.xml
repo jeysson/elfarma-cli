@@ -120,7 +120,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_outline_sports_motorsports_24" />
+            android:src="@drawable/ic_baseline_attach_money_24" />
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
