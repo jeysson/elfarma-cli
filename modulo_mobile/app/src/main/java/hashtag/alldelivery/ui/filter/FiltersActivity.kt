@@ -48,19 +48,19 @@ class FiltersActivity : AppCompatActivity() {
             SORT_BY_DELIVERY_FEE -> orderDeliveryFeeIsChecked()
         }
 
-        orderAZIcon.setOnClickListener {
+        orderAZCard.setOnClickListener {
             orderAZIsChecked()
         }
 
-        orderLocationIcon.setOnClickListener {
+        orderLocationCard.setOnClickListener {
             orderLocationIsChecked()
         }
 
-        orderTimerIcon.setOnClickListener {
+        orderTimerCard.setOnClickListener {
             orderTimerIsChecked()
         }
 
-        orderDeliveryFeeIcon.setOnClickListener {
+        orderDeliveryFeeCard.setOnClickListener {
             orderDeliveryFeeIsChecked()
         }
 
