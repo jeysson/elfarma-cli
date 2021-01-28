@@ -13,7 +13,7 @@
     </style>
 
     <style name="AppTheme.Transparent2" parent="AppTheme">
-        <item name="statusBarForeground">@color/colorPrimaryDark</item>
+        <item name="statusBarForeground">@color/deprecated_white_transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>

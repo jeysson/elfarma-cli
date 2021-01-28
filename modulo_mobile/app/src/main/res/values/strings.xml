@@ -98,4 +98,6 @@
     <string name="divider_simbol_store_item">•</string>
     <string name="km">km</string>
     <string name="filtros">Filtros</string>
+    <string name="limpar">Limpar</string>
+    <string name="ordenar_por">Ordenar por</string>
 </resources>
