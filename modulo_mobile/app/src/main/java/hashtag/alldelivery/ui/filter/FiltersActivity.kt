@@ -34,7 +34,7 @@ class FiltersActivity : AppCompatActivity() {
     private var isOrderDeliveryFeeChecked = false
 
     private val clearButton by lazy { btn_limpar_filters }
-    private val backButton by lazy { arrow_back_filters }
+    private val backButton by lazy { btn_back_filters }
     private val showResultsButton by lazy { btn_show_results_filters }
 
     override fun onCreate(savedInstanceState: Bundle?) {

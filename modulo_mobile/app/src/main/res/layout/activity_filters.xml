@@ -19,14 +19,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/arrow_back_filters"
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/btn_back_filters"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="16dp"
+                app:backgroundTint="@color/colorPrimary"
                 android:rotation="90"
                 android:singleLine="true"
-                android:src="@drawable/ic_arrow_stroke"
+                android:background="@drawable/ic_arrow_stroke"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
