@@ -104,4 +104,5 @@
     <string name="localiza_o">Localização</string>
     <string name="tempo_de_entrega">Tempo de entrega</string>
     <string name="taxa_de_entrega">Taxa de entrega</string>
+    <string name="ver_resultados">Ver Resultados</string>
 </resources>
