@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Address
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Filter
 import hashtag.alldelivery.core.models.Store
@@ -31,9 +32,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import org.koin.core.scope.ScopeCallback
 
-class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener  {
+class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
 
     private lateinit var stores: List<Store>
     private val viewModel: StoresViewModel by sharedViewModel()
@@ -41,8 +41,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private lateinit var homeViewModel: HomeViewModel
     private var isConnected: Boolean = false
     private lateinit var myView: View
+    private lateinit var myAddress: Address
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.filter_fragment, container, false)
     }
@@ -62,31 +64,31 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         setupObservers()
         carregarLojas()
-        address.text = getString(R.string.address_list_location_activate)
-        carregarEndereco ()
+        carregarEndereco()
         carregarFiltros()
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         this.isConnected = isConnected
-        if(!isConnected)
+        if (!isConnected)
             toast("O dispositivo não está conectado")
         else
             carregarLojas()
     }
 
     private fun setupObservers() {
-        viewModel.eventoErro.observe(viewLifecycleOwner, androidx.lifecycle.Observer<BusinessEvent> {
-            it?.let {
-                toast(it.message.toString())
-            }
-        })
+        viewModel.eventoErro.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer<BusinessEvent> {
+                it?.let {
+                    toast(it.message.toString())
+                }
+            })
 
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
-    private fun carregarLojas()
-    {
+    private fun carregarLojas() {
         viewModel.getActiveStores().observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
                 var x = arrayListOf<Store>(Store())
@@ -99,28 +101,34 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         })
     }
 
-    private fun carregarEndereco() = GlobalScope.async{
-        var add = addressViewModel.firstAddress()
-        if(add != null) {
-            AllDeliveryApplication.address = add
-            AllDeliveryApplication.latlong = LatLng(add.lat!!, add.longi!!)
+    private fun carregarEndereco() = GlobalScope.async {
+        myAddress = addressViewModel.firstAddress()
+        if (myAddress != null) {
 
-            address.text = getString(R.string.address_found_near,
-                context?.let { AllDeliveryApplication.getShortAddress(it, add.lat!!, add.longi!!) })
-        }
+            AllDeliveryApplication.address = myAddress
+            AllDeliveryApplication.latlong = LatLng(myAddress.lat!!, myAddress.longi!!)
+
+            address.text = AllDeliveryApplication.getShortAddress(
+                myView.context,
+                myAddress.lat!!,
+                myAddress.longi!!,
+                myAddress.number
+            )
+        } else address.text = getString(R.string.address_list_location_activate)
     }
 
-    private fun carregarFiltros() = GlobalScope.async{
-        var list = ArrayList<Filter>()
-        var f1 = Filter(getString(R.string.filtros))
+    private fun carregarFiltros() = GlobalScope.async {
+        val list = ArrayList<Filter>()
+        val f1 = Filter(getString(R.string.filtros))
         list.add(f1)
 
-        var adapter = FilterListAdapter(list) {
+        val adapter = FilterListAdapter(list) {
             startActivity(Intent(myView.context, FiltersActivity::class.java))
         }
         adapter.setFilter(list)
         quick_filters.adapter = adapter
-        quick_filters.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        quick_filters.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
     }
 
@@ -129,11 +137,13 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         super.onResume()
 
         AllDeliveryApplication.latlong?.let {
-            address.text = getString(R.string.address_found_near,
-                context?.let { AllDeliveryApplication.getShortAddress(it, AllDeliveryApplication.latlong!!.latitude,
-                    AllDeliveryApplication.latlong!!.longitude) })
+            address.text = AllDeliveryApplication.getShortAddress(
+                myView.context, AllDeliveryApplication.address!!.lat!!,
+                AllDeliveryApplication.address!!.longi!!,
+                AllDeliveryApplication.address!!.number!!
+            )
         }
-
-
     }
+
+
 }

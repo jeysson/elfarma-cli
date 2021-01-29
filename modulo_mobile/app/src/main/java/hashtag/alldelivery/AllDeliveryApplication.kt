@@ -33,11 +33,11 @@ class AllDeliveryApplication: Application() {
             return  address[0].thoroughfare +" - "+ address[0].subLocality+", "+ address[0].subAdminArea+" - "+address[0].adminArea
         }
 
-        fun getShortAddress(context: Context, lat: Double, long: Double): String{
+        fun getShortAddress(context: Context, lat: Double, long: Double, addressNumber: String?): String{
             if(latlong != null){
                 var geoCoder = Geocoder(context, Locale.getDefault())
                 var address = geoCoder.getFromLocation(lat, long, 1)
-                return  address[0].thoroughfare +" - "+ address[0].subLocality
+                return  address[0].thoroughfare +", "+ addressNumber
             }else
                 return  ""
         }
