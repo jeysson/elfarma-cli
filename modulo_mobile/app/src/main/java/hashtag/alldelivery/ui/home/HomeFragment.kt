@@ -73,6 +73,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarFiltros()
 
         swipeRefresh.setOnRefreshListener {
+//        Timer para atrazar o inicio do swipeRefresh -> UX
             Handler(Looper.getMainLooper()).postDelayed({
                 carregarLojas()
             }, REFRESH_DELAY_TIMER)

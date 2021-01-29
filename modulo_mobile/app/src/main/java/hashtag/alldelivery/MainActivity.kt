@@ -1,36 +1,17 @@
 package hashtag.alldelivery
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.StrictMode
-import android.view.View
-import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.SupportActionModeWrapper
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jaeger.library.StatusBarUtil
-import hashtag.alldelivery.core.models.Store
-import hashtag.alldelivery.core.receiver.NetworkReceiver
-import hashtag.alldelivery.ui.lojas.StoresListItemAdapter
-import hashtag.alldelivery.ui.lojas.StoresViewModel
-import kotlinx.android.synthetic.main.bag_content_list_item.*
-import kotlinx.android.synthetic.main.bag_fragment.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import org.jetbrains.anko.toast
-import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         /*if (BuildConfig.DEBUG) {
@@ -63,14 +44,19 @@ class MainActivity : AppCompatActivity(){
 */
 
 
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_search,
+                R.id.navigation_requests,
+                R.id.navigation_perfil
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
