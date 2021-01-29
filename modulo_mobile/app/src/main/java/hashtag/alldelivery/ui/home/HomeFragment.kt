@@ -58,19 +58,18 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         super.onViewCreated(view, savedInstanceState)
 
         myView = view
-
         loading.visibility = View.VISIBLE
 
+        setupObservers()
+        carregarLojas()
+        carregarUltimoEndereco()
+        carregarFiltros()
+        carregarTodosEnderecos()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
         }
-
-        setupObservers()
-        carregarLojas()
-        carregarEndereco()
-        carregarFiltros()
 
         swipeRefresh.setOnRefreshListener {
 //        Timer para atrazar o inicio do swipeRefresh -> UX
@@ -121,10 +120,17 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     }
 
-    private fun carregarEndereco() = GlobalScope.async {
-        myAddress = addressViewModel.firstAddress()
-        if (myAddress != null) {
+    private fun carregarTodosEnderecos() {
+        addressViewModel.getAll().observe(viewLifecycleOwner) {
+            AllDeliveryApplication.addressList.addAll(it)
+        }
+    }
 
+    private fun carregarUltimoEndereco() = GlobalScope.async {
+        myAddress = addressViewModel.firstAddress()
+        address.text = getString(R.string.address_list_location_activate)
+
+         if (myAddress != null) {
             AllDeliveryApplication.address = myAddress
             AllDeliveryApplication.latlong = LatLng(myAddress.lat!!, myAddress.longi!!)
 
@@ -134,7 +140,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 myAddress.longi!!,
                 myAddress.number
             )
-        } else address.text = getString(R.string.address_list_location_activate)
+        }
     }
 
     private fun carregarFiltros() = GlobalScope.async {

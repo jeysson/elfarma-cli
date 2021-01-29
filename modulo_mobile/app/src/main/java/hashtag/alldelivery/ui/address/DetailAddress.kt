@@ -38,7 +38,7 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
 
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
 
-        back_button.setOnClickListener{
+        back_button.setOnClickListener {
             AllDeliveryApplication.address = null
             finish()
         }
@@ -46,14 +46,15 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
         var latlong = AllDeliveryApplication.latlong
         var geoCoder = Geocoder(baseContext, Locale.getDefault())
 
-        address = geoCoder.getFromLocation( latlong!!.latitude, latlong.longitude, 1)
-        header_title_address.text =  address[0].thoroughfare //+ ", " + address[0].featureName
-        header_subtitle_address.text = address[0].subLocality+", "+ address[0].subAdminArea+" - "+address[0].adminArea
+        address = geoCoder.getFromLocation(latlong!!.latitude, latlong.longitude, 1)
+        header_title_address.text = address[0].thoroughfare //+ ", " + address[0].featureName
+        header_subtitle_address.text =
+            address[0].subLocality + ", " + address[0].subAdminArea + " - " + address[0].adminArea
 
-        if(AllDeliveryApplication.address != null && AllDeliveryApplication.edit){
+        if (AllDeliveryApplication.address != null && AllDeliveryApplication.edit) {
             var add = AllDeliveryApplication.address
-            header_title_address.text =  add!!.address + ", " + add.number
-            header_subtitle_address.text = add.neighborhood+", "+ add.city+" - "+add.state
+            header_title_address.text = add!!.address + ", " + add.number
+            header_subtitle_address.text = add.neighborhood + ", " + add.city + " - " + add.state
             number_input.setText(add.number)
             complement_input.setText(add.complement)
             reference_input.setText(add.landmark)
@@ -76,19 +77,20 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    header_title_address.text =  address[0].thoroughfare + ", " + s.toString()
+                    header_title_address.text = address[0].thoroughfare + ", " + s.toString()
                 }
             }
         )
 
         save_button.setOnClickListener {
-            if(number_input.text.toString().isNullOrBlank()){
+            if (number_input.text.toString().isNullOrBlank()) {
                 Toast.makeText(this, "Informe o número!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            var latLng = AllDeliveryApplication.latlong!!
-            var add = Address()
+            val addressList = AllDeliveryApplication.addressList
+            val latLng = AllDeliveryApplication.latlong!!
+            val add = Address()
+            var isUpdateAddress = false
 
             if(AllDeliveryApplication.address != null) {
                 add.id = AllDeliveryApplication.address!!.id
@@ -104,13 +106,20 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
             add.lat = latLng.latitude
             add.longi = latLng.longitude
 
-            if(add.id != null){
-                addressViewModel.update(add)
+            for (i in 1..addressList.size) {
+                if (addressList[i].id == add.id) {
+                    add.id = AllDeliveryApplication.address!!.id
+                    isUpdateAddress = true
+                }
             }
-            else{
+
+            if (isUpdateAddress){
+                addressViewModel.update(add)
+            } else if(!isUpdateAddress) {
                 addressViewModel.insert(add)
             }
-            AllDeliveryApplication.address=add
+
+//            AllDeliveryApplication.address = add
             finish()
         }
     }

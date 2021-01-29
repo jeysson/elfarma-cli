@@ -23,6 +23,7 @@ class AllDeliveryApplication: Application() {
         var edit: Boolean = false
         var latlong: LatLng? = null
         var address : Address? = null
+        val addressList = mutableListOf<Address>()
         lateinit var context: Context
         var store: Store? = null
         var product: Product? = null
