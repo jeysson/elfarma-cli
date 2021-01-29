@@ -29,18 +29,8 @@
                 android:elevation="0dp"
                 android:tag="binding_1">
 
-                <include
-                    android:id="@+id/topbar"
-                    layout="@layout/topbar"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    app:layout_constraintEnd_toStartOf="@+id/wallet_image"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent" />
 
-
-<!--                QR CODE   ///    visibility -->
+                <!--                QR CODE   ///    visibility -->
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/wallet_image"
@@ -65,19 +55,28 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintBottom_toTopOf="@+id/sticky_filters"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/topbar" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <include
                     android:id="@+id/sticky_filters"
                     layout="@layout/filter_bar_container"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:layout_marginEnd="150dp"
                     app:layout_collapseMode="parallax"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/topbar"
+                    app:layout_constraintHorizontal_bias="0.51"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/address_with_scheduling" />
+
+                <include
+                    android:id="@+id/topbar"
+                    layout="@layout/topbar"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/sticky_filters" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
