@@ -3,6 +3,8 @@ package hashtag.alldelivery.ui.home
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Filter
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.receiver.NetworkReceiver
+import hashtag.alldelivery.core.utils.Constants.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
@@ -26,7 +29,8 @@ import hashtag.alldelivery.ui.lojas.StoresListItemAdapter
 import hashtag.alldelivery.ui.lojas.StoresViewModel
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
-import kotlinx.android.synthetic.main.fragment_home.address
+import kotlinx.android.synthetic.main.filter_fragment.swipe_refresh
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.home_cards
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -42,6 +46,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private var isConnected: Boolean = false
     private lateinit var myView: View
     private lateinit var myAddress: Address
+    private val swipeRefresh by lazy { swipe_refresh }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -66,6 +71,13 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarLojas()
         carregarEndereco()
         carregarFiltros()
+
+        swipeRefresh.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                carregarLojas()
+            }, REFRESH_DELAY_TIMER)
+
+        }
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
@@ -89,6 +101,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun carregarLojas() {
+
         viewModel.getActiveStores().observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
                 var x = arrayListOf<Store>(Store())
@@ -99,6 +112,12 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 loading.visibility = View.GONE
             }
         })
+
+//        Timer para atrazar o encerramento do swipeRefresh -> UX
+        Handler(Looper.getMainLooper()).postDelayed({
+            swipeRefresh.isRefreshing = false
+        }, REFRESH_DELAY_TIMER)
+
     }
 
     private fun carregarEndereco() = GlobalScope.async {

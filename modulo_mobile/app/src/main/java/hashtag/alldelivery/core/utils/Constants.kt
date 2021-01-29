@@ -6,4 +6,6 @@ object Constants {
       const val SORT_BY_LOCALIZATION = 1
       const val SORT_BY_TIMER = 2
       const val SORT_BY_DELIVERY_FEE = 3
+
+      const val REFRESH_DELAY_TIMER: Long = 1500
 }
