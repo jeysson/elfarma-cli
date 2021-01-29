@@ -3,7 +3,6 @@ package hashtag.alldelivery.core.repository
 import hashtag.alldelivery.core.models.Group
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.ProductImage
-import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.network.ProductApi
 import hashtag.alldelivery.core.network.StoreApi
 import io.reactivex.Observable

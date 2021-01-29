@@ -12,9 +12,9 @@ class StoresViewModel(private val storeRep: IStoreRepository) : ViewModel(){
     var stores: MutableLiveData<List<Store>> = MutableLiveData()
     var eventoErro = SingleLiveEvent<BusinessEvent>()
 
-    fun getActiveStores(): MutableLiveData<List<Store>> {
+    fun getActiveStores(ordenationType: Int): MutableLiveData<List<Store>> {
 
-        storeRep.getActiveStores().subscribe({
+        storeRep.getActiveStores(ordenationType).subscribe({
             if(it != null && it.isNotEmpty()) {
                 stores.postValue(it)
             } else {

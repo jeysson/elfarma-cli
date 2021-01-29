@@ -5,6 +5,6 @@ import io.reactivex.Observable
 
 interface IStoreRepository {
 
-    fun getActiveStores(): Observable<List<Store>>
+    fun getActiveStores(ordenationType: Int): Observable<List<Store>>
 
 }

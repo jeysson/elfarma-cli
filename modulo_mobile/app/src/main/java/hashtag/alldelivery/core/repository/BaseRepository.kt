@@ -1,5 +1,6 @@
 package hashtag.alldelivery.core.repository
 
+import hashtag.alldelivery.core.models.Store
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

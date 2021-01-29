@@ -22,6 +22,7 @@ import hashtag.alldelivery.core.models.Filter
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.core.utils.Constants.REFRESH_DELAY_TIMER
+import hashtag.alldelivery.core.utils.Constants.SORT_FILTER
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
@@ -102,7 +103,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun carregarLojas() {
 
-        viewModel.getActiveStores().observe(viewLifecycleOwner, Observer<List<Store>> {
+        viewModel.getActiveStores(SORT_FILTER).observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
                 var x = arrayListOf<Store>(Store())
                 x.addAll(it)

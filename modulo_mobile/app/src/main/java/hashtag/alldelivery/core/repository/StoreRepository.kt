@@ -4,9 +4,11 @@ import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.network.StoreApi
 import io.reactivex.Observable
 
-class StoreRepository(private val dataSource: StoreApi): IStoreRepository, BaseRepository() {
+class StoreRepository(
+    private val dataSource: StoreApi
+): IStoreRepository, BaseRepository() {
 
-    override fun getActiveStores(): Observable<List<Store>> {
-        return runOnBackground(dataSource.getActiveStores())
+    override fun getActiveStores(ordenationType: Int): Observable<List<Store>> {
+        return runOnBackground(dataSource.getActiveStores(1,12, -3.09488, -20.0462758, ordenationType))
     }
 }
