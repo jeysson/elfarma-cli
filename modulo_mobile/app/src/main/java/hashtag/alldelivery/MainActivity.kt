@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.lojas.StoresListItemAdapter
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(){
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
+        StatusBarUtil.setTransparent(this)
 
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()

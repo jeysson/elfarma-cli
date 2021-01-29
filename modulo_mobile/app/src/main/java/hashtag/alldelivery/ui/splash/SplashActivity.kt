@@ -1,16 +1,9 @@
 package hashtag.alldelivery.ui.splash
 
 import androidx.appcompat.app.AppCompatActivity
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.view.MotionEvent
-import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 
