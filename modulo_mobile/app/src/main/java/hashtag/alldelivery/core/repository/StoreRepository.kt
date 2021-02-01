@@ -8,7 +8,18 @@ class StoreRepository(
     private val dataSource: StoreApi
 ): IStoreRepository, BaseRepository() {
 
-    override fun getActiveStores(ordenationType: Int): Observable<List<Store>> {
-        return runOnBackground(dataSource.getActiveStores(1,5, -3.09488, -20.0462758, ordenationType))
+    override fun getActiveStores(
+        indice: Int,
+        tamanho: Int,
+        lat: Double?,
+        lon: Double?,
+        tipoOrdenacao: Int
+    ): Observable<List<Store>> {
+        val newLat = -30.09488
+        val newLon = -60.0462758
+        if (lat == null || lon == null){
+            return runOnBackground(dataSource.getActiveStores(indice,tamanho, newLat, newLon, tipoOrdenacao))
+        }
+        return runOnBackground(dataSource.getActiveStores(indice,tamanho, lat, lon, tipoOrdenacao))
     }
 }

@@ -7,20 +7,22 @@ import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.repository.IStoreRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
 
-class StoresViewModel(private val storeRep: IStoreRepository) : ViewModel(){
+class StoresViewModel(private val storeRep: IStoreRepository) : ViewModel() {
 
     var stores: MutableLiveData<List<Store>> = MutableLiveData()
     var eventoErro = SingleLiveEvent<BusinessEvent>()
 
-    fun getActiveStores(ordenationType: Int): MutableLiveData<List<Store>> {
+    fun getActiveStores(
+        indice: Int, tamanho: Int, lat: Double?, lon: Double?, tipoOrdenacao: Int
+    ): MutableLiveData<List<Store>> {
 
-        storeRep.getActiveStores(ordenationType).subscribe({
-            if(it != null && it.isNotEmpty()) {
+        storeRep.getActiveStores(indice, tamanho, lat, lon, tipoOrdenacao).subscribe({
+            if (it != null && it.isNotEmpty()) {
                 stores.postValue(it)
             } else {
                 eventoErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
             }
-        },{
+        }, {
             eventoErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))
         })
 

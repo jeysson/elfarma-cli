@@ -28,8 +28,9 @@ class AllDeliveryApplication: Application() {
         var store: Store? = null
         var product: Product? = null
 
-
         const val REFRESH_DELAY_TIMER: Long = 1500
+        const val DEFAULT_INDICE = 1
+        const val DEFAULT_TAMANHO = 10
         var SORT_FILTER = 0
 
         fun getAddress(context: Context, lat: Double, long: Double): String{

@@ -15,8 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.DEFAULT_INDICE
+import hashtag.alldelivery.AllDeliveryApplication.Companion.DEFAULT_TAMANHO
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
+import hashtag.alldelivery.AllDeliveryApplication.Companion.latlong
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.*
 import hashtag.alldelivery.core.receiver.NetworkReceiver
@@ -99,8 +102,14 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun carregarLojas() {
-
-        viewModel.getActiveStores(SORT_FILTER).observe(viewLifecycleOwner, Observer<List<Store>> {
+//                              indice, tamanho, lat, lon, tipoOrdenacao
+        viewModel.getActiveStores(
+            DEFAULT_INDICE,
+            DEFAULT_TAMANHO,
+            latlong?.latitude,
+            latlong?.longitude,
+            SORT_FILTER
+        ).observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
                 var x = arrayListOf<Store>(Store())
                 x.addAll(it)
