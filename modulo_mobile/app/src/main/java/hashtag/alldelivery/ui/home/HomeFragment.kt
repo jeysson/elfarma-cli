@@ -15,14 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
+import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.models.Address
-import hashtag.alldelivery.core.models.BusinessEvent
-import hashtag.alldelivery.core.models.Filter
-import hashtag.alldelivery.core.models.Store
+import hashtag.alldelivery.core.models.*
 import hashtag.alldelivery.core.receiver.NetworkReceiver
-import hashtag.alldelivery.core.utils.Constants.REFRESH_DELAY_TIMER
-import hashtag.alldelivery.core.utils.Constants.SORT_FILTER
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity

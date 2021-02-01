@@ -2,12 +2,9 @@ package hashtag.alldelivery.ui.filter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.utils.Constants.SORT_BY_A_Z
-import hashtag.alldelivery.core.utils.Constants.SORT_BY_DELIVERY_FEE
-import hashtag.alldelivery.core.utils.Constants.SORT_BY_LOCALIZATION
-import hashtag.alldelivery.core.utils.Constants.SORT_BY_TIMER
-import hashtag.alldelivery.core.utils.Constants.SORT_FILTER
+import hashtag.alldelivery.core.models.EnumSortBy
 import kotlinx.android.synthetic.main.activity_filters.*
 import kotlinx.android.synthetic.main.filters_button.*
 
@@ -43,10 +40,10 @@ class FiltersActivity : AppCompatActivity() {
 
 //        Verifica o filtro que esta ativo
         when (SORT_FILTER) {
-            SORT_BY_A_Z -> orderAZIsChecked()
-            SORT_BY_LOCALIZATION -> orderLocationIsChecked()
-            SORT_BY_TIMER -> orderTimerIsChecked()
-            SORT_BY_DELIVERY_FEE -> orderDeliveryFeeIsChecked()
+            EnumSortBy.SORT_BY_A_Z.ordinal-> orderAZIsChecked()
+            EnumSortBy.SORT_BY_LOCALIZATION.ordinal -> orderLocationIsChecked()
+            EnumSortBy.SORT_BY_TIMER.ordinal -> orderTimerIsChecked()
+            EnumSortBy.SORT_BY_DELIVERY_FEE.ordinal -> orderDeliveryFeeIsChecked()
         }
 
         orderAZCard.setOnClickListener {
@@ -108,7 +105,7 @@ class FiltersActivity : AppCompatActivity() {
         orderAZCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
         orderAZText.setTextColor(getColor(R.color.colorPrimary))
         isOrderAZChecked = true
-        SORT_FILTER = SORT_BY_A_Z
+        SORT_FILTER = EnumSortBy.SORT_BY_A_Z.ordinal
 
     }
 
@@ -119,7 +116,7 @@ class FiltersActivity : AppCompatActivity() {
         orderLocationCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
         orderLocationText.setTextColor(getColor(R.color.colorPrimary))
         isOrderLocationChecked = true
-        SORT_FILTER = SORT_BY_LOCALIZATION
+        SORT_FILTER = EnumSortBy.SORT_BY_LOCALIZATION.ordinal
 
     }
 
@@ -130,7 +127,7 @@ class FiltersActivity : AppCompatActivity() {
         orderTimerCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
         orderTimerText.setTextColor(getColor(R.color.colorPrimary))
         isOrderTimerChecked = true
-        SORT_FILTER = SORT_BY_TIMER
+        SORT_FILTER = EnumSortBy.SORT_BY_TIMER.ordinal
 
     }
 
@@ -141,7 +138,7 @@ class FiltersActivity : AppCompatActivity() {
         orderDeliveryFeeCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
         orderDeliveryFeeText.setTextColor(getColor(R.color.colorPrimary))
         isOrderDeliveryFeeChecked = true
-        SORT_FILTER = SORT_BY_DELIVERY_FEE
+        SORT_FILTER = EnumSortBy.SORT_BY_DELIVERY_FEE.ordinal
 
     }
 }

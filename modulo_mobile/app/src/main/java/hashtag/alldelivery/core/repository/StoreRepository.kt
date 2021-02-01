@@ -9,6 +9,6 @@ class StoreRepository(
 ): IStoreRepository, BaseRepository() {
 
     override fun getActiveStores(ordenationType: Int): Observable<List<Store>> {
-        return runOnBackground(dataSource.getActiveStores(1,12, -3.09488, -20.0462758, ordenationType))
+        return runOnBackground(dataSource.getActiveStores(1,5, -3.09488, -20.0462758, ordenationType))
     }
 }

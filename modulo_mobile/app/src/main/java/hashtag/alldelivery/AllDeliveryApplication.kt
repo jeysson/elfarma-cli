@@ -28,6 +28,10 @@ class AllDeliveryApplication: Application() {
         var store: Store? = null
         var product: Product? = null
 
+
+        const val REFRESH_DELAY_TIMER: Long = 1500
+        var SORT_FILTER = 0
+
         fun getAddress(context: Context, lat: Double, long: Double): String{
             var geoCoder = Geocoder(context, Locale.getDefault())
             var address = geoCoder.getFromLocation(lat, long, 1)
