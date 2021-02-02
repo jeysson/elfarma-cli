@@ -101,8 +101,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
-    private fun carregarLojas() {
-//                              indice, tamanho, lat, lon, tipoOrdenacao
+    fun carregarLojas() {
         viewModel.getActiveStores(
             DEFAULT_INDICE,
             DEFAULT_TAMANHO,
@@ -177,6 +176,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             )
         }
     }
+
 
 
 }

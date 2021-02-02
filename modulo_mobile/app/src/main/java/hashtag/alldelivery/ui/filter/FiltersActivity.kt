@@ -7,6 +7,7 @@ import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.EnumSortBy
 import kotlinx.android.synthetic.main.activity_filters.*
 import kotlinx.android.synthetic.main.filters_button.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class FiltersActivity : AppCompatActivity() {
 
@@ -38,33 +39,52 @@ class FiltersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filters)
 
+
 //        Verifica o filtro que esta ativo
         when (SORT_FILTER) {
-            EnumSortBy.SORT_BY_A_Z.ordinal-> orderAZIsChecked()
-            EnumSortBy.SORT_BY_LOCALIZATION.ordinal -> orderLocationIsChecked()
-            EnumSortBy.SORT_BY_TIMER.ordinal -> orderTimerIsChecked()
-            EnumSortBy.SORT_BY_DELIVERY_FEE.ordinal -> orderDeliveryFeeIsChecked()
+            EnumSortBy.SORT_BY_A_Z.ordinal->{
+                orderAZIsChecked()
+
+            }
+            EnumSortBy.SORT_BY_LOCALIZATION.ordinal -> {
+                orderLocationIsChecked()
+                clearButton.setTextColor(getColor(R.color.colorPrimary))
+            }
+            EnumSortBy.SORT_BY_TIMER.ordinal -> {
+                orderTimerIsChecked()
+                clearButton.setTextColor(getColor(R.color.colorPrimary))
+            }
+            EnumSortBy.SORT_BY_DELIVERY_FEE.ordinal -> {
+                orderDeliveryFeeIsChecked()
+                clearButton.setTextColor(getColor(R.color.colorPrimary))
+            }
         }
 
+//        Seleciona qual tipo de ordem será aplicado no filtro
         orderAZCard.setOnClickListener {
             orderAZIsChecked()
+            clearButton.setTextColor(getColor(R.color.medium_gray))
         }
 
         orderLocationCard.setOnClickListener {
             orderLocationIsChecked()
+            clearButton.setTextColor(getColor(R.color.colorPrimary))
         }
 
         orderTimerCard.setOnClickListener {
             orderTimerIsChecked()
+            clearButton.setTextColor(getColor(R.color.colorPrimary))
         }
 
         orderDeliveryFeeCard.setOnClickListener {
             orderDeliveryFeeIsChecked()
+            clearButton.setTextColor(getColor(R.color.colorPrimary))
         }
 
         clearButton.setOnClickListener {
             clearFilters()
             orderAZIsChecked()
+            clearButton.setTextColor(getColor(R.color.medium_gray))
         }
 
         backButton.setOnClickListener {
@@ -73,6 +93,7 @@ class FiltersActivity : AppCompatActivity() {
 
         showResultsButton.setOnClickListener {
             finish()
+
         }
 
     }
