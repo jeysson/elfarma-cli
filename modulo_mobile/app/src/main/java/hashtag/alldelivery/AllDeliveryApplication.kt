@@ -33,6 +33,13 @@ class AllDeliveryApplication: Application() {
         const val DEFAULT_TAMANHO = 10
         var SORT_FILTER = 0
 
+        const val RESULTS = "RESULTS"
+
+//      RequestCode Control
+        const val FILTER_REQUEST_CODE = 1
+
+//       =======
+
         fun getAddress(context: Context, lat: Double, long: Double): String{
             var geoCoder = Geocoder(context, Locale.getDefault())
             var address = geoCoder.getFromLocation(lat, long, 1)

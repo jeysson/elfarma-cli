@@ -1,5 +1,7 @@
 package hashtag.alldelivery.ui.home
 
+import android.R.attr
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
@@ -17,11 +19,16 @@ import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.DEFAULT_INDICE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.DEFAULT_TAMANHO
+import hashtag.alldelivery.AllDeliveryApplication.Companion.FILTER_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
+import hashtag.alldelivery.AllDeliveryApplication.Companion.RESULTS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.latlong
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.models.*
+import hashtag.alldelivery.core.models.Address
+import hashtag.alldelivery.core.models.BusinessEvent
+import hashtag.alldelivery.core.models.Filter
+import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
@@ -37,6 +44,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+
 
 class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
 
@@ -155,13 +163,32 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         list.add(f1)
 
         val adapter = FilterListAdapter(list) {
-            startActivity(Intent(myView.context, FiltersActivity::class.java))
+            val intent = Intent(myView.context, FiltersActivity::class.java)
+            startActivityForResult(intent, FILTER_REQUEST_CODE)
         }
         adapter.setFilter(list)
         quick_filters.adapter = adapter
         quick_filters.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == FILTER_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+//              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
+//              Timer para atrazar o encerramento do swipeRefresh -> UX
+
+                swipeRefresh.isRefreshing = true
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    carregarLojas()
+                }, REFRESH_DELAY_TIMER)
+
+            }
+        }
     }
 
     override fun onResume() {

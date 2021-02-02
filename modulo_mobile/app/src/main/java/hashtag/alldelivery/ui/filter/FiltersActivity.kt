@@ -1,13 +1,15 @@
 package hashtag.alldelivery.ui.filter
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import hashtag.alldelivery.AllDeliveryApplication.Companion.RESULTS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.EnumSortBy
 import kotlinx.android.synthetic.main.activity_filters.*
 import kotlinx.android.synthetic.main.filters_button.*
-import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class FiltersActivity : AppCompatActivity() {
 
@@ -42,7 +44,7 @@ class FiltersActivity : AppCompatActivity() {
 
 //        Verifica o filtro que esta ativo
         when (SORT_FILTER) {
-            EnumSortBy.SORT_BY_A_Z.ordinal->{
+            EnumSortBy.SORT_BY_A_Z.ordinal -> {
                 orderAZIsChecked()
 
             }
@@ -92,6 +94,11 @@ class FiltersActivity : AppCompatActivity() {
         }
 
         showResultsButton.setOnClickListener {
+
+//            Deve encerrar activity atual e retornar true -> Carregar nova lista de lojas
+            val returnIntent = Intent()
+            returnIntent.putExtra(RESULTS, true)
+            setResult(RESULT_OK, returnIntent)
             finish()
 
         }
