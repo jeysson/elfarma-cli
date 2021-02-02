@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-class Address {
+class Address() {
     var title : String? = null
     var description: String? = null
     var description2 : String? = null
@@ -32,5 +32,4 @@ class Address {
     @ColumnInfo
     var longi: Double? = null
 
-    constructor()
 }

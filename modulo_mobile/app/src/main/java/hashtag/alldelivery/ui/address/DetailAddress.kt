@@ -89,7 +89,7 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
             }
             val addressList = AllDeliveryApplication.addressList
             val latLng = AllDeliveryApplication.latlong!!
-            val add = Address()
+            val add = Address( )
             var isUpdateAddress = false
 
             if(AllDeliveryApplication.address != null) {
@@ -106,13 +106,17 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
             add.lat = latLng.latitude
             add.longi = latLng.longitude
 
-            for (i in 1..addressList.size) {
+//            Deve verificar se já existe um item no banco com o mesmo id
+            for (i in 0 until addressList.size) {
                 if (addressList[i].id == add.id) {
+
+                    val two = addressList[i].id
                     add.id = AllDeliveryApplication.address!!.id
                     isUpdateAddress = true
                 }
             }
 
+//            Atualiza ou insere, de acordo com a variável
             if (isUpdateAddress){
                 addressViewModel.update(add)
             } else if(!isUpdateAddress) {
