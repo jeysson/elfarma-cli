@@ -3,6 +3,7 @@ package hashtag.alldelivery.ui.home
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,8 +41,8 @@ import hashtag.alldelivery.ui.lojas.StoresViewModel
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.filter_fragment.swipe_refresh
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.home_cards
+import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.home_fragment.home_cards
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import org.jetbrains.anko.support.v4.toast
@@ -69,14 +71,15 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        myView = view
         home_cards.layoutManager = LinearLayoutManager(context)
         adapter = StoresListItemAdapter(activity as AppCompatActivity, _storeList)
         home_cards.adapter = adapter
         home_cards.setHasFixedSize(true)
 
+//        Definindo a cor azul para o swipeRefresh
+        swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
 
-        myView = view
         loading.visibility = View.VISIBLE
 
         setupObservers()
