@@ -6,11 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
@@ -22,14 +20,9 @@ import hashtag.alldelivery.core.models.Group
 import hashtag.alldelivery.ui.products.GroupProductsAdapter
 import hashtag.alldelivery.ui.products.ProductSearch
 import hashtag.alldelivery.ui.products.ProductViewModel
-import hashtag.alldelivery.ui.products.ProductsListItemAdapter
 import kotlinx.android.synthetic.main.store_card_toolbar.*
 import kotlinx.android.synthetic.main.store_fragment.*
 import kotlinx.android.synthetic.main.store_menu_header.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -49,7 +42,7 @@ class StoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        store_name.text = AllDeliveryApplication.store?.nomeFantasia
+        store_name.text = AllDeliveryApplication.STORE?.nomeFantasia
         store_info.text = "08:00 - 22:00 "+ getString(R.string.dot) + " ver mais"
 
         store_info.setOnClickListener {
@@ -77,7 +70,7 @@ class StoreFragment : Fragment() {
                 }
                 if (scrollRange + verticalOffset == 0) {
                     isShow = true;
-                    store_title.text = AllDeliveryApplication.store?.nomeFantasia
+                    store_title.text = AllDeliveryApplication.STORE?.nomeFantasia
                     store_description.text = "08:00 - 22:00 "+ getString(R.string.dot) + " ver mais"
                     tabs.visibility = View.VISIBLE
                 } else if (isShow) {
@@ -125,7 +118,7 @@ class StoreFragment : Fragment() {
             list.adapter = adapter
             list.setHasFixedSize(true)
 
-            viewModelProduct.getAllGroups(AllDeliveryApplication.store?.id)
+            viewModelProduct.getAllGroups(AllDeliveryApplication.STORE?.id)
                 .observe(viewLifecycleOwner, Observer<List<Group>> {
                     it?.let {
                         adapter.groups = it

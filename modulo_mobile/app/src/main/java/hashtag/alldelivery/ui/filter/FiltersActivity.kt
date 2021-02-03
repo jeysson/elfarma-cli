@@ -7,7 +7,7 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.RESULTS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.EnumSortBy
-import kotlinx.android.synthetic.main.activity_filters.*
+import kotlinx.android.synthetic.main.filter_activity.*
 import kotlinx.android.synthetic.main.filters_button.*
 
 
@@ -39,7 +39,7 @@ class FiltersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_filters)
+        setContentView(R.layout.filter_activity)
 
 
 //        Verifica o filtro que esta ativo

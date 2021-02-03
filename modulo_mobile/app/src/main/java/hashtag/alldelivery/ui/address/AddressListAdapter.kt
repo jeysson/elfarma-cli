@@ -1,6 +1,5 @@
 package hashtag.alldelivery.ui.address
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.view.*
-import kotlinx.android.synthetic.main.address_with_scheduling_layout.*
 
 
 class AddressListAdapter internal constructor(activity: AppCompatActivity): RecyclerView.Adapter<AddressListAdapter.AddressItemViewHolder>(),
@@ -42,8 +40,8 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
         holder.btSelected.setOnClickListener(this)
 
         holder.itemView.setOnClickListener {
-            AllDeliveryApplication.address = address[position]
-            AllDeliveryApplication.latlong = LatLng(address[position].lat!!,
+            AllDeliveryApplication.ADDRESS = address[position]
+            AllDeliveryApplication.LAT_LONG = LatLng(address[position].lat!!,
                 address[position].longi!!
             )
             activity.finish()

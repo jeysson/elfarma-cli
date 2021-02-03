@@ -90,7 +90,7 @@ class DeliveryAddress : AppCompatActivity() {
                         getNewLocation()
                     }else
                     {
-                        AllDeliveryApplication.latlong = LatLng(location.latitude, location.longitude)
+                        AllDeliveryApplication.LAT_LONG = LatLng(location.latitude, location.longitude)
                         description_address.text = AllDeliveryApplication.getAddress(baseContext, location.latitude, location.longitude)
                     }
                 }
@@ -133,7 +133,7 @@ class DeliveryAddress : AppCompatActivity() {
             var lastLocation = p0?.lastLocation
 
             if (lastLocation != null) {
-                AllDeliveryApplication.latlong = LatLng(lastLocation.latitude, lastLocation.longitude)
+                AllDeliveryApplication.LAT_LONG = LatLng(lastLocation.latitude, lastLocation.longitude)
             }
 
             description_address.text = AllDeliveryApplication.getAddress(baseContext, lastLocation!!.latitude, lastLocation.longitude)

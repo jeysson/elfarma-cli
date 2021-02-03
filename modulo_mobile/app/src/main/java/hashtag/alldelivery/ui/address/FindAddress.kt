@@ -1,28 +1,21 @@
 package hashtag.alldelivery.ui.address
 
-import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
-import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
-import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
-import hashtag.alldelivery.ui.lojas.StoresListItemAdapter
 import kotlinx.android.synthetic.main.address_find_activity.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import java.util.*
 
 class FindAddress : AppCompatActivity() {
 
@@ -61,7 +54,7 @@ class FindAddress : AppCompatActivity() {
   //                  var geoCoder = Geocoder(this@FindAddress, Locale.getDefault())
 //                    var address = geoCoder.getFromLocationName(s.toString(), 4)
 
-                    findPlaces(s.toString(), AllDeliveryApplication.latlong!!.latitude, AllDeliveryApplication.latlong!!.longitude)
+                    findPlaces(s.toString(), AllDeliveryApplication.LAT_LONG!!.latitude, AllDeliveryApplication.LAT_LONG!!.longitude)
     /*                address.forEach {
                         var ad = Address()
                         ad.title = it.thoroughfare

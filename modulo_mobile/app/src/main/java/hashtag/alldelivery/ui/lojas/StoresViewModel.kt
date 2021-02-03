@@ -1,32 +1,67 @@
 package hashtag.alldelivery.ui.lojas
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hashtag.alldelivery.AllDeliveryApplication.Companion.PAGE_OBSERVER
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.repository.IStoreRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
 
-class StoresViewModel(private val storeRep: IStoreRepository) : ViewModel() {
+class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
 
-    var stores: MutableLiveData<List<Store>> = MutableLiveData()
-    var eventoErro = SingleLiveEvent<BusinessEvent>()
+    var eventErro = SingleLiveEvent<BusinessEvent>()
+    private var _stores: MutableLiveData<List<Store>> = MutableLiveData()
 
+
+    //    Itens de paginação
+    private var _storesNewSearch: MutableLiveData<List<Store>> = MutableLiveData()
+    private var _page = 1
+    private var _controlIndice = 10
+
+    @SuppressLint("CheckResult")
     fun getActiveStores(
-        indice: Int, tamanho: Int, lat: Double?, lon: Double?, tipoOrdenacao: Int
+        lat: Double?, lon: Double?, tipoOrdenacao: Int
     ): MutableLiveData<List<Store>> {
 
-        storeRep.getActiveStores(indice, tamanho, lat, lon, tipoOrdenacao).subscribe({
+//        Quando for uma nova busca, a busca se inicia a partir da pagina 1
+        _page = 1
+
+        _storeRep.getActiveStores(_page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
             if (it != null && it.isNotEmpty()) {
-                stores.postValue(it)
+                _stores.postValue(it)
             } else {
-                eventoErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
+                eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
             }
         }, {
-            eventoErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))
+            eventErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))
         })
 
-        return stores
+        return _stores
+    }
+
+    @SuppressLint("CheckResult")
+    fun getNextPage(
+        lat: Double?, lon: Double?, tipoOrdenacao: Int
+    ): MutableLiveData<List<Store>> {
+        //        Quanto for continuar exibindo os dados, ele pega a proxima pagina
+        _page += 1
+        PAGE_OBSERVER = _page
+        Log.d("PAGE_GET_NEXT", "$_page")
+
+        _storeRep.getActiveStores(_page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
+            if (it != null && it.isNotEmpty()) {
+                _stores.postValue(it)
+            } else {
+                eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
+            }
+        }, {
+            eventErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))
+        })
+
+        return _stores
     }
 
 }

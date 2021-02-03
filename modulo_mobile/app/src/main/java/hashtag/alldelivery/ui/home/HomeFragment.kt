@@ -1,12 +1,12 @@
 package hashtag.alldelivery.ui.home
 
-import android.R.attr
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +15,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
-import hashtag.alldelivery.AllDeliveryApplication.Companion.DEFAULT_INDICE
-import hashtag.alldelivery.AllDeliveryApplication.Companion.DEFAULT_TAMANHO
 import hashtag.alldelivery.AllDeliveryApplication.Companion.FILTER_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
-import hashtag.alldelivery.AllDeliveryApplication.Companion.RESULTS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
-import hashtag.alldelivery.AllDeliveryApplication.Companion.latlong
+import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
+import hashtag.alldelivery.AllDeliveryApplication.Companion.PAGE_OBSERVER
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import hashtag.alldelivery.core.models.BusinessEvent
@@ -57,6 +56,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private lateinit var myAddress: Address
     private val swipeRefresh by lazy { swipe_refresh }
 
+    private lateinit var adapter: StoresListItemAdapter
+    private var _storeList: MutableList<Store> = mutableListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -66,6 +68,12 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        home_cards.layoutManager = LinearLayoutManager(context)
+        adapter = StoresListItemAdapter(activity as AppCompatActivity, _storeList)
+        home_cards.adapter = adapter
+        home_cards.setHasFixedSize(true)
+
+
         myView = view
         loading.visibility = View.VISIBLE
 
@@ -74,6 +82,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
+        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -98,7 +107,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun setupObservers() {
-        viewModel.eventoErro.observe(
+        viewModel.eventErro.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer<BusinessEvent> {
                 it?.let {
@@ -109,34 +118,75 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
+    fun showResults(list: ArrayList<Store>) {
+        _storeList.addAll(list)
+        _storeList.forEach {
+            Log.d("STORE_ITENS:", "${it.nomeFantasia}")
+        }
+        Log.d("STORE_ITENS:", "Pagina : $PAGE_OBSERVER")
+        adapter.notifyDataSetChanged()
+    }
+
     fun carregarLojas() {
-        viewModel.getActiveStores(
-            DEFAULT_INDICE,
-            DEFAULT_TAMANHO,
-            latlong?.latitude,
-            latlong?.longitude,
-            SORT_FILTER
-        ).observe(viewLifecycleOwner, Observer<List<Store>> {
-            it?.let {
-                var x = arrayListOf<Store>(Store())
-                x.addAll(it)
-                val adapter = StoresListItemAdapter(activity as AppCompatActivity, x)
-                home_cards.layoutManager = LinearLayoutManager(context)
-                home_cards.adapter = adapter
-                loading.visibility = View.GONE
-            }
-        })
+//        Executa apenas se a pagina observada for igual a 1
+        if (PAGE_OBSERVER == 1) {
+            viewModel.getActiveStores(
+                LAT_LONG?.latitude,
+                LAT_LONG?.longitude,
+                SORT_FILTER
+            ).observe(viewLifecycleOwner, Observer<List<Store>> {
+                it?.let {
+                    var x = arrayListOf<Store>(Store())
+                    x.addAll(it)
+
+                    showResults(x)
+
+                    loading.visibility = View.GONE
+                }
+            })
 
 //        Timer para atrazar o encerramento do swipeRefresh -> UX
-        Handler(Looper.getMainLooper()).postDelayed({
-            swipeRefresh.isRefreshing = false
-        }, REFRESH_DELAY_TIMER)
+            Handler(Looper.getMainLooper()).postDelayed({
+                swipeRefresh.isRefreshing = false
+            }, REFRESH_DELAY_TIMER)
+        }
+    }
 
+    private fun setScrollView() {
+        home_cards.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val target = recyclerView.layoutManager as LinearLayoutManager?
+
+                val totalItemCount = target!!.itemCount
+
+                val lastVisible = target.findLastVisibleItemPosition()
+
+                val lastItem = lastVisible + 5 >= totalItemCount
+
+                if (totalItemCount > 0 && lastItem) {
+                    viewModel.getNextPage(
+                        LAT_LONG?.latitude,
+                        LAT_LONG?.longitude,
+                        SORT_FILTER
+                    ).observe(viewLifecycleOwner, Observer<List<Store>> {
+                        it?.let {
+                            var x = arrayListOf<Store>(Store())
+                            x.addAll(it)
+                            showResults(x)
+                        }
+                    })
+                }
+            }
+        })
     }
 
     private fun carregarTodosEnderecos() {
         addressViewModel.getAll().observe(viewLifecycleOwner) {
-            AllDeliveryApplication.addressList.addAll(it)
+            AllDeliveryApplication.ADDRESS_LIST.addAll(it)
         }
     }
 
@@ -144,9 +194,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         myAddress = addressViewModel.firstAddress()
         address.text = getString(R.string.address_list_location_activate)
 
-         if (myAddress != null) {
-            AllDeliveryApplication.address = myAddress
-            AllDeliveryApplication.latlong = LatLng(myAddress.lat!!, myAddress.longi!!)
+        if (myAddress != null) {
+            AllDeliveryApplication.ADDRESS = myAddress
+            AllDeliveryApplication.LAT_LONG = LatLng(myAddress.lat!!, myAddress.longi!!)
 
             address.text = AllDeliveryApplication.getShortAddress(
                 myView.context,
@@ -195,11 +245,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         super.onResume()
 
-        AllDeliveryApplication.latlong?.let {
+        AllDeliveryApplication.LAT_LONG?.let {
             address.text = AllDeliveryApplication.getShortAddress(
-                myView.context, AllDeliveryApplication.address!!.lat!!,
-                AllDeliveryApplication.address!!.longi!!,
-                AllDeliveryApplication.address!!.number!!
+                myView.context, AllDeliveryApplication.ADDRESS!!.lat!!,
+                AllDeliveryApplication.ADDRESS!!.longi!!,
+                AllDeliveryApplication.ADDRESS!!.number!!
             )
         }
     }

@@ -5,19 +5,14 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
-import hashtag.alldelivery.ui.address.DeliveryAddress
 import kotlinx.android.synthetic.main.button_minus_plus.*
 import kotlinx.android.synthetic.main.cart_button.*
 import kotlinx.android.synthetic.main.common_toolbar.*
-import kotlinx.android.synthetic.main.fragment_item_list_dialog_list_dialog_item.view.*
 import kotlinx.android.synthetic.main.product_details_content.*
-import kotlinx.android.synthetic.main.product_details_content.quantity
 import kotlinx.android.synthetic.main.product_item_info.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import java.text.NumberFormat
 import java.util.*
 
@@ -30,7 +25,7 @@ class ProductDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.product_details_content)
-        product = AllDeliveryApplication.product!!
+        product = AllDeliveryApplication.PRODUCT!!
         topbar_title.text = getString(R.string.product_details)
 
         back_button.setOnClickListener {

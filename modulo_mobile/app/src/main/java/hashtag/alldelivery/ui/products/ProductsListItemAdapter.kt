@@ -17,8 +17,6 @@ import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
 import kotlinx.android.synthetic.main.product_card_item.view.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
@@ -95,7 +93,7 @@ class ProductsListItemAdapter(val frag: Fragment, val lLayoutManager: LinearLayo
     override fun onClick(view: View?) {
         if(view is CardView){
             var position = view!!.tag as Int
-            AllDeliveryApplication.product = itens?.get(position)
+            AllDeliveryApplication.PRODUCT = itens?.get(position)
             val intent = Intent(fragment.context, ProductDetail::class.java)
             fragment.context?.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(fragment.activity).toBundle())
         }

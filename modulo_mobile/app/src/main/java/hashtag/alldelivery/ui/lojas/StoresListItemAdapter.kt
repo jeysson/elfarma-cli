@@ -99,7 +99,7 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
     override fun onClick(view: View?) {
         if(view is CardView){
             var position = view!!.tag as Int
-            AllDeliveryApplication.store = itens[position]
+            AllDeliveryApplication.STORE = itens[position]
             val manager: FragmentManager = activity.supportFragmentManager
             manager.beginTransaction()
             manager.commit {

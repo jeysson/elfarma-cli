@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
-import kotlinx.android.synthetic.main.product_details_content.*
 import kotlinx.android.synthetic.main.product_view.*
 
 class ProductView : AppCompatActivity() {
@@ -13,7 +12,7 @@ class ProductView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.product_view)
         supportActionBar?.hide()
-        var product = AllDeliveryApplication.product
+        var product = AllDeliveryApplication.PRODUCT
         product_title.text = product?.nome
         product_description.text = product?.descricao
         //

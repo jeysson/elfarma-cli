@@ -34,7 +34,7 @@ class GroupProductsAdapter(val frag: StoreFragment, var groups: List<Group>?): R
         holder.name.text = group?.nome
         holder.list.removeAllViews()
         //
-        holder.BindItem(AllDeliveryApplication.store?.id, group, recyledViewPool)
+        holder.BindItem(AllDeliveryApplication.STORE?.id, group, recyledViewPool)
     }
 
     override fun getItemCount(): Int {

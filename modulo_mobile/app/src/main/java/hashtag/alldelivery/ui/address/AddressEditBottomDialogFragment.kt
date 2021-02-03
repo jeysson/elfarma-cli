@@ -3,7 +3,6 @@ package hashtag.alldelivery.ui.address
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_edit_bottom_dialog.*
-import kotlinx.android.synthetic.main.address_edit_bottom_dialog.view.*
 
 // TODO: Customize parameter argument names
 const val ARG_ITEM_COUNT = "item_count"
@@ -51,9 +49,9 @@ class AddressEditBottomDialogFragment : BottomSheetDialogFragment() {
         }
 
         edit_address_button.setOnClickListener {
-            AllDeliveryApplication.edit    = true;
-            AllDeliveryApplication.latlong = LatLng(this.address!!.lat!!, this.address!!.longi!!)
-            AllDeliveryApplication.address = this.address
+            AllDeliveryApplication.EDIT    = true;
+            AllDeliveryApplication.LAT_LONG = LatLng(this.address!!.lat!!, this.address!!.longi!!)
+            AllDeliveryApplication.ADDRESS = this.address
             val intent = Intent(this.context, DetailAddress::class.java)
             // start your next activity
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this.activity).toBundle())

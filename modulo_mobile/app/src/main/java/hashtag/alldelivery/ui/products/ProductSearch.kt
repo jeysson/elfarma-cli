@@ -1,6 +1,5 @@
 package hashtag.alldelivery.ui.products
 
-import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,26 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.size
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
-import hashtag.alldelivery.core.utils.PaginationScrollListener
-import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.android.synthetic.main.product_search_fragment.list
 import kotlinx.android.synthetic.main.search_toolbar.*
-import kotlinx.android.synthetic.main.store_fragment.*
-import kotlinx.android.synthetic.main.store_fragment.loading
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.anko.support.v4.runOnUiThread
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ProductSearch : Fragment() {
@@ -112,7 +103,7 @@ class ProductSearch : Fragment() {
     fun getMoreItems(){
         list.post{
             lifecycleScope.launch(Dispatchers.IO){
-                produtos = viewModelProduct?.getPagingProducts(AllDeliveryApplication.store!!.id, -1, pagina, itensPorPagina)
+                produtos = viewModelProduct?.getPagingProducts(AllDeliveryApplication.STORE!!.id, -1, pagina, itensPorPagina)
                 withContext(Dispatchers.Main){
                     adapt.addItems(produtos)
                     adapt.notifyDataSetChanged()
@@ -127,7 +118,7 @@ class ProductSearch : Fragment() {
      private suspend fun obterProdutos(){
         var ps = this
         //config adapter
-        produtos = viewModelProduct?.getPagingProducts(AllDeliveryApplication.store!!.id, -1, pagina, itensPorPagina)
+        produtos = viewModelProduct?.getPagingProducts(AllDeliveryApplication.STORE!!.id, -1, pagina, itensPorPagina)
 
         withContext(Dispatchers.Main){
             adapt = ProductsListItemAdapter(ps, null, list.layoutManager as GridLayoutManager, produtos)

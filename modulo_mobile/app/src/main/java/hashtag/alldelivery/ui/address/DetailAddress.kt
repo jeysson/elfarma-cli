@@ -39,11 +39,11 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
 
         back_button.setOnClickListener {
-            AllDeliveryApplication.address = null
+            AllDeliveryApplication.ADDRESS = null
             finish()
         }
 
-        var latlong = AllDeliveryApplication.latlong
+        var latlong = AllDeliveryApplication.LAT_LONG
         var geoCoder = Geocoder(baseContext, Locale.getDefault())
 
         address = geoCoder.getFromLocation(latlong!!.latitude, latlong.longitude, 1)
@@ -51,8 +51,8 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
         header_subtitle_address.text =
             address[0].subLocality + ", " + address[0].subAdminArea + " - " + address[0].adminArea
 
-        if (AllDeliveryApplication.address != null && AllDeliveryApplication.edit) {
-            var add = AllDeliveryApplication.address
+        if (AllDeliveryApplication.ADDRESS != null && AllDeliveryApplication.EDIT) {
+            var add = AllDeliveryApplication.ADDRESS
             header_title_address.text = add!!.address + ", " + add.number
             header_subtitle_address.text = add.neighborhood + ", " + add.city + " - " + add.state
             number_input.setText(add.number)
@@ -87,13 +87,13 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this, "Informe o número!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val addressList = AllDeliveryApplication.addressList
-            val latLng = AllDeliveryApplication.latlong!!
+            val addressList = AllDeliveryApplication.ADDRESS_LIST
+            val latLng = AllDeliveryApplication.LAT_LONG!!
             val add = Address( )
             var isUpdateAddress = false
 
-            if(AllDeliveryApplication.address != null) {
-                add.id = AllDeliveryApplication.address!!.id
+            if(AllDeliveryApplication.ADDRESS != null) {
+                add.id = AllDeliveryApplication.ADDRESS!!.id
             }
 
             add.address = address[0].thoroughfare
@@ -111,7 +111,7 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
                 if (addressList[i].id == add.id) {
 
                     val two = addressList[i].id
-                    add.id = AllDeliveryApplication.address!!.id
+                    add.id = AllDeliveryApplication.ADDRESS!!.id
                     isUpdateAddress = true
                 }
             }
@@ -133,7 +133,7 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
             mMap = googleMap
         }
         // Add a marker in Sydney and move the camera
-        var latLng = AllDeliveryApplication.latlong!!
+        var latLng = AllDeliveryApplication.LAT_LONG!!
         val position = LatLng(latLng!!.latitude, latLng!!.longitude)
         //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 18.0f))

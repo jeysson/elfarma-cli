@@ -17,49 +17,54 @@ import wiki.depasquale.mcache.Cache
 import java.util.*
 
 
-class AllDeliveryApplication: Application() {
+class AllDeliveryApplication : Application() {
 
     companion object {
-        var edit: Boolean = false
-        var latlong: LatLng? = null
-        var address : Address? = null
-        val addressList = mutableListOf<Address>()
-        lateinit var context: Context
-        var store: Store? = null
-        var product: Product? = null
+        var EDIT: Boolean = false
+        var LAT_LONG: LatLng? = null
+        var ADDRESS: Address? = null
+        val ADDRESS_LIST = mutableListOf<Address>()
+        lateinit var CONTEXT: Context
+        var STORE: Store? = null
+        var PRODUCT: Product? = null
 
         const val REFRESH_DELAY_TIMER: Long = 1500
-        const val DEFAULT_INDICE = 1
-        const val DEFAULT_TAMANHO = 10
         var SORT_FILTER = 0
 
+        //      RequestCode Control que solicita a exibição de novos itens, vindo da pagina filtros
         const val RESULTS = "RESULTS"
-
-//      RequestCode Control
         const val FILTER_REQUEST_CODE = 1
 
-//       =======
+        //        Para validação de paginas exibidas por InfinityScrow
+        var PAGE_OBSERVER = 1
 
-        fun getAddress(context: Context, lat: Double, long: Double): String{
+        //       =======
+
+        fun getAddress(context: Context, lat: Double, long: Double): String {
             var geoCoder = Geocoder(context, Locale.getDefault())
             var address = geoCoder.getFromLocation(lat, long, 1)
-            return  address[0].thoroughfare +" - "+ address[0].subLocality+", "+ address[0].subAdminArea+" - "+address[0].adminArea
+            return address[0].thoroughfare + " - " + address[0].subLocality + ", " + address[0].subAdminArea + " - " + address[0].adminArea
         }
 
-        fun getShortAddress(context: Context, lat: Double, long: Double, addressNumber: String?): String{
-            if(latlong != null){
+        fun getShortAddress(
+            context: Context,
+            lat: Double,
+            long: Double,
+            addressNumber: String?
+        ): String {
+            if (LAT_LONG != null) {
                 var geoCoder = Geocoder(context, Locale.getDefault())
                 var address = geoCoder.getFromLocation(lat, long, 1)
-                return  address[0].thoroughfare +", "+ addressNumber
-            }else
-                return  ""
+                return address[0].thoroughfare + ", " + addressNumber
+            } else
+                return ""
         }
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        AllDeliveryApplication.context = this
+        AllDeliveryApplication.CONTEXT = this
 
         startKoin(
             this, listOf(
@@ -73,7 +78,7 @@ class AllDeliveryApplication: Application() {
             //.withGlobalMode(CacheMode.FILE)
             .with(this)
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()

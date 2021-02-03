@@ -2,23 +2,17 @@ package hashtag.alldelivery.ui.address
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
-import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import androidx.lifecycle.Transformations.map
-import com.google.android.gms.location.LocationRequest
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import kotlinx.android.synthetic.main.address_map_toolbar.*
@@ -70,7 +64,7 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
         mMap.setOnCameraMoveStartedListener(this)
         mMap.setOnCameraIdleListener(this)
         // Add a marker in Sydney and move the camera
-        latLng = AllDeliveryApplication.latlong!!
+        latLng = AllDeliveryApplication.LAT_LONG!!
         val sydney = LatLng(latLng!!.latitude, latLng!!.longitude)
         //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f))
@@ -100,7 +94,7 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
         title_address.text =  address[0].thoroughfare + ", " + address[0].featureName
         subtitle_address.text = address[0].subLocality+", "+ address[0].subAdminArea+" - "+address[0].adminArea
 
-        AllDeliveryApplication.latlong = latlong
-        AllDeliveryApplication.edit = false
+        AllDeliveryApplication.LAT_LONG = latlong
+        AllDeliveryApplication.EDIT = false
     }
 }
