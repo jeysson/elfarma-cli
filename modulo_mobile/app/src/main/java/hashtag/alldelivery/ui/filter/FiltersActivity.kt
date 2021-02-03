@@ -62,6 +62,8 @@ class FiltersActivity : AppCompatActivity() {
             }
         }
 
+        setStrokeCardColor(SORT_FILTER)
+
 //        Seleciona qual tipo de ordem será aplicado no filtro
         orderAZCard.setOnClickListener {
             orderAZIsChecked()
@@ -81,6 +83,7 @@ class FiltersActivity : AppCompatActivity() {
         orderDeliveryFeeCard.setOnClickListener {
             orderDeliveryFeeIsChecked()
             clearButton.setTextColor(getColor(R.color.colorPrimary))
+
         }
 
         clearButton.setOnClickListener {
@@ -101,6 +104,22 @@ class FiltersActivity : AppCompatActivity() {
             setResult(RESULT_OK, returnIntent)
             finish()
 
+        }
+
+    }
+
+//    Deve mudar a cor da borda de cada card, de acordo com o valor
+    private fun setStrokeCardColor(filterNumber: Int){
+        orderAZCard.strokeColor = getColor(R.color.medium_gray)
+        orderLocationCard.strokeColor = getColor(R.color.medium_gray)
+        orderTimerCard.strokeColor = getColor(R.color.medium_gray)
+        orderDeliveryFeeCard.strokeColor = getColor(R.color.medium_gray)
+
+        when (filterNumber){
+            0 -> orderAZCard.strokeColor = getColor(R.color.colorPrimary)
+            1 -> orderLocationCard.strokeColor = getColor(R.color.colorPrimary)
+            2 -> orderTimerCard.strokeColor = getColor(R.color.colorPrimary)
+            3 -> orderDeliveryFeeCard.strokeColor = getColor(R.color.colorPrimary)
         }
 
     }
