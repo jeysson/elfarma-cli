@@ -51,7 +51,7 @@ class StoresListItemAdapter(
 
             val name = item.nomeFantasia
 
-            if(!item.ativo){
+            if(!item.disponivel){
                 holder.closedItemOverlay.visibility = VISIBLE
             }
 

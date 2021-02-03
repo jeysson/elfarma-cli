@@ -85,7 +85,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
-//        setScrollView()
+        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -170,7 +170,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
                     val lastVisible = target.findLastVisibleItemPosition()
 
-                    val lastItem = lastVisible + 5 >= totalItemCount
+                    val lastItem = lastVisible + 1 >= totalItemCount
 
                     if (totalItemCount > 0 && lastItem) {
                         viewModel.getNextPage(
