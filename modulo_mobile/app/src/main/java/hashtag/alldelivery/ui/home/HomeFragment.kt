@@ -80,11 +80,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         loading.visibility = View.VISIBLE
 
         setupObservers()
-        getActiveStores()
+        getActiveStores(true)
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
-//        setScrollView()
+        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -94,7 +94,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         swipeRefresh.setOnRefreshListener {
 //        Timer para atrazar o inicio do swipeRefresh -> UX
             Handler(Looper.getMainLooper()).postDelayed({
-                getActiveStores()
+                getActiveStores(true)
             }, REFRESH_DELAY_TIMER)
 
         }
@@ -105,7 +105,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         if (!isConnected)
             toast("O dispositivo não está conectado")
         else
-            getActiveStores()
+            getActiveStores(true)
     }
 
     private fun setupObservers() {
@@ -120,32 +120,43 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
-    fun showResults(list: ArrayList<Store>) {
-        _storeList.clear()
-        _storeList.addAll(list)
+    fun showResults(list: ArrayList<Store>, isNewSearch: Boolean?) {
+        if (isNewSearch == true) {
+            _storeList.clear()
+            _storeList.addAll(list)
+        } else {
+            val lastList = _storeList
+            _storeList.clear()
+            _storeList.addAll(lastList)
+            _storeList.addAll(list)
+        }
+
         adapter.notifyDataSetChanged()
+
+
     }
 
-    fun getActiveStores() {
-
+    fun getActiveStores(isNewSearch: Boolean?) {
         viewModel.getActiveStores(
-            null,
-            null,
+            LAT_LONG?.latitude,
+            LAT_LONG?.longitude,
             SORT_FILTER
         ).observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
                 var x = arrayListOf<Store>(Store())
                 x.addAll(it)
 
-                showResults(x)
+                showResults(x, isNewSearch)
 
-                loading.visibility = View.GONE
+
             }
         })
-
-//        Timer para atrazar o encerramento do swipeRefresh -> UX
+        
+        //        Timer para atrazar o encerramento do loading -> UX
         Handler(Looper.getMainLooper()).postDelayed({
             swipeRefresh.isRefreshing = false
+            home_cards.visibility = VISIBLE
+            loading.visibility = GONE
         }, REFRESH_DELAY_TIMER)
 
     }
@@ -176,7 +187,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                         it?.let {
                             var x = arrayListOf<Store>(Store())
                             x.addAll(it)
-                            showResults(x)
+                            showResults(x, false)
                         }
                     })
                 }
@@ -230,15 +241,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             if (resultCode == Activity.RESULT_OK) {
 //              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
 //              Timer para atrazar o encerramento do swipeRefresh -> UX
-
-
                 loading.visibility = VISIBLE
                 home_cards.visibility = GONE
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    home_cards.visibility = VISIBLE
-                    getActiveStores()
-                }, REFRESH_DELAY_TIMER)
+                getActiveStores(true)
 
             }
         }
