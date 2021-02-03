@@ -9,6 +9,8 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -128,28 +130,27 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     fun carregarLojas() {
-//        Executa apenas se a pagina observada for igual a 1
-        if (PAGE_OBSERVER == 1) {
-            viewModel.getActiveStores(
-                LAT_LONG?.latitude,
-                LAT_LONG?.longitude,
-                SORT_FILTER
-            ).observe(viewLifecycleOwner, Observer<List<Store>> {
-                it?.let {
-                    var x = arrayListOf<Store>(Store())
-                    x.addAll(it)
 
-                    showResults(x)
+        viewModel.getActiveStores(
+            LAT_LONG?.latitude,
+            LAT_LONG?.longitude,
+            SORT_FILTER
+        ).observe(viewLifecycleOwner, Observer<List<Store>> {
+            it?.let {
+                var x = arrayListOf<Store>(Store())
+                x.addAll(it)
 
-                    loading.visibility = View.GONE
-                }
-            })
+                showResults(x)
+
+                loading.visibility = View.GONE
+            }
+        })
 
 //        Timer para atrazar o encerramento do swipeRefresh -> UX
-            Handler(Looper.getMainLooper()).postDelayed({
-                swipeRefresh.isRefreshing = false
-            }, REFRESH_DELAY_TIMER)
-        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            swipeRefresh.isRefreshing = false
+        }, REFRESH_DELAY_TIMER)
+
     }
 
     private fun setScrollView() {
@@ -231,9 +232,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 //              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
 //              Timer para atrazar o encerramento do swipeRefresh -> UX
 
-                swipeRefresh.isRefreshing = true
+                loading.visibility = VISIBLE
+                home_cards.visibility = GONE
 
                 Handler(Looper.getMainLooper()).postDelayed({
+                    home_cards.visibility = VISIBLE
                     carregarLojas()
                 }, REFRESH_DELAY_TIMER)
 
@@ -253,7 +256,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             )
         }
     }
-
 
 
 }
