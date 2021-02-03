@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.filter.FiltersActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -21,26 +21,27 @@
 
             <ImageView
                 android:id="@+id/btn_back_filters"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/content_description_back"
-                app:srcCompat="@drawable/ic_arrow_back"
-                app:tint="@color/colorPrimary"
+                android:padding="8dp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_back"
+                app:tint="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/txt_filtros_filters"
-                style="@style/Text"
+                style="@style/Text.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/filtros"
                 android:textAllCaps="true"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +63,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
