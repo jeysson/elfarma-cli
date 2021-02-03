@@ -20,6 +20,9 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
     private var _storesNewSearch: MutableLiveData<List<Store>> = MutableLiveData()
     private var _page = 1
     private var _controlIndice = 10
+    private var _lat: Double? = 0.0
+    private var _lon: Double? = 0.0
+    private var _tipoOrdenacao = 0
 
     @SuppressLint("CheckResult")
     fun getActiveStores(
@@ -28,6 +31,10 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
 
 //        Quando for uma nova busca, a busca se inicia a partir da pagina 1
         _page = 1
+        _lat = lat
+        _lon = lon
+        _tipoOrdenacao = tipoOrdenacao
+
 
         _storeRep.getActiveStores(_page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
             if (it != null && it.isNotEmpty()) {
@@ -43,19 +50,15 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getNextPage(
-        lat: Double?, lon: Double?, tipoOrdenacao: Int
-    ): MutableLiveData<List<Store>> {
+    fun getNextPage(latitude: Double?, longitude: Double?, tipoOrdenacao: Int): MutableLiveData<List<Store>> {
         //        Quanto for continuar exibindo os dados, ele pega a proxima pagina
         _page += 1
         PAGE_OBSERVER = _page
         Log.d("PAGE_GET_NEXT", "$_page")
 
-        _storeRep.getActiveStores(_page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
+        _storeRep.getActiveStores(_page, _controlIndice, latitude, longitude, tipoOrdenacao).subscribe({
             if (it != null && it.isNotEmpty()) {
                 _stores.postValue(it)
-            } else {
-                eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
             }
         }, {
             eventErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))

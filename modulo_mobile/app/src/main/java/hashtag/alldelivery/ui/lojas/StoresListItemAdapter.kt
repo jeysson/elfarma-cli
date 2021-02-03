@@ -3,6 +3,7 @@ package hashtag.alldelivery.ui.lojas
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +15,15 @@ import com.squareup.picasso.Picasso
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
+import hashtag.alldelivery.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
 
-class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+class StoresListItemAdapter(
+    val act: AppCompatActivity,
+    val itens: List<Store>
+) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private val TYPE_HEADER = 1
     private val TYPE_BODY = 2
@@ -27,11 +33,11 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
     var activity = act
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
-        if(viewType == TYPE_HEADER){
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.store_list_header, parent, false)
-        return StoreItemViewHolder(view)
-        }else{
+        if (viewType == TYPE_HEADER) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.store_list_header, parent, false)
+            return StoreItemViewHolder(view)
+        } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.store_item_adapter, parent, false)
             return StoreItemViewHolder(view)
@@ -39,11 +45,15 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position > 0){
+        if (position > 0) {
             holder as StoreItemViewHolder
             val item = itens[position]
 
             val name = item.nomeFantasia
+
+            if(!item.ativo){
+                holder.closedItemOverlay.visibility = VISIBLE
+            }
 
 //            Mudando a visibilidade dos itens
             holder.rating.visibility = GONE
@@ -53,6 +63,7 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
             holder.dividerRatingCategory.visibility = GONE
 
 
+//           Inserindo imagem
             if (item.imgBanner != null) {
                 Picasso.get().load(item.imgBanner).into(holder.logo)
             }
@@ -80,11 +91,11 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
         }
     }
 
-    class StoreHeaderViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class StoreHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name = view.store_title
     }
 
-    class StoreItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class StoreItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val card = view.card
         val name = view.name
         val rating = view.rating_store_item
@@ -92,22 +103,27 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
         val deliveryTime = view.delivery_time
         val deliveryFree = view.delivery_free
         val categoryType = view.category_store_item
-
         val starIcon = view.star_icon
         val dividerRatingCategory = view.divider_rating_category
         val dividerCategoryDistance = view.divider_category_distance
         val logo = view.logo
+        val closedItemOverlay = view.image_view_store_closed_overlay
     }
 
     override fun onClick(view: View?) {
-        if(view is CardView){
+        if (view is CardView) {
             var position = view!!.tag as Int
             AllDeliveryApplication.STORE = itens[position]
             val manager: FragmentManager = activity.supportFragmentManager
             manager.beginTransaction()
             manager.commit {
-                setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                replace(R.id.nav_host_fragment, StoreFragment::class.java, null )
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+                replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
                 addToBackStack(null)
             }
         }

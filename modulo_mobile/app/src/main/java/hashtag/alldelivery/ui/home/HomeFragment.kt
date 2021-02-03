@@ -42,6 +42,7 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.home_cards
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -84,7 +85,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
-        setScrollView()
+//        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -120,14 +121,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
-    fun showResults(list: ArrayList<Store>, isNewSearch: Boolean?) {
+    fun showResults(list: List<Store>, isNewSearch: Boolean?) {
         if (isNewSearch == true) {
             _storeList.clear()
             _storeList.addAll(list)
         } else {
-            val lastList = _storeList
-            _storeList.clear()
-            _storeList.addAll(lastList)
             _storeList.addAll(list)
         }
 
@@ -142,16 +140,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             LAT_LONG?.longitude,
             SORT_FILTER
         ).observe(viewLifecycleOwner, Observer<List<Store>> {
-            it?.let {
-                var x = arrayListOf<Store>(Store())
-                x.addAll(it)
-
-                showResults(x, isNewSearch)
-
-
-            }
+            var x = arrayListOf<Store>(Store())
+            x.addAll(it)
+            showResults(x, isNewSearch)
         })
-        
+
         //        Timer para atrazar o encerramento do loading -> UX
         Handler(Looper.getMainLooper()).postDelayed({
             swipeRefresh.isRefreshing = false
@@ -161,7 +154,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     }
 
-    private fun setScrollView() {
+    fun setScrollView() {
 //        Deve mostrar novas lojas
 
         home_cards.addOnScrollListener(object :
@@ -170,27 +163,26 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val target = recyclerView.layoutManager as LinearLayoutManager?
+                if (dy > 0){ //checa se esta indo para baixo
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
 
-                val totalItemCount = target!!.itemCount
+                    val totalItemCount = target!!.itemCount
 
-                val lastVisible = target.findLastVisibleItemPosition()
+                    val lastVisible = target.findLastVisibleItemPosition()
 
-                val lastItem = lastVisible + 5 >= totalItemCount
+                    val lastItem = lastVisible + 5 >= totalItemCount
 
-                if (totalItemCount > 0 && lastItem) {
-                    viewModel.getNextPage(
-                        LAT_LONG?.latitude,
-                        LAT_LONG?.longitude,
-                        SORT_FILTER
-                    ).observe(viewLifecycleOwner, Observer<List<Store>> {
-                        it?.let {
-                            var x = arrayListOf<Store>(Store())
-                            x.addAll(it)
-                            showResults(x, false)
-                        }
-                    })
+                    if (totalItemCount > 0 && lastItem) {
+                        viewModel.getNextPage(
+                            LAT_LONG?.latitude,
+                            LAT_LONG?.longitude,
+                            SORT_FILTER
+                        ).observe(viewLifecycleOwner, Observer<List<Store>> {
+                            showResults(it, false)
+                        })
+                    }
                 }
+
             }
         })
     }
@@ -261,6 +253,5 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             )
         }
     }
-
 
 }

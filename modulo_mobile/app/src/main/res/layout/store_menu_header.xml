@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <View android:id="@+id/overlay"
+    <View android:id="@+id/image_view_store_closed_overlay"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
