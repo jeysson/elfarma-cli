@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
@@ -52,8 +53,9 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
             holder.dividerRatingCategory.visibility = GONE
 
 
-
-
+            if (item.imgBanner != null) {
+                Picasso.get().load(item.imgBanner).into(holder.logo)
+            }
 
             holder.name.text = name
             holder.rating.text = "4,5"
@@ -94,6 +96,7 @@ class StoresListItemAdapter(val act: AppCompatActivity, val itens: List<Store>):
         val starIcon = view.star_icon
         val dividerRatingCategory = view.divider_rating_category
         val dividerCategoryDistance = view.divider_category_distance
+        val logo = view.logo
     }
 
     override fun onClick(view: View?) {

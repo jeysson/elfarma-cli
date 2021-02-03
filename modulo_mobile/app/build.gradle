@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])

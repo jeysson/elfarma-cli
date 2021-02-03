@@ -235,6 +235,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 //              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
 //              Timer para atrazar o encerramento do swipeRefresh -> UX
 
+                _storeList.clear()
                 loading.visibility = VISIBLE
                 home_cards.visibility = GONE
 

@@ -54,6 +54,7 @@
             app:layout_constraintLeft_toLeftOf="@id/header_image"
             app:layout_constraintTop_toTopOf="@id/header_image" />
 
+<!--        Fechado     -->
         <View
             android:id="@+id/overlay"
             android:layout_width="0dp"
