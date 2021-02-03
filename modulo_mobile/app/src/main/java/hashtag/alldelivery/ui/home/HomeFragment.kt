@@ -3,11 +3,9 @@ package hashtag.alldelivery.ui.home
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -26,7 +24,6 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.FILTER_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
-import hashtag.alldelivery.AllDeliveryApplication.Companion.PAGE_OBSERVER
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import hashtag.alldelivery.core.models.BusinessEvent
@@ -83,7 +80,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         loading.visibility = View.VISIBLE
 
         setupObservers()
-        carregarLojas()
+        getActiveStores()
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
@@ -97,7 +94,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         swipeRefresh.setOnRefreshListener {
 //        Timer para atrazar o inicio do swipeRefresh -> UX
             Handler(Looper.getMainLooper()).postDelayed({
-                carregarLojas()
+                getActiveStores()
             }, REFRESH_DELAY_TIMER)
 
         }
@@ -108,7 +105,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         if (!isConnected)
             toast("O dispositivo não está conectado")
         else
-            carregarLojas()
+            getActiveStores()
     }
 
     private fun setupObservers() {
@@ -129,7 +126,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         adapter.notifyDataSetChanged()
     }
 
-    fun carregarLojas() {
+    fun getActiveStores() {
 
         viewModel.getActiveStores(
             null,
@@ -154,6 +151,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun setScrollView() {
+//        Deve mostrar novas lojas
+
         home_cards.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
 
@@ -238,7 +237,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     home_cards.visibility = VISIBLE
-                    carregarLojas()
+                    getActiveStores()
                 }, REFRESH_DELAY_TIMER)
 
             }

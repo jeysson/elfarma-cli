@@ -1,5 +1,6 @@
 package hashtag.alldelivery.ui.address
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.view.*
@@ -31,7 +33,12 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
 
     override fun onBindViewHolder(holder: AddressItemViewHolder, position: Int) {
 
+
         val item = address?.get(position)
+
+        if (item.id == ADDRESS?.id) {
+            holder.cardView.strokeColor = Color.BLUE
+        }
 
         holder.title.text = item!!.address+", "+item.number
         holder.description.text = item.neighborhood+", "+item.city+" - "+item.state
@@ -71,8 +78,8 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
         val title = view.title_address
         val description = view.description_address
         val description2 = view.second_description
-
         var btSelected = view.kebab
+        val cardView = view.card_view_addess_item
     }
 
 }
