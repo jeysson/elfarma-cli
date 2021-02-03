@@ -5,7 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.DimenRes
+import androidx.annotation.Dimension
+import androidx.annotation.Dimension.DP
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
@@ -22,11 +27,13 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
     private val inflater: LayoutInflater = LayoutInflater.from(activity.baseContext)
     private var address = emptyList<Address>() // Cached copy of words
     private var activity = activity
+    private lateinit var _view: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddressItemViewHolder {
 
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.address_list_item, parent, false)
+        _view = view
         return AddressItemViewHolder(view)
 
     }
@@ -36,8 +43,13 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
 
         val item = address?.get(position)
 
+//        Muda a cor do cardView se for o endereço padrão
         if (item.id == ADDRESS?.id) {
-            holder.cardView.strokeColor = Color.BLUE
+            holder.cardView.strokeColor = Color.parseColor("#057DCD")
+            holder.cardView.strokeWidth = holder.itemView.resources.getDimension(R.dimen.address_card_selected_bord_width).toInt()
+        } else {
+            holder.cardView.strokeColor = Color.parseColor("#A6A6A6")
+            holder.cardView.strokeWidth = holder.itemView.resources.getDimension(R.dimen.address_card_default).toInt()
         }
 
         holder.title.text = item!!.address+", "+item.number

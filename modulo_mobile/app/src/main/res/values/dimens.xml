@@ -43,4 +43,7 @@
     <dimen name="space_size_8dp">8dp</dimen>
     <dimen name="text_size_s1">10sp</dimen>
     <dimen name="checkout_toolbar_height">56dp</dimen>
+
+    <dimen name="address_card_selected_bord_width">2dp</dimen>
+    <dimen name="address_card_default">1dp</dimen>
 </resources>

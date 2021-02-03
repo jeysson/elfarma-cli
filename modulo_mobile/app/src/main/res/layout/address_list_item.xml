@@ -15,7 +15,7 @@
         app:cardCornerRadius="12dp"
         android:elevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/medium_gray"
+        app:strokeColor="@color/deprecated_white_transparent"
         android:layout_height="match_parent">
 
 
