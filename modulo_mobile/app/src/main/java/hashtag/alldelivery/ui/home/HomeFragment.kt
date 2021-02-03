@@ -87,7 +87,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
-        setScrollView()
+//        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -124,19 +124,16 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     fun showResults(list: ArrayList<Store>) {
+        _storeList.clear()
         _storeList.addAll(list)
-        _storeList.forEach {
-            Log.d("STORE_ITENS:", "${it.nomeFantasia}")
-        }
-        Log.d("STORE_ITENS:", "Pagina : $PAGE_OBSERVER")
         adapter.notifyDataSetChanged()
     }
 
     fun carregarLojas() {
 
         viewModel.getActiveStores(
-            LAT_LONG?.latitude,
-            LAT_LONG?.longitude,
+            null,
+            null,
             SORT_FILTER
         ).observe(viewLifecycleOwner, Observer<List<Store>> {
             it?.let {
@@ -235,7 +232,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 //              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
 //              Timer para atrazar o encerramento do swipeRefresh -> UX
 
-                _storeList.clear()
+
                 loading.visibility = VISIBLE
                 home_cards.visibility = GONE
 
