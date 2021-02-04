@@ -1,242 +1,266 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
-    android:tag="layout/address_detail_fragment_0"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:tag="layout/address_detail_fragment_0">
 
-        <RelativeLayout android:id="@+id/search_map_container"
+    <RelativeLayout
+        android:id="@+id/search_map_container"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <fragment
+            android:id="@+id/search_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="140dp">
+            android:layout_height="match_parent"
+            app:uiRotateGestures="false"
+            app:uiScrollGestures="false"
+            app:uiZoomGestures="false" />
 
-            <fragment android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:id="@+id/search_map"
+        <View
+            android:id="@+id/map_pin_guideline"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true" />
+
+        <ImageView
+            android:id="@+id/map_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/map_pin_guideline"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@null"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_map_pin" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@drawable/address_map_toolbar_background" />
+
+        <View
+            android:id="@+id/google_logo_placeholder"
+            android:layout_width="45dp"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom|right|center_vertical|center_horizontal|center|end"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="26dp" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="124dp">
+
+        <FrameLayout
+            android:id="@+id/rounded_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_top">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:uiRotateGestures="false"
-                app:uiScrollGestures="false"
-                app:uiZoomGestures="false"/>
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <View android:id="@+id/map_pin_guideline"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_centerVertical="true"/>
-
-            <ImageView android:id="@+id/map_pin"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/map_pin_guideline"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_map_pin"/>
-
-            <View android:background="@drawable/address_map_toolbar_background"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"/>
-
-            <View android:layout_gravity="bottom|right|center_vertical|center_horizontal|center|end"
-                android:id="@+id/google_logo_placeholder"
-                android:layout_width="45dp"
-                android:layout_height="15dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="26dp"
-                android:layout_marginEnd="25dp"/>
-
-        </RelativeLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
-            android:paddingTop="124dp"
-            android:clipToPadding="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <FrameLayout android:id="@+id/rounded_frame_layout"
-                android:background="@drawable/bg_rounded_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout android:orientation="vertical"
-                    android:padding="20dp"
+                <LinearLayout
+                    android:id="@+id/header_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout android:orientation="vertical"
-                        android:id="@+id/header_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="30dp">
-
-                        <TextView android:textColor="@color/deprecated_dark_grey"
-                            android:gravity="left"
-                            android:id="@+id/header_title_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            style="@style/Text.Subtitle"/>
-
-                        <TextView android:textColor="@color/deprecated_medium_grey"
-                            android:gravity="left"
-                            android:id="@+id/header_subtitle_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/sul_sans_medium"
-                            style="@style/Text"/>
-
-                        <TextView android:textColor="@color/deprecated_medium_grey"
-                            android:gravity="left"
-                            android:id="@+id/header_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Text"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout android:orientation="horizontal"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/header_title_address"
+                        style="@style/Text.Subtitle"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp">
+                        android:layout_marginBottom="4dp"
+                        android:gravity="left"
+                        android:textColor="@color/deprecated_dark_grey" />
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/number_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:hint="@string/number_hint"
-                            android:layout_marginEnd="20dp"
-                            style="@style/TextInputLayoutLight">
+                    <TextView
+                        android:id="@+id/header_subtitle_address"
+                        style="@style/Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sul_sans_medium"
+                        android:gravity="left"
+                        android:textColor="@color/deprecated_medium_grey" />
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:textSize="16sp"
-                                android:layout_gravity="center_horizontal"
-                                android:id="@+id/number_input"
-                                android:layout_width="96dp"
-                                android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:maxLength="6"
-                                android:inputType="textVisiblePassword"
-                                android:imeOptions="actionNext"
-                                style="@style/TextInputEditText.Light"/>
+                    <TextView
+                        android:id="@+id/header_text"
+                        style="@style/Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textColor="@color/deprecated_medium_grey" />
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
 
-                        <LinearLayout android:orientation="vertical"
-                            android:id="@+id/complement_layout_container"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/complement_layout"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/new_address_complement_hint"
-                                style="@style/TextInputLayoutLight">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:textSize="16sp"
-                                    android:layout_gravity="center_horizontal"
-                                    android:id="@+id/complement_input"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:maxLines="1"
-                                    android:maxLength="150"
-                                    android:inputType="textCapWords"
-                                    android:imeOptions="actionNext"
-                                    style="@style/TextInputEditText.Light"/>
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                            <TextView android:textColor="@color/deprecated_medium_grey"
-                                android:gravity="left"
-                                android:id="@+id/complement_hint"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/new_address_complement_description"
-                                style="@style/Text.MoneySaved"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/reference_layout"
-                        android:layout_width="match_parent"
+                        android:id="@+id/number_layout"
+                        style="@style/TextInputLayoutLight"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:hint="@string/new_address_reference_hint"
-                        style="@style/TextInputLayoutLight">
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:hint="@string/number_hint">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:textSize="16sp"
-                            android:layout_gravity="center_horizontal"
-                            android:id="@+id/reference_input"
-                            android:layout_width="match_parent"
+                            android:id="@+id/number_input"
+                            style="@style/HintTextAppearance"
+                            android:layout_width="96dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/deprecated_white_transparent"
+                            android:imeOptions="actionNext"
+                            android:inputType="textVisiblePassword"
+                            android:maxLength="6"
                             android:maxLines="1"
-                            android:maxLength="150"
-                            android:inputType="textCapWords"
-                            android:imeOptions="actionDone"
-                            style="@style/TextInputEditText.Light"/>
+                            android:textSize="16sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout android:orientation="horizontal"
+                    <LinearLayout
+                        android:id="@+id/complement_layout_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:weightSum="1">
-                       <!--
-                        <p102br.com.ifood.core.toolkit.view.ToggleButton
-                            android:id="@+id/favorite_home_button"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_weight="0.5"
-                            app:tb_iconDrawable="@drawable/ic_home"
-                            app:tb_text="Casa"/>
+                        android:orientation="vertical">
 
-                        <p102br.com.ifood.core.toolkit.view.ToggleButton
-                            android:id="@+id/favorite_work_button"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="0.5"
-                            app:tb_iconDrawable="@drawable/ic_work"
-                            app:tb_text="Trabalho"/> -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/complement_layout"
+                            style="@style/TextInputLayoutLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/new_address_complement_hint">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/complement_input"
+                                style="@style/HintTextAppearance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@color/deprecated_white_transparent"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapWords"
+                                android:maxLength="150"
+                                android:maxLines="1"
+                                android:textSize="16sp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/complement_hint"
+                            style="@style/Text.MoneySaved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="left"
+                            android:text="@string/new_address_complement_description"
+                            android:textColor="@color/deprecated_medium_grey" />
+
                     </LinearLayout>
-                    <Button
-                        android:enabled="true"
-                        android:gravity="center"
-                        android:id="@+id/save_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:minHeight="50dp"
-                        android:text="@string/new_address_save_address_button_description"
-                        style="@style/Button.AddressMapContinue"/>
+
                 </LinearLayout>
 
-            </FrameLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/reference_layout"
+                    style="@style/TextInputLayoutLight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="@string/new_address_reference_hint">
 
-        </androidx.core.widget.NestedScrollView>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/reference_input"
+                        style="@style/HintTextAppearance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/deprecated_white_transparent"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:maxLength="150"
+                        android:maxLines="1"
+                        android:textSize="16sp" />
 
-        <LinearLayout android:orientation="vertical"
-            android:tag="binding_1"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+                    <!--
+                     <p102br.com.ifood.core.toolkit.view.ToggleButton
+                         android:id="@+id/favorite_home_button"
+                         android:layout_width="0dp"
+                         android:layout_height="50dp"
+                         android:layout_marginRight="12dp"
+                         android:layout_weight="0.5"
+                         app:tb_iconDrawable="@drawable/ic_home"
+                         app:tb_text="Casa"/>
+
+                     <p102br.com.ifood.core.toolkit.view.ToggleButton
+                         android:id="@+id/favorite_work_button"
+                         android:layout_width="0dp"
+                         android:layout_height="50dp"
+                         android:layout_weight="0.5"
+                         app:tb_iconDrawable="@drawable/ic_work"
+                         app:tb_text="Trabalho"/> -->
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/save_button"
+                    style="@style/Button.AddressMapContinue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:enabled="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="center"
+                    android:minHeight="50dp"
+                    android:text="@string/new_address_save_address_button_description" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:tag="binding_1">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/common_toolbar" />
+
+        <View
+            android:id="@+id/toolbar_shadow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="4dp"
+            android:background="@drawable/shadow_up_black" />
 
-            <include android:id="@+id/toolbar" layout="@layout/common_toolbar"/>
-
-            <View android:id="@+id/toolbar_shadow"
-                android:background="@drawable/shadow_up_black"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"/>
-
-        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

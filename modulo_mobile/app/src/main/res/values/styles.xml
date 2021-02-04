@@ -8,8 +8,7 @@
     </style>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/deprecated_white_transparent</item>
+
     </style>
 
     <style name="AppTheme.Transparent2" parent="AppTheme">
@@ -257,10 +256,6 @@
     </style>
 
     <style name="TextInputEditText">
-        <item name="android:textSize">22sp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">24dp</item>
-        <item name="android:textCursorDrawable">@null</item>
         <item name="android:fontFamily">@font/sul_sans_medium</item>
     </style>
 
