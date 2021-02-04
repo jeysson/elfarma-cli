@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.*
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.address_delivery_activity.*
@@ -56,6 +58,7 @@ class DeliveryAddress : AppCompatActivity() {
         }
 
         search_box.setOnClickListener {
+            ADDRESS = Address()
             val intent = Intent(this, AddressSet::class.java)
             // start your next activity
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())

@@ -85,7 +85,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
-        setScrollView()
+//        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
