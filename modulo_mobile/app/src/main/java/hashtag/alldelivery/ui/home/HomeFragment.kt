@@ -23,9 +23,9 @@ import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.FILTER_REQUEST_CODE
+import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
-import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import hashtag.alldelivery.core.models.BusinessEvent
@@ -44,10 +44,8 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.home_cards
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
-import java.lang.Exception
 
 
 class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
@@ -72,6 +70,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         myView = view
         home_cards.layoutManager = LinearLayoutManager(context)
         adapter = StoresListItemAdapter(activity as AppCompatActivity, _storeList)
@@ -103,6 +102,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         }
     }
+
+
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         this.isConnected = isConnected
@@ -166,7 +167,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                if (dy > 0){ //checa se esta indo para baixo
+                if (dy > 0) { //checa se esta indo para baixo
                     val target = recyclerView.layoutManager as LinearLayoutManager?
 
                     val totalItemCount = target!!.itemCount

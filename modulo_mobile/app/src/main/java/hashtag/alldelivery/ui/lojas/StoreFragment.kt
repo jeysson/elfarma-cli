@@ -1,11 +1,14 @@
 package hashtag.alldelivery.ui.lojas
 
+import android.R.attr.fragment
 import android.app.ActivityOptions
+import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
+import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
@@ -27,7 +31,7 @@ import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class StoreFragment : Fragment() {
+class StoreFragment : Fragment(){
 
     private var isUserScrolling: Boolean = false
     val viewModelProduct: ProductViewModel by sharedViewModel()
@@ -41,6 +45,7 @@ class StoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        StatusBarUtil.setDarkMode(activity)
 
         store_name.text = AllDeliveryApplication.STORE?.nomeFantasia
         store_info.text = "08:00 - 22:00 "+ getString(R.string.dot) + " ver mais"
@@ -49,8 +54,19 @@ class StoreFragment : Fragment() {
             val manager: FragmentManager = activity!!.supportFragmentManager
             manager.beginTransaction()
             manager.commit {
-                setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                replace(R.id.nav_host_fragment, StoreInfoFragment::class.java, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle() )
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+                replace(
+                    R.id.nav_host_fragment,
+                    StoreInfoFragment::class.java,
+                    ActivityOptions.makeSceneTransitionAnimation(
+                        activity
+                    ).toBundle()
+                )
                 addToBackStack(null)
             }
         }
@@ -59,7 +75,7 @@ class StoreFragment : Fragment() {
             activity?.onBackPressed()
         }
 
-        page_header.addOnOffsetChangedListener(object: AppBarLayout.OnOffsetChangedListener{
+        page_header.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
 
             var isShow = false;
             var scrollRange = -1;
@@ -71,7 +87,8 @@ class StoreFragment : Fragment() {
                 if (scrollRange + verticalOffset == 0) {
                     isShow = true;
                     store_title.text = AllDeliveryApplication.STORE?.nomeFantasia
-                    store_description.text = "08:00 - 22:00 "+ getString(R.string.dot) + " ver mais"
+                    store_description.text =
+                        "08:00 - 22:00 " + getString(R.string.dot) + " ver mais"
                     tabs.visibility = View.VISIBLE
                 } else if (isShow) {
                     isShow = false;
@@ -80,7 +97,8 @@ class StoreFragment : Fragment() {
                     tabs.visibility = View.GONE
                 }
 
-                store_title.alpha = (scrollRange + (verticalOffset * -1)) / scrollRange.toFloat() - 1
+                store_title.alpha =
+                    (scrollRange + (verticalOffset * -1)) / scrollRange.toFloat() - 1
                 store_description.alpha = store_title.alpha
             }
 
@@ -90,8 +108,19 @@ class StoreFragment : Fragment() {
             val manager: FragmentManager = activity!!.supportFragmentManager
             manager.beginTransaction()
             manager.commit {
-                setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                replace(R.id.nav_host_fragment, ProductSearch::class.java, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle() )
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+                replace(
+                    R.id.nav_host_fragment,
+                    ProductSearch::class.java,
+                    ActivityOptions.makeSceneTransitionAnimation(
+                        activity
+                    ).toBundle()
+                )
                 addToBackStack(null)
             }
         }
@@ -102,11 +131,13 @@ class StoreFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModelProduct.eventoErro.observe(viewLifecycleOwner, androidx.lifecycle.Observer<BusinessEvent> {
-            it?.let {
-                toast(it.message.toString())
-            }
-        })
+        viewModelProduct.eventoErro.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer<BusinessEvent> {
+                it?.let {
+                    toast(it.message.toString())
+                }
+            })
     }
 
     private fun carregarProdutos()
@@ -142,13 +173,16 @@ class StoreFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (!isUserScrolling) {
                     val position = tab.position
-                    (list.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
+                    (list.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                        position,
+                        0
+                    )
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {  }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-            override fun onTabReselected(tab: TabLayout.Tab) {  }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
         // Detect recyclerview position and select tab respectively.

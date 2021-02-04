@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jaeger.library.StatusBarUtil
+import org.jetbrains.anko.toast
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
+        StatusBarUtil.setLightMode(this)
         StatusBarUtil.setTransparent(this)
 
         setContentView(R.layout.activity_main)
@@ -61,5 +63,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        StatusBarUtil.setLightMode(this)
     }
 }
