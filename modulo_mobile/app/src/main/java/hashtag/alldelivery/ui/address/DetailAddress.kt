@@ -30,7 +30,7 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.address_detail_activity)
 
-        supportActionBar?.hide()
+//        supportActionBar?.hide()
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.search_map) as SupportMapFragment

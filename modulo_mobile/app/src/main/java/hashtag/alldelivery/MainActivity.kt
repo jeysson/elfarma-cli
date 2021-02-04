@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         StatusBarUtil.setTransparent(this)
 
         setContentView(R.layout.activity_main)
-        supportActionBar?.hide()
+//        supportActionBar?.hide()
 /*
         more_icon.setImageResource(R.drawable.ic_medicine)
         quantity.setText("1x")
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_perfil
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
 

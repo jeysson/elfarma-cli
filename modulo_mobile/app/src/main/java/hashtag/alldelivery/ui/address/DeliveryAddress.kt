@@ -40,7 +40,7 @@ class DeliveryAddress : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.address_delivery_activity)
-        supportActionBar?.hide()
+//        supportActionBar?.hide()
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 

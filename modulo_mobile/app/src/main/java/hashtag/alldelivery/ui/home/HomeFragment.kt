@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.FILTER_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
@@ -45,6 +47,7 @@ import kotlinx.coroutines.async
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import java.lang.Exception
 
 
 class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
@@ -245,13 +248,16 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         super.onResume()
 
-        AllDeliveryApplication.LAT_LONG?.let {
-            address.text = AllDeliveryApplication.getShortAddress(
-                myView.context, AllDeliveryApplication.ADDRESS!!.lat!!,
-                AllDeliveryApplication.ADDRESS!!.longi!!,
-                AllDeliveryApplication.ADDRESS!!.number!!
-            )
+        if (ADDRESS != null){
+            LAT_LONG?.let {
+                address.text = AllDeliveryApplication.getShortAddress(
+                    myView.context, ADDRESS!!.lat!!,
+                    ADDRESS!!.longi!!,
+                    ADDRESS!!.number!!
+                )
+            }
         }
+
     }
 
 }

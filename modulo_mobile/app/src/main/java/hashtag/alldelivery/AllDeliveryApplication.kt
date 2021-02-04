@@ -55,9 +55,14 @@ class AllDeliveryApplication : Application() {
             if (LAT_LONG != null) {
                 var geoCoder = Geocoder(context, Locale.getDefault())
                 var address = geoCoder.getFromLocation(lat, long, 1)
-                return address[0].thoroughfare + ", " + addressNumber
+                if (addressNumber == null){
+                    return address[0].thoroughfare + ", próximo há " + address[0].subLocality
+                } else {
+                    return address[0].thoroughfare + ", " + addressNumber
+                }
+
             } else
-                return ""
+                return "Ativar localização"
         }
     }
 
