@@ -46,50 +46,64 @@ class FiltersActivity : AppCompatActivity() {
         when (SORT_FILTER) {
             EnumSortBy.SORT_BY_A_Z.ordinal -> {
                 orderAZIsChecked()
-
+                setStrokeCardColor(SORT_FILTER)
+                setIconColor(SORT_FILTER)
             }
             EnumSortBy.SORT_BY_LOCALIZATION.ordinal -> {
                 orderLocationIsChecked()
                 clearButton.setTextColor(getColor(R.color.colorPrimary))
+                setStrokeCardColor(SORT_FILTER)
+                setIconColor(SORT_FILTER)
             }
             EnumSortBy.SORT_BY_TIMER.ordinal -> {
                 orderTimerIsChecked()
                 clearButton.setTextColor(getColor(R.color.colorPrimary))
+                setStrokeCardColor(SORT_FILTER)
+                setIconColor(SORT_FILTER)
             }
             EnumSortBy.SORT_BY_DELIVERY_FEE.ordinal -> {
                 orderDeliveryFeeIsChecked()
                 clearButton.setTextColor(getColor(R.color.colorPrimary))
+                setStrokeCardColor(SORT_FILTER)
+                setIconColor(SORT_FILTER)
             }
         }
-
-        setStrokeCardColor(SORT_FILTER)
 
 //        Seleciona qual tipo de ordem será aplicado no filtro
         orderAZCard.setOnClickListener {
             orderAZIsChecked()
             clearButton.setTextColor(getColor(R.color.medium_gray))
+            setStrokeCardColor(SORT_FILTER)
+            setIconColor(SORT_FILTER)
         }
 
         orderLocationCard.setOnClickListener {
             orderLocationIsChecked()
             clearButton.setTextColor(getColor(R.color.colorPrimary))
+            setStrokeCardColor(SORT_FILTER)
+            setIconColor(SORT_FILTER)
         }
 
         orderTimerCard.setOnClickListener {
             orderTimerIsChecked()
             clearButton.setTextColor(getColor(R.color.colorPrimary))
+            setStrokeCardColor(SORT_FILTER)
+            setIconColor(SORT_FILTER)
         }
 
         orderDeliveryFeeCard.setOnClickListener {
             orderDeliveryFeeIsChecked()
             clearButton.setTextColor(getColor(R.color.colorPrimary))
-
+            setStrokeCardColor(SORT_FILTER)
+            setIconColor(SORT_FILTER)
         }
 
         clearButton.setOnClickListener {
             clearFilters()
             orderAZIsChecked()
             clearButton.setTextColor(getColor(R.color.medium_gray))
+            setStrokeCardColor(SORT_FILTER)
+            setIconColor(SORT_FILTER)
         }
 
         backButton.setOnClickListener {
@@ -122,6 +136,21 @@ class FiltersActivity : AppCompatActivity() {
             3 -> orderDeliveryFeeCard.strokeColor = getColor(R.color.colorPrimary)
         }
 
+    }
+
+    private fun setIconColor(filterNumber: Int){
+        orderAZIcon.setColorFilter(getColor(R.color.heavy_grey))
+        orderLocationIcon.setColorFilter(getColor(R.color.heavy_grey))
+        orderTimerIcon.setColorFilter(getColor(R.color.heavy_grey))
+        orderDeliveryFeeIcon.setColorFilter(getColor(R.color.heavy_grey))
+
+
+        when (filterNumber){
+            0 -> orderAZIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))
+            1 -> orderLocationIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))
+            2 -> orderTimerIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))
+            3 -> orderDeliveryFeeIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))
+        }
     }
 
     private fun clearFilters() {
