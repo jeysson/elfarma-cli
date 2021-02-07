@@ -1,8 +1,10 @@
 package hashtag.alldelivery.ui.products
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.AttributeSet
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
@@ -39,6 +42,15 @@ class ProductSearch : Fragment() {
         fun newInstance() = ProductSearch()
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        StatusBarUtil.setLightMode(activity)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +60,9 @@ class ProductSearch : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        StatusBarUtil.setLightMode(activity)
+
         //config rv
         var lm = GridLayoutManager(context, 2)
         list.layoutManager = lm
