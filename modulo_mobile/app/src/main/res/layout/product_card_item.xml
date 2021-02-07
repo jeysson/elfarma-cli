@@ -1,80 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:background="@drawable/checkout_cross_selling_item_background"
-    android:foreground="?attr/selectableItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_product"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/space_size_8dp"
+    android:background="@drawable/checkout_cross_selling_item_background"
+    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="2dp"
-    app:cardElevation="2dp"
-    android:id="@+id/card_product">
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="?attr/selectableItemBackground"
-        android:padding="8dp"
         android:layout_width="wrap_content"
-        android:layout_height="240dp">
+        android:layout_height="240dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="8dp">
 
-        <ImageView android:id="@+id/cross_selling_item_image"
+        <ImageView
+            android:id="@+id/cross_selling_item_image"
             android:layout_width="@dimen/space_size_120dp"
             android:layout_height="@dimen/space_size_120dp"
+            android:src="@drawable/ic_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_background"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView android:id="@+id/cross_selling_item_increment_quantity"
-            android:background="?attr/selectableItemBackgroundBorderless"
+<!--        Background Tint Preto apenas para controle  -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/image_button_plus_item"
             android:layout_width="@dimen/space_size_40dp"
             android:layout_height="@dimen/space_size_40dp"
-            android:layout_marginBottom="@dimen/space_size_4dp"
-            android:layout_marginEnd="@dimen/space_size_4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/plugin_items_increment"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            app:backgroundTint="#000"
+            app:backgroundTintMode="multiply"
+            app:icon="@drawable/ic_plus_sign"
+            app:iconTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/cross_selling_item_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/plugin_items_increment"/>
+            tools:ignore="RtlSymmetry" />
 
-        <TextView android:id="@+id/cross_selling_item_total_value"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view_increment_decrement_item"
+            android:layout_height="30dp"
+            android:alpha="0"
+            android:elevation="10dp"
+            android:layout_margin="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cross_selling_item_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/decrement_selling_item_button"
+                    style="@style/Text.Button.Borderless"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_baseline_remove_24" />
+
+                <TextView
+                    android:id="@+id/txt_item_result"
+                    style="@style/Text.H2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:text="0" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/increment_selling_item_button"
+                    style="@style/Text.Button.Borderless"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_baseline_add_24" />
+
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/cross_selling_item_total_value"
+            style="@style/TextAppearance.DesignSystem.Button.B1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_size_12dp"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
             app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_image"
-            app:layout_constraintVertical_bias="1"
-            style="@style/TextAppearance.DesignSystem.Button.B1"/>
+            app:layout_constraintVertical_bias="1" />
 
-        <TextView android:textColor="@color/medium_gray"
+        <TextView
             android:id="@+id/cross_selling_item_original_value"
+            style="@style/TextAppearance.DesignSystem.Form.S1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/medium_gray"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
-            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_total_value"
-            style="@style/TextAppearance.DesignSystem.Form.S1"/>
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_total_value" />
 
-        <TextView android:ellipsize="end"
+        <TextView
             android:id="@+id/cross_selling_item_description"
+            style="@style/TextAppearance.DesignSystem.Button.B2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_size_8dp"
+            android:ellipsize="end"
             android:maxLines="2"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
-            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_original_value"
-            style="@style/TextAppearance.DesignSystem.Button.B2"/>
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_original_value" />
 
-        <TextView android:textColor="@color/medium_gray"
-            android:ellipsize="end"
+        <TextView
             android:id="@+id/cross_selling_item_details"
+            style="@style/TextAppearance.DesignSystem.Button.B3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="@color/medium_gray"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
-            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_description"
-            style="@style/TextAppearance.DesignSystem.Button.B3"/>
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

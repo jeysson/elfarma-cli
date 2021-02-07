@@ -1,5 +1,6 @@
 package hashtag.alldelivery.ui.lojas
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -16,6 +17,7 @@ import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.ui.home.HomeFragment
+import kotlinx.android.synthetic.main.product_view.*
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
 
@@ -64,8 +66,10 @@ class StoresListItemAdapter(
 
 
 //           Inserindo imagem
-            if (item.imgBanner != null) {
-                Picasso.get().load(item.imgBanner).into(holder.logo)
+            if(item.imgBanner != null){
+                val imageBytes = android.util.Base64.decode(item.imgBanner, 0)
+                val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                holder.logo.setImageBitmap(image)
             }
 
             holder.name.text = name

@@ -262,8 +262,6 @@
     <style name="TextInputEditText.Light">
         <item name="android:theme">@style/AppTheme.TextInputEditTextLight</item>
         <item name="android:textColor">@color/selector_input_light</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">14dp</item>
     </style>
 
     <style name="Text.MoneySaved">

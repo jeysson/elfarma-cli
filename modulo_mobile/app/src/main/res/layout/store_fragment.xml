@@ -10,9 +10,9 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/page_header"
-        android:paddingTop="@dimen/space_size_12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/space_size_12dp"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -112,6 +112,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
+    <!--    Search Bard     -->
     <RelativeLayout
         android:id="@+id/search_container"
         android:layout_width="match_parent"
@@ -184,8 +186,10 @@
                 app:layout_constraintTop_toTopOf="@+id/search" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </RelativeLayout>
 
+    <!--    Recycler Vertical Itens     -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -197,6 +201,7 @@
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!--    Tab Itens       -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tabs_container"
         android:layout_width="match_parent"
