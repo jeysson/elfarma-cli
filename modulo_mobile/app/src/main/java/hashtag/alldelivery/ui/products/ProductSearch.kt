@@ -41,16 +41,7 @@ class ProductSearch : Fragment() {
     companion object {
         fun newInstance() = ProductSearch()
     }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        StatusBarUtil.setLightMode(activity)
-    }
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +51,6 @@ class ProductSearch : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         StatusBarUtil.setLightMode(activity)
 
         //config rv
