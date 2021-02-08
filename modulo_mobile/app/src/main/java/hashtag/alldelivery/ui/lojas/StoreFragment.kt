@@ -1,6 +1,7 @@
 package hashtag.alldelivery.ui.lojas
 
 import android.R.attr.fragment
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.DialogInterface
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Group
@@ -43,12 +45,13 @@ class StoreFragment : Fragment(){
         return inflater.inflate(R.layout.store_fragment, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setDarkMode(activity)
 
-        store_name.text = AllDeliveryApplication.STORE?.nomeFantasia
-        store_info.text = "08:00 - 22:00 "+ getString(R.string.dot) + " ver mais"
+        store_name.text = STORE?.nomeFantasia
+        store_info.text = "${STORE?.hAbre} - ${STORE?.hFecha}  ${getString(R.string.dot)} ver mais"
 
         store_info.setOnClickListener {
             val manager: FragmentManager = activity!!.supportFragmentManager

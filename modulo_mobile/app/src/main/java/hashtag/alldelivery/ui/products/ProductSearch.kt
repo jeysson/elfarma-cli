@@ -41,7 +41,7 @@ class ProductSearch : Fragment() {
     companion object {
         fun newInstance() = ProductSearch()
     }
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

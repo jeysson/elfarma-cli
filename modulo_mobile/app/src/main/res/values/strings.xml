@@ -106,4 +106,7 @@
     <string name="taxa_de_entrega">Taxa de entrega</string>
     <string name="ver_resultados">Ver Resultados</string>
     <string name="title_perfil">Perfil</string>
+    <string name="horarios_de_entrega">Horários de entrega</string>
+    <string name="tempo_medio_de_entrega">Tempo médio de entrega</string>
+    <string name="taxa_minima_de_entrega">Taxa mínima de entrega</string>
 </resources>

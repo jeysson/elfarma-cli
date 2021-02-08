@@ -1,31 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:orientation="vertical"
-    android:tag="layout/restaurant_info_fragment_0"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:tag="layout/restaurant_info_fragment_0">
 
-    <include android:id="@+id/toolbar" layout="@layout/common_toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar" />
 
-    <androidx.core.widget.NestedScrollView android:id="@+id/scroll_container"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <LinearLayout android:orientation="vertical"
+        <LinearLayout
             android:id="@+id/content"
-            android:tag="binding_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--
-            <include android:id="@+id/restaurant_info_description" layout="@layout/restaurant_info_description"/>
-            <include android:id="@+id/restaurant_info_opening_hours" layout="@layout/restaurant_info_opening_hours"/>
-            <include android:id="@+id/restaurant_info_payment_online" layout="@layout/restaurant_info_payment_online"/>
-            <include android:id="@+id/restaurant_info_payment_offline" layout="@layout/restaurant_info_payment_offline"/>
-            <include layout="@layout/restaurant_info_footer"/>-->
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:tag="binding_1">
+
+            <TextView
+                android:id="@+id/txt_store_name_info_fragment"
+                style="@style/TextAppearance.DesignSystem.Title.H1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                tools:text="Bemol" />
+
+            <TextView
+                android:id="@+id/txt_store_description_info_fragment"
+                style="@style/TextAppearance.DesignSystem.Title.H4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                tools:text="Durante o mês de Fevereiro blablabla... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Auctor neque vitae tempus quam pellentesque nec nam. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Curabitur gravida arcu ac tortor dignissim convallis aenean. Quis imperdiet massa tincidunt nunc pulvinar. Aliquet enim tortor at auctor urna. Vitae purus faucibus ornare suspendisse sed nisi lacus sed viverra. Elit sed vulputate mi sit amet. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ultrices gravida dictum fusce ut placerat orci nulla." />
+
+            <TextView
+                style="@style/TextAppearance.DesignSystem.Title.H3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/horarios_de_entrega"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_delivery_time_info_fragment"
+                style="@style/TextAppearance.DesignSystem.Title.H4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_size_12dp"
+                tools:text="8:00 ás 19:00" />
+
+            <TextView
+                style="@style/TextAppearance.DesignSystem.Title.H3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/tempo_medio_de_entrega"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_timer_info_fragment"
+                style="@style/TextAppearance.DesignSystem.Title.H4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_size_12dp"
+                tools:text="30 á 60" />
+
+            <TextView
+                style="@style/TextAppearance.DesignSystem.Title.H3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/taxa_minima_de_entrega"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_delivery_fee_info_fragment"
+                style="@style/TextAppearance.DesignSystem.Title.H4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_size_12dp"
+                tools:text="15,00 R$" />
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
