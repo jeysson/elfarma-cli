@@ -1,24 +1,23 @@
 package hashtag.alldelivery.ui.products
 
-import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.AttributeSet
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
 import kotlinx.android.synthetic.main.product_search_fragment.*
-import kotlinx.android.synthetic.main.product_search_fragment.list
-import kotlinx.android.synthetic.main.search_toolbar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,38 +25,39 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class ProductSearch : Fragment() {
 
-    private lateinit var adapt: ProductsListItemAdapter
-    private lateinit var produtos: ArrayList<Product>
-    val viewModelProduct: ProductViewModel by sharedViewModel()
+    private lateinit var _view: View
+    private lateinit var _productAdapter: ProductsListItemAdapter
+    private lateinit var _productList: ArrayList<Product>
+    private val _viewModelProduct: ProductViewModel by sharedViewModel()
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
-    var pagina = 1
-    var itensPorPagina = 6
+    var page = 1
+    var itemsPerPage = 6
 
+    private val _recyclerProductList by lazy { _view.findViewById<RecyclerView>(R.id.recycler_product_list_search) }
+    private val _editSearch by lazy { _view.findViewById<EditText>(R.id.edit_text_search_item) }
+    private val _cancelButton by lazy { _view.findViewById<Button>(R.id.btn_cancel_search) }
 
-    private lateinit var viewModel: ProductViewModel
-
-
-    companion object {
-        fun newInstance() = ProductSearch()
-    }
+    private lateinit var _fullList: List<Product>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.product_search_fragment, container, false)
+        val view = inflater.inflate(R.layout.product_search_fragment, container, false)
+        _view = view
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
+        getAll()
 
         //config rv
-        var lm = GridLayoutManager(context, 2)
-        list.layoutManager = lm
-        list.setHasFixedSize(true)
-        list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        _recyclerProductList.layoutManager = GridLayoutManager(context, 2)
+        _recyclerProductList.setHasFixedSize(true)
+        _recyclerProductList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
@@ -65,79 +65,123 @@ class ProductSearch : Fragment() {
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                var vmm = (list.layoutManager as GridLayoutManager)
-                /*val visibleItemCount = vmm.childCount
-                val totalItemCount = vmm.itemCount
+                val recyclerLayout = (_recyclerProductList.layoutManager as GridLayoutManager)
+                /*val visibleItemCount = recyclerLayout.childCount
+                val totalItemCount = recyclerLayout.itemCount
                 val firstVisibleItemPosition = vmm.findFirstVisibleItemPosition()
                  */
 
                 if (!isLoading && !isLastPage) {
                     //if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                        if(vmm.findLastCompletelyVisibleItemPosition() == (itensPorPagina * pagina) - 1){
-                            isLoading = true
-                            loadingSearch.visibility = View.VISIBLE
-                            pagina = pagina +1
-                            getMoreItems()
-                        }
+                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 1) {
+                        isLoading = true
+                        loadingSearch.visibility = View.VISIBLE
+                        page += 1
+                        getMoreItems()
+                    }
                 }
             }
         })
 
-        cancel_button.setOnClickListener{
+        _cancelButton.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        lifecycleScope.launch(Dispatchers.IO){
-            obterProdutos()
+        lifecycleScope.launch(Dispatchers.IO) {
+            getItems()
+
         }
 
-        filter.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-
+        _editSearch.doOnTextChanged { text, start, count, after ->
+            if (text.isNullOrBlank()) {
+                getMoreItems()
+            } else {
+                findItemByName(text!!)
             }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filtrarProdutos(s!!)
-            }
+        }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            }
-        })
     }
 
-    fun getMoreItems(){
-        list.post{
-            lifecycleScope.launch(Dispatchers.IO){
-                produtos = viewModelProduct?.getPagingProducts(AllDeliveryApplication.STORE!!.id, -1, pagina, itensPorPagina)
-                withContext(Dispatchers.Main){
-                    adapt.addItems(produtos)
-                    adapt.notifyDataSetChanged()
+    fun getAll() {
+        _viewModelProduct.getAllProducts(STORE?.id).observe(viewLifecycleOwner) {
+            _fullList = it
+        }
+    }
+
+    fun getMoreItems() {
+        _recyclerProductList.post {
+            lifecycleScope.launch(Dispatchers.IO) {
+                _productList = _viewModelProduct.getPagingProducts(
+                    AllDeliveryApplication.STORE!!.id,
+                    -1,
+                    page,
+                    itemsPerPage
+                )
+                withContext(Dispatchers.Main) {
+                    _productAdapter.addItems(_productList)
+                    _productAdapter.notifyDataSetChanged()
                     loadingSearch.visibility = View.INVISIBLE
                 }
-                isLastPage = produtos.size == 0
+                isLastPage = _productList.size == 0
                 isLoading = false
             }
         }
     }
 
-     private suspend fun obterProdutos(){
-        var ps = this
+    private suspend fun getItems() {
+        val productSearch = this
         //config adapter
-        produtos = viewModelProduct?.getPagingProducts(AllDeliveryApplication.STORE!!.id, -1, pagina, itensPorPagina)
+        _productList = _viewModelProduct.getPagingProducts(
+            AllDeliveryApplication.STORE!!.id,
+            -1,
+            page,
+            itemsPerPage
+        )
 
-        withContext(Dispatchers.Main){
-            adapt = ProductsListItemAdapter(ps, null, list.layoutManager as GridLayoutManager, produtos)
-            list.adapter = adapt
-            adapt.notifyDataSetChanged()
+        withContext(Dispatchers.Main) {
+            _productAdapter = ProductsListItemAdapter(
+                productSearch,
+                null,
+                _recyclerProductList.layoutManager as GridLayoutManager,
+                _productList
+            )
+            _recyclerProductList.adapter = _productAdapter
+            _productAdapter.notifyDataSetChanged()
             loadingSearch.visibility = View.INVISIBLE
         }
     }
 
-    private fun filtrarProdutos(s:CharSequence){
+    private fun findItemByName(text: CharSequence) {
+//        Procura na lista completa da loja
+        val byName = _fullList.filter { it.nome!!.contains(text, true) }
+        val filteredItems = mutableListOf<Product>()
+        filteredItems.addAll(byName)
 
-        var produtosFiltrados = produtos.filter {  p -> p.descricao!!.contains(s)  }
-        adapt = ProductsListItemAdapter(this, null, list.layoutManager as GridLayoutManager, produtosFiltrados as java.util.ArrayList<Product>)
-        list.adapter = adapt
+        when {
+            filteredItems.isNotEmpty() -> {
 
+                _productAdapter = ProductsListItemAdapter(
+                    this,
+                    null,
+                    _recyclerProductList.layoutManager as GridLayoutManager,
+                    filteredItems as java.util.ArrayList<Product>
+                )
+                _recyclerProductList.adapter = _productAdapter
+
+            }
+            filteredItems.isEmpty() -> {
+                Toast.makeText(_view.context, "Nenhum item encontrado", Toast.LENGTH_SHORT).show()
+                getMoreItems()
+            }
+            else -> {
+                getMoreItems()
+            }
+        }
+    }
+
+
+    companion object {
+        fun newInstance() = ProductSearch()
     }
 }
