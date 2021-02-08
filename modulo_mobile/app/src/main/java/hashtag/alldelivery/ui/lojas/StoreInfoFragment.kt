@@ -42,13 +42,24 @@ class StoreInfoFragment : Fragment() {
 
         storeName.text = STORE?.nomeFantasia
         storeDescription.text = STORE?.descricao
-        deliveryTime.text = "${STORE?.hAbre} • ${STORE?.hFecha}"
+        deliveryTime.text = "${returnHour(STORE?.hAbre)} às ${returnHour(STORE?.hFecha)}"
         deliveryDefaultTimer.text = "${STORE?.tempoMinimo}m • ${STORE?.tempoMaximo}m"
         deliveryFee.text = "${STORE?.taxaEntrega} R$"
         back_button.setOnClickListener {
             activity?.onBackPressed()
         }
 
+    }
+
+    fun returnHour (number: Int?): String {
+        var newString = number.toString()
+        if (newString.length == 3) {
+            newString = "0$newString"
+        }
+
+        newString = "${newString.substring(0, 2)}:${newString.substring(2, 4)}"
+
+        return newString
     }
 
 

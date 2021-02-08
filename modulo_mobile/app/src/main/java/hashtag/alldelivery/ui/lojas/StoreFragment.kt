@@ -51,7 +51,7 @@ class StoreFragment : Fragment(){
         StatusBarUtil.setDarkMode(activity)
 
         store_name.text = STORE?.nomeFantasia
-        store_info.text = "${STORE?.hAbre} - ${STORE?.hFecha}  ${getString(R.string.dot)} ver mais"
+        store_info.text = "${returnHour(STORE?.hAbre)} - ${returnHour(STORE?.hFecha)}  ${getString(R.string.dot)} ver mais"
 
         store_info.setOnClickListener {
             val manager: FragmentManager = activity!!.supportFragmentManager
@@ -89,9 +89,9 @@ class StoreFragment : Fragment(){
                 }
                 if (scrollRange + verticalOffset == 0) {
                     isShow = true;
-                    store_title.text = AllDeliveryApplication.STORE?.nomeFantasia
+                    store_title.text = STORE?.nomeFantasia
                     store_description.text =
-                        "08:00 - 22:00 " + getString(R.string.dot) + " ver mais"
+                        "${returnHour(STORE?.hAbre)} - ${returnHour(STORE?.hFecha)}" + getString(R.string.dot) + " ver mais"
                     tabs.visibility = View.VISIBLE
                 } else if (isShow) {
                     isShow = false;
@@ -105,7 +105,7 @@ class StoreFragment : Fragment(){
                 store_description.alpha = store_title.alpha
             }
 
-        });
+        })
 
         search_background.setOnClickListener {
             val manager: FragmentManager = activity!!.supportFragmentManager
@@ -131,6 +131,17 @@ class StoreFragment : Fragment(){
         setupObservers()
         carregarProdutos()
         syncTabWithRecyclerView()
+    }
+
+    fun returnHour (number: Int?): String {
+        var newString = number.toString()
+        if (newString.length == 3) {
+            newString = "0$newString"
+        }
+
+        newString = "${newString.substring(0, 2)}:${newString.substring(2, 4)}"
+
+        return newString
     }
 
     private fun setupObservers() {
