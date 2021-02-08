@@ -3,12 +3,17 @@ package hashtag.alldelivery.ui.products
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Color.alpha
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.view.ViewCompat.animate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +28,7 @@ import kotlinx.coroutines.runBlocking
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
+import java.util.logging.Handler
 
 class ProductsListItemAdapter(
     val frag: Fragment,
@@ -52,45 +58,29 @@ class ProductsListItemAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
 
-
-
         holder as ProductItemCardViewHolder
 
+
+
+
         //        Increment Button
-        holder.textItemCount.text = "0"
+
+        var isOpen = false
+        var count = 1
+        holder.textItemCount.text = count.toString()
         holder.plusButton.setOnClickListener {
-
-            var count = (holder.textItemCount.text as String).toInt()
-
-            holder.cardViewIncrementItem.animate().apply {
-                duration = 300
-                alpha(1f)
-            }
-
-            it.animate().apply {
-                duration = 150
-                alpha(0f)
-
-            }.withEndAction {
-                it.animate().apply {
-                    duration = 150
-                    translationY(200f)
-                }
-            }
-
-            holder.incrementButton.setOnClickListener {
-                count += 1
+            isOpen = animationListener(holder.plusButton, holder.cardViewIncrementItem, isOpen)
+        }
+        holder.incrementButton.setOnClickListener {
+            count += 1
+            holder.textItemCount.text = count.toString()
+        }
+        holder.decrementButton.setOnClickListener {
+            if (count <= 1) {
+                isOpen = animationListener(holder.plusButton, holder.cardViewIncrementItem, isOpen)
+            } else {
+                count -= 1
                 holder.textItemCount.text = count.toString()
-            }
-
-            holder.decrementButton.setOnClickListener {
-                if (count >= 1){
-                    count -= 1
-                    holder.textItemCount.text = count.toString()
-                } else {
-                    Toast.makeText(myView.context, "Não pode ser menor que zero", Toast.LENGTH_SHORT).show()
-                }
-
             }
 
         }
@@ -152,7 +142,8 @@ class ProductsListItemAdapter(
         val incrementButton = view.findViewById<Button>(R.id.increment_selling_item_button)
         val decrementButton = view.findViewById<Button>(R.id.decrement_selling_item_button)
         val textItemCount = view.findViewById<TextView>(R.id.txt_item_result)
-        val cardViewIncrementItem = view.findViewById<MaterialCardView>(R.id.card_view_increment_decrement_item)
+        val cardViewIncrementItem =
+            view.findViewById<MaterialCardView>(R.id.card_view_increment_decrement_item)
         val plusButton = view.findViewById<Button>(R.id.image_button_plus_item)
     }
 
@@ -173,5 +164,61 @@ class ProductsListItemAdapter(
         itens?.addAll(produtos)
         var tamanhoNovo = itens?.size
         notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
+    }
+
+    fun animateAppear(plusButton: Button, cardViewIncrementItem: MaterialCardView) {
+        plusButton.animate().apply {
+            alpha(0f)
+            duration = 200
+        }.withEndAction {
+            plusButton.animate().translationY(200f)
+            val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            plusAnimate.duration = 200
+            plusAnimate.fillAfter = true
+
+            cardViewIncrementItem.animate().alpha(1f).duration = 200
+            val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            cardAnimate.duration = 200
+            cardAnimate.fillAfter = true
+
+            cardViewIncrementItem.startAnimation(cardAnimate)
+            plusButton.startAnimation(plusAnimate)
+        }
+
+    }
+
+    fun animateDisappear(plusButton: Button, cardViewIncrementItem: MaterialCardView) {
+        cardViewIncrementItem.animate().apply {
+            alpha(0f)
+            duration = 200
+        }.withEndAction {
+            plusButton.animate().translationY(0f).withEndAction {
+                plusButton.animate().alpha(1f).duration = 200
+            }
+            val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            plusAnimate.duration = 200
+            plusAnimate.fillAfter = true
+            
+            val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            cardAnimate.duration = 200
+            cardAnimate.fillAfter = true
+
+            cardViewIncrementItem.startAnimation(cardAnimate)
+            plusButton.startAnimation(plusAnimate)
+        }
+
+    }
+
+    fun animationListener(plusButton: Button, cardViewIncrementItem: MaterialCardView, isOpen: Boolean): Boolean {
+        var opened = false
+        if (isOpen){
+            animateDisappear(plusButton, cardViewIncrementItem)
+            opened = false
+        }else if (!isOpen){
+            animateAppear(plusButton, cardViewIncrementItem)
+            opened = true
+        }
+
+        return opened
     }
 }
