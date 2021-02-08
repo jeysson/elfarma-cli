@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -83,14 +84,6 @@ class ProductSearch : Fragment() {
             }
         })
 
-        _cancelButton.setOnClickListener {
-            activity?.onBackPressed()
-        }
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            getItems()
-
-        }
 
         _editSearch.doOnTextChanged { text, start, count, after ->
             if (text.isNullOrBlank()) {
@@ -100,7 +93,19 @@ class ProductSearch : Fragment() {
             }
         }
 
+        _cancelButton.setOnClickListener {
+            if (_editSearch.text.isNullOrBlank()){
+                activity?.onBackPressed()
+            }else {
+                _editSearch.setText("")
+            }
 
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            getItems()
+
+        }
     }
 
     fun getAll() {

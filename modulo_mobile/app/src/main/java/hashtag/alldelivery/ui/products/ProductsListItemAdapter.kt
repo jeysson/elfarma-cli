@@ -198,7 +198,7 @@ class ProductsListItemAdapter(
             val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
             plusAnimate.duration = 200
             plusAnimate.fillAfter = true
-            
+
             val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
             cardAnimate.duration = 200
             cardAnimate.fillAfter = true
