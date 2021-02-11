@@ -4,42 +4,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_product"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/space_size_8dp"
-    android:layout_weight="1"
     android:background="@drawable/checkout_cross_selling_item_background"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="240dp"
         android:background="?attr/selectableItemBackground"
         android:padding="8dp">
 
         <ImageView
             android:id="@+id/cross_selling_item_image"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/space_size_120dp"
             android:layout_height="@dimen/space_size_120dp"
-            android:elevation="1dp"
-            android:scaleType="center"
             android:src="@drawable/ic_background"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/space_size_120dp"
-            android:background="@color/light_gray"
-            android:elevation="0dp"
-            android:scaleType="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+<!--        Background Tint Preto apenas para controle  -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/image_button_plus_item"
             android:layout_width="@dimen/space_size_40dp"
@@ -47,10 +34,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/plugin_items_increment"
-            android:elevation="4dp"
             android:gravity="center"
             android:paddingStart="8dp"
-            app:backgroundTint="#FFF"
+            app:backgroundTint="#000"
             app:backgroundTintMode="multiply"
             app:icon="@drawable/ic_plus_sign"
             app:iconTint="@color/colorPrimary"
@@ -60,14 +46,14 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_increment_decrement_item"
-            android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_margin="12dp"
             android:alpha="0"
             android:elevation="10dp"
+            android:layout_margin="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/cross_selling_item_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
