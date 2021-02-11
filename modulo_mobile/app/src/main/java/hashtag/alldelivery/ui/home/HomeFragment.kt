@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -36,8 +35,8 @@ import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
-import hashtag.alldelivery.ui.lojas.StoresListItemAdapter
-import hashtag.alldelivery.ui.lojas.StoresViewModel
+import hashtag.alldelivery.ui.store.StoresListItemAdapter
+import hashtag.alldelivery.ui.store.StoresViewModel
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.filter_fragment.swipe_refresh

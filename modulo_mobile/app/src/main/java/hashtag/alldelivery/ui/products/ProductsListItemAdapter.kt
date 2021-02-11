@@ -45,9 +45,13 @@ class ProductsListItemAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.product_card_item_search, parent, false)
-
+        val view = if (lLayoutManager == null){
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.product_card_item, parent, false)
+        }else {
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.product_card_item_search, parent, false)
+        }
         myView = view
 
         var holder = ProductItemCardViewHolder(view)

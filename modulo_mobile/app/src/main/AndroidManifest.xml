@@ -27,7 +27,7 @@
         <activity android:name=".ui.filter.FiltersActivity" />
         <activity android:name=".ui.products.ProductView" />
         <activity android:name=".ui.products.ProductDetail" />
-        <activity android:name=".ui.lojas.StoreInfoFragment" />
+        <activity android:name=".ui.store.StoreInfoFragment" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">

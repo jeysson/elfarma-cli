@@ -1,4 +1,4 @@
-package hashtag.alldelivery.ui.lojas
+package hashtag.alldelivery.ui.store
 
 import android.annotation.SuppressLint
 import android.util.Log

@@ -1,11 +1,8 @@
-package hashtag.alldelivery.ui.lojas
+package hashtag.alldelivery.ui.store
 
-import android.R.attr.fragment
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

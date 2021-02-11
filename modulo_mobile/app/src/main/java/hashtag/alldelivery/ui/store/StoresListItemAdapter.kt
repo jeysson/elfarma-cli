@@ -1,4 +1,4 @@
-package hashtag.alldelivery.ui.lojas
+package hashtag.alldelivery.ui.store
 
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -12,12 +12,9 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
-import hashtag.alldelivery.ui.home.HomeFragment
-import kotlinx.android.synthetic.main.product_view.*
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
 

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Group
-import hashtag.alldelivery.ui.lojas.StoreFragment
+import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_item.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.store_title
 import kotlinx.coroutines.*

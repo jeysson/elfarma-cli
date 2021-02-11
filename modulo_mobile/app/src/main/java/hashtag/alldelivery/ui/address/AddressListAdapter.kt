@@ -12,16 +12,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.view.*
 
 
-class AddressListAdapter internal constructor(activity: AppCompatActivity): RecyclerView.Adapter<AddressListAdapter.AddressItemViewHolder>(),
+class AddressListAdapter internal constructor(activity: AppCompatActivity) :
+    RecyclerView.Adapter<AddressListAdapter.AddressItemViewHolder>(),
     View.OnClickListener {
 
     private val inflater: LayoutInflater = LayoutInflater.from(activity.baseContext)
@@ -46,30 +50,36 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
 //        Muda a cor do cardView se for o endereço padrão
         if (item.id == ADDRESS?.id) {
             holder.cardView.strokeColor = Color.parseColor("#057DCD")
-            holder.cardView.strokeWidth = holder.itemView.resources.getDimension(R.dimen.address_card_selected_bord_width).toInt()
+            holder.cardView.strokeWidth =
+                holder.itemView.resources.getDimension(R.dimen.address_card_selected_bord_width)
+                    .toInt()
         } else {
             holder.cardView.strokeColor = Color.parseColor("#A6A6A6")
-            holder.cardView.strokeWidth = holder.itemView.resources.getDimension(R.dimen.address_card_default).toInt()
+            holder.cardView.strokeWidth =
+                holder.itemView.resources.getDimension(R.dimen.address_card_default).toInt()
         }
 
-        holder.title.text = item!!.address+", "+item.number
-        holder.description.text = item.neighborhood+", "+item.city+" - "+item.state
+        holder.title.text = item!!.address + ", " + item.number
+        holder.description.text = item.neighborhood + ", " + item.city + " - " + item.state
         holder.description2.text = item!!.complement
         holder.btSelected.setTag(position)
         holder.btSelected.setOnClickListener(this)
 
         holder.itemView.setOnClickListener {
-            AllDeliveryApplication.ADDRESS = address[position]
-            AllDeliveryApplication.LAT_LONG = LatLng(address[position].lat!!,
+
+            ADDRESS = address[position]
+            LAT_LONG = LatLng(
+                address[position].lat!!,
                 address[position].longi!!
             )
+
             activity.finish()
         }
 
     }
 
-    override fun onClick(view: View?){
-        if(view is ImageView){
+    override fun onClick(view: View?) {
+        if (view is ImageView) {
             var position = view!!.tag as Int
             val manager: FragmentManager = activity.supportFragmentManager
             var d = AddressEditBottomDialogFragment()
@@ -86,7 +96,7 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity): Recy
         notifyDataSetChanged()
     }
 
-    inner class AddressItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class AddressItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title = view.title_address
         val description = view.description_address
         val description2 = view.second_description
