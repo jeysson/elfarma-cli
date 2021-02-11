@@ -2,6 +2,7 @@ package hashtag.alldelivery.ui.store
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
+import com.squareup.picasso.Picasso
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
@@ -47,6 +49,12 @@ class StoreFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setDarkMode(activity)
 
+        if(STORE?.imgBanner != null){
+            val imageBytes = android.util.Base64.decode(STORE?.imgBanner, 0)
+            val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            groceries_image_header.setImageBitmap(image)
+        }
+
         store_name.text = STORE?.nomeFantasia
         store_info.text = "${returnHour(STORE?.hAbre)} - ${returnHour(STORE?.hFecha)}  ${getString(R.string.dot)} ver mais"
 
@@ -72,6 +80,7 @@ class StoreFragment : Fragment(){
         }
 
         back_button.setOnClickListener {
+            StatusBarUtil.setLightMode(activity)
             activity?.onBackPressed()
         }
 

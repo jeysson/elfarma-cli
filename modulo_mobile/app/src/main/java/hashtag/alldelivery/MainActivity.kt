@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        StatusBarUtil.setLightMode(this)
         StatusBarUtil.setTransparent(this)
 
         setContentView(R.layout.activity_main)

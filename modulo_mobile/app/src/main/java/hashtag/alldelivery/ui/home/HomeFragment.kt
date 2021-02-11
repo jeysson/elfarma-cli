@@ -68,6 +68,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         return inflater.inflate(R.layout.filter_fragment, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
@@ -103,7 +104,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         }
     }
-
 
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
