@@ -52,6 +52,7 @@ class StoresListItemAdapter(
 
             if(!item.disponivel){
                 holder.closedItemOverlay.visibility = VISIBLE
+                holder.closedText.visibility = VISIBLE
             }
 
 //            Mudando a visibilidade dos itens
@@ -63,10 +64,12 @@ class StoresListItemAdapter(
 
 
 //           Inserindo imagem
-            if(item.imgBanner != null){
-                val imageBytes = android.util.Base64.decode(item.imgBanner, 0)
+            if(item.logo != null){
+                val imageBytes = android.util.Base64.decode(item.logo, 0)
                 val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                 holder.logo.setImageBitmap(image)
+            }else {
+                holder.logo.setImageResource(R.drawable.ic_medicine)
             }
 
             holder.name.text = name
@@ -109,6 +112,7 @@ class StoresListItemAdapter(
         val dividerCategoryDistance = view.divider_category_distance
         val logo = view.logo
         val closedItemOverlay = view.image_view_store_closed_overlay
+        val closedText = view.closed
     }
 
     override fun onClick(view: View?) {

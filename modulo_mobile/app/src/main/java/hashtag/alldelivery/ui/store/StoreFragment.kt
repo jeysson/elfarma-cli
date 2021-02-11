@@ -55,6 +55,7 @@ class StoreFragment : Fragment(){
             groceries_image_header.setImageBitmap(image)
         }
 
+
         store_name.text = STORE?.nomeFantasia
         store_info.text = "${returnHour(STORE?.hAbre)} - ${returnHour(STORE?.hFecha)}  ${getString(R.string.dot)} ver mais"
 
