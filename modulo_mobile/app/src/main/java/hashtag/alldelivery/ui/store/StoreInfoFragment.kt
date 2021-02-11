@@ -44,7 +44,7 @@ class StoreInfoFragment : Fragment() {
         storeDescription.text = STORE?.descricao
         deliveryTime.text = "${returnHour(STORE?.hAbre)} às ${returnHour(STORE?.hFecha)}"
         deliveryDefaultTimer.text = "${STORE?.tempoMinimo}m • ${STORE?.tempoMaximo}m"
-        deliveryFee.text = "${STORE?.taxaEntrega} R$"
+        deliveryFee.text = "R$ ${STORE?.taxaEntrega}"
         back_button.setOnClickListener {
             activity?.onBackPressed()
         }
