@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -54,6 +55,11 @@ class StoreFragment : Fragment(){
             val imageBytes = android.util.Base64.decode(STORE?.imgBanner, 0)
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             groceries_image_header.setImageBitmap(image)
+
+            if (STORE?.disponivel != true){
+                image_view_store_closed_overlay_hearder_menu.setBackgroundResource(R.color.black_overlay_70)
+                txt_closed_header_menu.visibility = VISIBLE
+            }
         }else {
             image_view_store_closed_overlay_hearder_menu.visibility = INVISIBLE
             groceries_image_header.setImageResource(R.color.colorPrimary)

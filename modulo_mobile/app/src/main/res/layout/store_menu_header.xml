@@ -57,6 +57,21 @@
         app:layout_constraintEnd_toEndOf="0"
          app:layout_constraintStart_toStartOf="0"/>
     -->
+
+    <TextView
+        android:id="@+id/txt_closed_header_menu"
+        style="@style/TextAppearance.DesignSystem.Title.H3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:text="@string/store_details_closed"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/store_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/groceries_image_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
     <TextView
         android:id="@+id/groceries_item_limit"
         style="@style/TextAppearance.DesignSystem.Paragraph.P4"
