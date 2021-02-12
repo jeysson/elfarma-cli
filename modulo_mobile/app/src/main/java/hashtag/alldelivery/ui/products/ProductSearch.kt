@@ -89,11 +89,11 @@ class ProductSearch : Fragment() {
         _editSearch.doOnTextChanged { text, start, count, after ->
             if (text.isNullOrBlank()) {
                 getMoreItems()
-                _cancelButton.text = "Cancelar"
+                _cancelButton.text = getString(R.string.cancelar)
             } else {
+                _cancelButton.text = getString(R.string.limpar)
                 if (text.length > 2){
                     findItemByName(text!!)
-                    _cancelButton.text = "Limpar"
                 }
             }
         }

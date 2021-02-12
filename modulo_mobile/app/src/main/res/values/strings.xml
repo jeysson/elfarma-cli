@@ -108,4 +108,5 @@
     <string name="title_perfil">Perfil</string>
     <string name="horarios_de_entrega">Horários de entrega</string>
     <string name="tempo_medio_de_entrega">Tempo médio de entrega</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

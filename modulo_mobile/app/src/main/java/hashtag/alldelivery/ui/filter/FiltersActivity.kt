@@ -181,7 +181,6 @@ class FiltersActivity : AppCompatActivity() {
         clearFilters()
 
 //        Muda a cor item A-Z
-
         orderAZView.setBackgroundResource(R.color.colorPrimary_75_translucent)
         orderAZText.setTextColor(getColor(R.color.colorPrimary))
         isOrderAZChecked = true
