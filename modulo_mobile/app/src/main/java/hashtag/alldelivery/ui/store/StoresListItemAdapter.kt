@@ -52,9 +52,13 @@ class StoresListItemAdapter(
 
             val name = item.nomeFantasia
 
+//            Mostra "fechado" + overlay caso a loja esteja indisponível
             if(!item.disponivel){
                 holder.closedItemOverlay.visibility = VISIBLE
                 holder.closedText.visibility = VISIBLE
+            }else {
+                holder.closedItemOverlay.visibility = GONE
+                holder.closedText.visibility = GONE
             }
 
 //            Mudando a visibilidade dos itens
