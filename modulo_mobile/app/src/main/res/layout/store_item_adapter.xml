@@ -148,8 +148,10 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name">
 
@@ -197,9 +199,9 @@
                     style="@style/TextAppearance.DesignSystem.Paragraph.P4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/divider_simbol_store_item"
                     android:textColor="@color/heavy_grey" />
 
@@ -278,17 +280,15 @@
             <TextView
                 android:id="@+id/delivery_free"
                 style="@style/TextAppearance.DesignSystem.Paragraph.P4"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/heavy_grey"
-                app:layout_constraintBottom_toBottomOf="@id/delivery_mode_barrier"
-                app:layout_constraintEnd_toEndOf="@id/delivery_mode_barrier"
-                app:layout_constraintStart_toEndOf="@+id/delivery_mode_barrier"
-                app:layout_constraintTop_toTopOf="@id/delivery_mode_barrier"
-                app:layout_goneMarginBottom="11dp" />
+                app:layout_constraintStart_toEndOf="@+id/delivery_time"
+                app:layout_goneMarginBottom="11dp"
+                tools:text="R$ 8,0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

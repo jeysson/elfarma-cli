@@ -54,6 +54,8 @@ class ProductSearch : Fragment() {
         StatusBarUtil.setLightMode(activity)
         getAll()
 
+
+
         //config rv
         _recyclerProductList.layoutManager = GridLayoutManager(context, 2)
         _recyclerProductList.setHasFixedSize(true)
@@ -87,8 +89,10 @@ class ProductSearch : Fragment() {
         _editSearch.doOnTextChanged { text, start, count, after ->
             if (text.isNullOrBlank()) {
                 getMoreItems()
+                _cancelButton.text = "Cancelar"
             } else {
                 findItemByName(text!!)
+                _cancelButton.text = "Limpar"
             }
         }
 

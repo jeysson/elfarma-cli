@@ -1,6 +1,7 @@
 package hashtag.alldelivery.ui.store
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,6 +18,8 @@ import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
+import java.text.NumberFormat
+import java.util.*
 
 class StoresListItemAdapter(
     val act: AppCompatActivity,
@@ -72,11 +75,17 @@ class StoresListItemAdapter(
                 holder.logo.setImageResource(R.drawable.ic_medicine)
             }
 
+            var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(item.taxaEntrega)
+            if (item.taxaEntrega == 0f || item.taxaEntrega == null) {
+                holder.deliveryFree.setTextColor(activity?.getColor(R.color.deprecated_forest))
+                storeFee = "Gratis"
+            }
+
             holder.name.text = name
             holder.rating.text = "4,5"
             holder.categoryDistance.text = "${item.distancia}"
             holder.deliveryTime.text = "${item.tempoMinimo} - ${item.tempoMaximo} min"
-            holder.deliveryFree.text = "${item.taxaEntrega}"
+            holder.deliveryFree.text = "$storeFee"
             holder.categoryType.text = "Farmácia"
 
             holder.card.setTag(position)
