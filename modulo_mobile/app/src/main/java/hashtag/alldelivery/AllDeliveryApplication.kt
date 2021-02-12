@@ -29,7 +29,8 @@ class AllDeliveryApplication : Application() {
         var PRODUCT: Product? = null
 
         const val REFRESH_DELAY_TIMER: Long = 1500
-        var SORT_FILTER = 0
+//        Filtro Default 1 (filtro por Localização)
+        var SORT_FILTER = 1
 
         //      RequestCode Control que solicita a exibição de novos itens, vindo da pagina filtros
         const val RESULTS = "RESULTS"
@@ -41,8 +42,22 @@ class AllDeliveryApplication : Application() {
         //       =======
 
         fun getAddress(context: Context, lat: Double, long: Double): String {
-            var geoCoder = Geocoder(context, Locale.getDefault())
-            var address = geoCoder.getFromLocation(lat, long, 1)
+            val geoCoder = Geocoder(context, Locale.getDefault())
+            val address = geoCoder.getFromLocation(lat, long, 1)
+
+            if (address[0].thoroughfare.isNullOrEmpty()){
+                address[0].thoroughfare = ""
+            }
+            if (address[0].subLocality.isNullOrEmpty()){
+                address[0].subLocality = ""
+            }
+            if (address[0].subAdminArea.isNullOrEmpty()){
+                address[0].subAdminArea = ""
+            }
+            if (address[0].adminArea.isNullOrEmpty()){
+                address[0].adminArea = ""
+            }
+
             return address[0].thoroughfare + " - " + address[0].subLocality + ", " + address[0].subAdminArea + " - " + address[0].adminArea
         }
 
