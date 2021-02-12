@@ -250,12 +250,20 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         super.onResume()
 
-        if (ADDRESS != null){
+        if (ADDRESS?.id != null){
             LAT_LONG?.let {
                 address.text = AllDeliveryApplication.getShortAddress(
                     myView.context, ADDRESS!!.lat!!,
                     ADDRESS!!.longi!!,
                     ADDRESS!!.number!!
+                )
+            }
+        }else if (LAT_LONG != null){
+            LAT_LONG?.let {
+                address.text = AllDeliveryApplication.getShortAddress(
+                    myView.context, LAT_LONG!!.latitude,
+                    LAT_LONG!!.longitude,
+                    null
                 )
             }
         }
