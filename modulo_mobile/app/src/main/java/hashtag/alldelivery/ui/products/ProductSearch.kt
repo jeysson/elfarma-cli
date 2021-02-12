@@ -91,8 +91,10 @@ class ProductSearch : Fragment() {
                 getMoreItems()
                 _cancelButton.text = "Cancelar"
             } else {
-                findItemByName(text!!)
-                _cancelButton.text = "Limpar"
+                if (text.length > 2){
+                    findItemByName(text!!)
+                    _cancelButton.text = "Limpar"
+                }
             }
         }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -51,20 +52,7 @@ class StoreFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setDarkMode(activity)
 
-        if(STORE?.imgBanner != null){
-            val imageBytes = android.util.Base64.decode(STORE?.imgBanner, 0)
-            val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            groceries_image_header.setImageBitmap(image)
-
-            if (STORE?.disponivel != true){
-                image_view_store_closed_overlay_hearder_menu.setBackgroundResource(R.color.black_overlay_70)
-                txt_closed_header_menu.visibility = VISIBLE
-            }
-        }else {
-            image_view_store_closed_overlay_hearder_menu.visibility = INVISIBLE
-            groceries_image_header.setImageResource(R.color.colorPrimary)
-        }
-
+        showBanner()
 
         store_name.text = STORE?.nomeFantasia
         store_info.text = "${returnHour(STORE?.hAbre)} - ${returnHour(STORE?.hFecha)}  ${getString(R.string.dot)} ver mais"
@@ -148,6 +136,22 @@ class StoreFragment : Fragment(){
         setupObservers()
         carregarProdutos()
         syncTabWithRecyclerView()
+    }
+
+    private fun showBanner() {
+        if (STORE?.imgBanner != null) {
+            val imageBytes = Base64.decode(STORE?.imgBanner, 0)
+            val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            groceries_image_header.setImageBitmap(image)
+
+            if (STORE?.disponivel != true) {
+                image_view_store_closed_overlay_hearder_menu.setBackgroundResource(R.color.black_overlay_70)
+                txt_closed_header_menu.visibility = VISIBLE
+            }
+        } else {
+            image_view_store_closed_overlay_hearder_menu.visibility = INVISIBLE
+            groceries_image_header.setImageResource(R.color.colorPrimary)
+        }
     }
 
     fun returnHour (number: Int?): String {
