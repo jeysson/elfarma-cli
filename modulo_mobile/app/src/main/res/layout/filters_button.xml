@@ -12,11 +12,18 @@
         android:id="@+id/card_view_order_a_z"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:shape="ring"
         app:cardCornerRadius="35dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/medium_gray"
         app:strokeWidth="1dp">
+
+        <View
+            android:id="@+id/view_order_a_z"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
 
         <ImageView
             android:id="@+id/img_order_a_z"
@@ -44,12 +51,19 @@
         android:id="@+id/card_view_order_location"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:shape="ring"
         app:cardCornerRadius="35dp"
         app:layout_constraintEnd_toStartOf="@+id/card_view_order_timer"
         app:layout_constraintStart_toEndOf="@+id/card_view_order_a_z"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/medium_gray"
         app:strokeWidth="1dp">
+
+        <View
+            android:id="@+id/view_order_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
 
         <ImageView
             android:id="@+id/img_order_location"
@@ -76,11 +90,18 @@
         android:id="@+id/card_view_order_timer"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:shape="ring"
         app:cardCornerRadius="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/medium_gray"
         app:strokeWidth="1dp">
+
+        <View
+            android:id="@+id/view_order_timer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
 
         <ImageView
             android:id="@+id/img_order_timer"
@@ -108,12 +129,19 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="30dp"
+        android:shape="ring"
         app:cardCornerRadius="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_view_order_a_z"
         app:strokeColor="@color/medium_gray"
         app:strokeWidth="1dp">
+
+        <View
+            android:id="@+id/view_order_delivery_fee"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
 
         <ImageView
             android:id="@+id/img_order_delivery_fee"

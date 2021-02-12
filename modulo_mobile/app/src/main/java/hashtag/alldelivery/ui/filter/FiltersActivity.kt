@@ -16,21 +16,25 @@ class FiltersActivity : AppCompatActivity() {
     private val orderAZIcon by lazy { img_order_a_z }
     private val orderAZCard by lazy { card_view_order_a_z }
     private val orderAZText by lazy { txt_order_a_z }
+    private val orderAZView by lazy { view_order_a_z }
     private var isOrderAZChecked = false
 
     private val orderLocationIcon by lazy { img_order_location }
     private val orderLocationCard by lazy { card_view_order_location }
     private val orderLocationText by lazy { txt_order_location }
+    private val orderLocationView by lazy { view_order_location }
     private var isOrderLocationChecked = false
 
     private val orderTimerIcon by lazy { img_order_timer }
     private val orderTimerCard by lazy { card_view_order_timer }
     private val orderTimerText by lazy { txt_order_timer }
+    private val orderTimerView by lazy { view_order_timer }
     private var isOrderTimerChecked = false
 
     private val orderDeliveryFeeIcon by lazy { img_order_delivery_fee }
     private val orderDeliveryFeeCard by lazy { card_view_order_delivery_fee }
     private val orderDeliveryFeeText by lazy { txt_order_delivery_fee }
+    private val orderDeliveryFeeView by lazy { view_order_delivery_fee }
     private var isOrderDeliveryFeeChecked = false
 
     private val clearButton by lazy { btn_limpar_filters }
@@ -155,19 +159,19 @@ class FiltersActivity : AppCompatActivity() {
 
     private fun clearFilters() {
 
-        orderAZCard.background.setTint(getColor(R.color.deprecated_white_transparent))
+        orderAZView.setBackgroundResource(R.color.white)
         orderAZText.setTextColor(getColor(R.color.deprecated_dark_grey))
         isOrderAZChecked = false
 
-        orderLocationCard.background.setTint(getColor(R.color.deprecated_white_transparent))
+        orderLocationView.setBackgroundResource(R.color.white)
         orderLocationText.setTextColor(getColor(R.color.deprecated_dark_grey))
         isOrderLocationChecked = false
 
-        orderTimerCard.background.setTint(getColor(R.color.deprecated_white_transparent))
+        orderTimerView.setBackgroundResource(R.color.white)
         orderTimerText.setTextColor(getColor(R.color.deprecated_dark_grey))
         isOrderTimerChecked = false
 
-        orderDeliveryFeeCard.background.setTint(getColor(R.color.deprecated_white_transparent))
+        orderDeliveryFeeView.setBackgroundResource(R.color.white)
         orderDeliveryFeeText.setTextColor(getColor(R.color.deprecated_dark_grey))
         isOrderDeliveryFeeChecked = false
 
@@ -178,7 +182,7 @@ class FiltersActivity : AppCompatActivity() {
 
 //        Muda a cor item A-Z
 
-        orderAZCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
+        orderAZView.setBackgroundResource(R.color.colorPrimary_75_translucent)
         orderAZText.setTextColor(getColor(R.color.colorPrimary))
         isOrderAZChecked = true
         SORT_FILTER = EnumSortBy.SORT_BY_A_Z.ordinal
@@ -189,7 +193,7 @@ class FiltersActivity : AppCompatActivity() {
         clearFilters()
 
 //        Muda a cor do item localização
-        orderLocationCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
+        orderLocationView.setBackgroundResource(R.color.colorPrimary_75_translucent)
         orderLocationText.setTextColor(getColor(R.color.colorPrimary))
         isOrderLocationChecked = true
         SORT_FILTER = EnumSortBy.SORT_BY_LOCALIZATION.ordinal
@@ -200,7 +204,7 @@ class FiltersActivity : AppCompatActivity() {
         clearFilters()
 
 //        Muda a cor do item tempo de entrega
-        orderTimerCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
+        orderTimerView.setBackgroundResource(R.color.colorPrimary_75_translucent)
         orderTimerText.setTextColor(getColor(R.color.colorPrimary))
         isOrderTimerChecked = true
         SORT_FILTER = EnumSortBy.SORT_BY_TIMER.ordinal
@@ -211,7 +215,7 @@ class FiltersActivity : AppCompatActivity() {
         clearFilters()
 
 //        Muda a cor do item taxa de entrega
-        orderDeliveryFeeCard.background.setTint(getColor(R.color.colorPrimary_75_translucent))
+        orderDeliveryFeeView.setBackgroundResource(R.color.colorPrimary_75_translucent)
         orderDeliveryFeeText.setTextColor(getColor(R.color.colorPrimary))
         isOrderDeliveryFeeChecked = true
         SORT_FILTER = EnumSortBy.SORT_BY_DELIVERY_FEE.ordinal
