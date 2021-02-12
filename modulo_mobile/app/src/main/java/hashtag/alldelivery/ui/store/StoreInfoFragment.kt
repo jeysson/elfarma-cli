@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.store_card_toolbar.back_button
+import java.text.NumberFormat
+import java.util.*
 
 class StoreInfoFragment : Fragment() {
 
@@ -40,11 +43,18 @@ class StoreInfoFragment : Fragment() {
 
         topbar_title.text = getString(R.string.store_information)
 
+//            transforma em valor em moeda e verifica se é 0 ou nulo
+        var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(STORE?.taxaEntrega)
+        if (STORE?.taxaEntrega == 0f || STORE?.taxaEntrega == null) {
+            deliveryFee.setTextColor(resources.getColor(R.color.deprecated_forest))
+            storeFee = "Gratis"
+        }
+
         storeName.text = STORE?.nomeFantasia
         storeDescription.text = STORE?.descricao
         deliveryTime.text = "${returnHour(STORE?.hAbre)} às ${returnHour(STORE?.hFecha)}"
-        deliveryDefaultTimer.text = "${STORE?.tempoMinimo}m • ${STORE?.tempoMaximo}m"
-        deliveryFee.text = "R$ ${STORE?.taxaEntrega}"
+        deliveryDefaultTimer.text = "${STORE?.tempoMinimo} - ${STORE?.tempoMaximo} min"
+        deliveryFee.text = "$storeFee"
         back_button.setOnClickListener {
             activity?.onBackPressed()
         }

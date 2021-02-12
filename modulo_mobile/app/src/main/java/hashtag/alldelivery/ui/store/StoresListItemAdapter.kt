@@ -1,7 +1,6 @@
 package hashtag.alldelivery.ui.store
 
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -75,9 +74,10 @@ class StoresListItemAdapter(
                 holder.logo.setImageResource(R.drawable.ic_medicine)
             }
 
+//            transforma em valor em moeda e verifica se é 0 ou nulo
             var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(item.taxaEntrega)
             if (item.taxaEntrega == 0f || item.taxaEntrega == null) {
-                holder.deliveryFree.setTextColor(activity?.getColor(R.color.deprecated_forest))
+                holder.deliveryFee.setTextColor(activity?.getColor(R.color.deprecated_forest))
                 storeFee = "Gratis"
             }
 
@@ -85,7 +85,7 @@ class StoresListItemAdapter(
             holder.rating.text = "4,5"
             holder.categoryDistance.text = "${item.distancia}"
             holder.deliveryTime.text = "${item.tempoMinimo} - ${item.tempoMaximo} min"
-            holder.deliveryFree.text = "$storeFee"
+            holder.deliveryFee.text = "$storeFee"
             holder.categoryType.text = "Farmácia"
 
             holder.card.setTag(position)
@@ -114,7 +114,7 @@ class StoresListItemAdapter(
         val rating = view.rating_store_item
         val categoryDistance = view.distance_store_item
         val deliveryTime = view.delivery_time
-        val deliveryFree = view.delivery_free
+        val deliveryFee = view.delivery_free
         val categoryType = view.category_store_item
         val starIcon = view.star_icon
         val dividerRatingCategory = view.divider_rating_category
