@@ -109,4 +109,6 @@
     <string name="horarios_de_entrega">Horários de entrega</string>
     <string name="tempo_medio_de_entrega">Tempo médio de entrega</string>
     <string name="cancelar">Cancelar</string>
+    <string name="loja">Loja</string>
+    <string name="hor_rio_de_funcionamento">horário de funcionamento</string>
 </resources>
