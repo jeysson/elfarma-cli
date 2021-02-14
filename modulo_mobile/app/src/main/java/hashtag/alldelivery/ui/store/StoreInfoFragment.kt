@@ -46,7 +46,7 @@ class StoreInfoFragment : Fragment() {
 //            transforma em valor em moeda e verifica se é 0 ou nulo
         var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(STORE?.taxaEntrega)
         if (STORE?.taxaEntrega == 0f || STORE?.taxaEntrega == null) {
-            deliveryFee.setTextColor(resources.getColor(R.color.deprecated_forest))
+            deliveryFee.setTextColor(resources.getColor(R.color.green_free_item))
             storeFee = "Gratis"
         }
 

@@ -81,7 +81,7 @@ class StoresListItemAdapter(
 //            transforma em valor em moeda e verifica se é 0 ou nulo
             var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(item.taxaEntrega)
             if (item.taxaEntrega == 0f || item.taxaEntrega == null) {
-                holder.deliveryFee.setTextColor(activity?.getColor(R.color.deprecated_forest))
+                holder.deliveryFee.setTextColor(activity?.getColor(R.color.green_free_item))
                 storeFee = "Gratis"
             }
 
