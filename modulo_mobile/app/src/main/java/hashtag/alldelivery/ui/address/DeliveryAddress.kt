@@ -21,9 +21,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
+import hashtag.alldelivery.AllDeliveryApplication.Companion.getShortAddress
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.*
@@ -56,12 +58,30 @@ class DeliveryAddress : AppCompatActivity() {
         }
 
         location.setOnClickListener {
-            ADDRESS = null
-            //            Deve encerrar activity atual e retornar true -> Carregar nova lista de lojas
-            val returnIntent = Intent()
-            returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
-            setResult(RESULT_OK, returnIntent)
-            finish()
+
+            val value = getShortAddress(
+                this, ADDRESS!!.lat!!,
+                ADDRESS!!.longi!!,
+                ADDRESS!!.number!!
+            )
+
+//            Verifica se o endereço é válido, do contrário direciona o usuário para definir endereço manualmente
+            if (value != null) {
+                ADDRESS = null
+                //            Deve encerrar activity atual e retornar true -> Carregar nova lista de lojas
+                val returnIntent = Intent()
+                returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
+                setResult(RESULT_OK, returnIntent)
+                finish()
+            } else {
+
+                Toast.makeText(this, "Localização inválida", Toast.LENGTH_LONG).show()
+
+                ADDRESS = Address()
+                val intent = Intent(this, AddressSet::class.java)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+            }
+
         }
 
         search_box.setOnClickListener {
@@ -75,9 +95,9 @@ class DeliveryAddress : AppCompatActivity() {
         setupObservers()
     }
 
-    private fun getLastLocation(){
-        if(CheckPermission()){
-            if(isLocationEnable()){
+    private fun getLastLocation() {
+        if (CheckPermission()) {
+            if (isLocationEnable()) {
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -98,23 +118,31 @@ class DeliveryAddress : AppCompatActivity() {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     var location: Location? = task.result
 
-                    if(location == null){
+                    if (location == null) {
                         getNewLocation()
-                    }else
-                    {
-                        AllDeliveryApplication.LAT_LONG = LatLng(location.latitude, location.longitude)
-                        description_address.text = AllDeliveryApplication.getAddress(baseContext, location.latitude, location.longitude)
+                    } else {
+                        AllDeliveryApplication.LAT_LONG =
+                            LatLng(location.latitude, location.longitude)
+                        description_address.text = AllDeliveryApplication.getAddress(
+                            baseContext,
+                            location.latitude,
+                            location.longitude
+                        )
                     }
                 }
-            }else{
-                Toast.makeText(this, "Por favor, habilite seu serviço de localização!", Toast.LENGTH_SHORT)
+            } else {
+                Toast.makeText(
+                    this,
+                    "Por favor, habilite seu serviço de localização!",
+                    Toast.LENGTH_SHORT
+                )
             }
-        }else{
+        } else {
             RequestPermission()
         }
     }
 
-    private fun getNewLocation(){
+    private fun getNewLocation() {
         locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 0
@@ -137,18 +165,27 @@ class DeliveryAddress : AppCompatActivity() {
             // for ActivityCompat#requestPermissions for more details.
             return
         }
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.myLooper()
+        )
     }
 
-    private  val locationCallback = object:LocationCallback(){
+    private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(p0: LocationResult?) {
             var lastLocation = p0?.lastLocation
 
             if (lastLocation != null) {
-                AllDeliveryApplication.LAT_LONG = LatLng(lastLocation.latitude, lastLocation.longitude)
+                AllDeliveryApplication.LAT_LONG =
+                    LatLng(lastLocation.latitude, lastLocation.longitude)
             }
 
-            description_address.text = AllDeliveryApplication.getAddress(baseContext, lastLocation!!.latitude, lastLocation.longitude)
+            description_address.text = AllDeliveryApplication.getAddress(
+                baseContext,
+                lastLocation!!.latitude,
+                lastLocation.longitude
+            )
         }
     }
 
@@ -157,28 +194,35 @@ class DeliveryAddress : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-       if(requestCode == PERMISSION_ID){
-           if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-               Log.d("[Address]","Permissão concedida!")
-               getLastLocation()
-           }
-       }
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("[Address]", "Permissão concedida!")
+                getLastLocation()
+            }
+        }
     }
 
-    private fun isLocationEnable(): Boolean
-    {
+    private fun isLocationEnable(): Boolean {
         var location = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            return location.isProviderEnabled(LocationManager.GPS_PROVIDER) || location.isProviderEnabled(
-                LocationManager.NETWORK_PROVIDER)
+        return location.isProviderEnabled(LocationManager.GPS_PROVIDER) || location.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
-    fun CheckPermission():Boolean{
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    fun CheckPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun RequestPermission(){
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+    fun RequestPermission() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_ID
         )
     }

@@ -67,13 +67,13 @@ class AllDeliveryApplication : Application() {
             lat: Double,
             long: Double,
             addressNumber: String?
-        ): String {
+        ): String? {
             if (LAT_LONG != null) {
                 var geoCoder = Geocoder(context, Locale.getDefault())
                 var address = geoCoder.getFromLocation(lat, long, 1)
                 if (addressNumber == null){
 
-                    var value =  ""
+                    var value: String? =  ""
                     if (!address[0].thoroughfare.isNullOrEmpty() && !address[0].subLocality.isNullOrEmpty()){
                         value =  address[0].thoroughfare + ", próximo há " + address[0].subLocality
                     }else if (address[0].thoroughfare.isNullOrEmpty() && !address[0].subLocality.isNullOrEmpty()) {
@@ -81,7 +81,7 @@ class AllDeliveryApplication : Application() {
                     }else if (!address[0].thoroughfare.isNullOrEmpty() && address[0].subLocality.isNullOrEmpty()) {
                         value = address[0].thoroughfare
                     }else if (address[0].thoroughfare.isNullOrEmpty() && address[0].subLocality.isNullOrEmpty()){
-                        value = "Não foi possivel encontrar"
+                        value = null
                     }
 
                     return value
