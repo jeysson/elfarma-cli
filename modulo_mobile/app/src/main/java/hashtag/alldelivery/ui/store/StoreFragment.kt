@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
@@ -21,6 +24,8 @@ import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
 import com.squareup.picasso.Picasso
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
+import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER_STORE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
@@ -31,6 +36,8 @@ import hashtag.alldelivery.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.store_card_toolbar.*
 import kotlinx.android.synthetic.main.store_fragment.*
 import kotlinx.android.synthetic.main.store_menu_header.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -134,7 +141,11 @@ class StoreFragment : Fragment(){
         }
 
         setupObservers()
-        carregarProdutos()
+
+//      delay para auxilio de UX
+        Handler(Looper.getMainLooper()).postDelayed({
+            carregarProdutos()
+        }, REFRESH_DELAY_TIMER_STORE)
         syncTabWithRecyclerView()
     }
 

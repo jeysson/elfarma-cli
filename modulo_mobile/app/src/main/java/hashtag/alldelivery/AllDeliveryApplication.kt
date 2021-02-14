@@ -29,6 +29,7 @@ class AllDeliveryApplication : Application() {
         var PRODUCT: Product? = null
 
         const val REFRESH_DELAY_TIMER: Long = 1500
+        const val REFRESH_DELAY_TIMER_STORE: Long = 500
 //        Filtro Default 1 (filtro por Localização)
         var SORT_FILTER = 1
 
