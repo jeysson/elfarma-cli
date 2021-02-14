@@ -54,6 +54,10 @@ class DeliveryAddress : AppCompatActivity() {
         }
 
         location.setOnClickListener {
+            //            Deve encerrar activity atual e retornar true -> Carregar nova lista de lojas
+            val returnIntent = Intent()
+            returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
+            setResult(RESULT_OK, returnIntent)
             finish()
         }
 

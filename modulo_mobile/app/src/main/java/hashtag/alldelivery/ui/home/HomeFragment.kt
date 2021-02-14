@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
-import hashtag.alldelivery.AllDeliveryApplication.Companion.FILTER_REQUEST_CODE
+import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
@@ -93,7 +93,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
+            startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
+//            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -222,7 +223,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         val adapter = FilterListAdapter(list) {
             val intent = Intent(myView.context, FiltersActivity::class.java)
-            startActivityForResult(intent, FILTER_REQUEST_CODE)
+            startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
         }
         adapter.setFilter(list)
         quick_filters.adapter = adapter
@@ -234,7 +235,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == FILTER_REQUEST_CODE) {
+        if (requestCode == NEW_SEARCH_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
 //              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
 //              Timer para atrazar o encerramento do swipeRefresh -> UX

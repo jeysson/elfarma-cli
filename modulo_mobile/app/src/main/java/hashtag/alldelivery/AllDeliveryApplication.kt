@@ -31,11 +31,11 @@ class AllDeliveryApplication : Application() {
         const val REFRESH_DELAY_TIMER: Long = 1500
         const val REFRESH_DELAY_TIMER_STORE: Long = 500
 //        Filtro Default 1 (filtro por Localização)
-        var SORT_FILTER = 1
+        var SORT_FILTER = 0
 
         //      RequestCode Control que solicita a exibição de novos itens, vindo da pagina filtros
         const val RESULTS = "RESULTS"
-        const val FILTER_REQUEST_CODE = 1
+        const val NEW_SEARCH_REQUEST_CODE = 1
 
         //        Para validação de paginas exibidas por InfinityScrow
         var PAGE_OBSERVER = 1
