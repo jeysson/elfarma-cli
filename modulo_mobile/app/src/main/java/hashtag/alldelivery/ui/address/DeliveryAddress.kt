@@ -23,6 +23,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.*
@@ -50,10 +51,12 @@ class DeliveryAddress : AppCompatActivity() {
         kebab.visibility = View.GONE
 
         back_button.setOnClickListener {
+            LAT_LONG = null
             finish()
         }
 
         location.setOnClickListener {
+            ADDRESS = null
             //            Deve encerrar activity atual e retornar true -> Carregar nova lista de lojas
             val returnIntent = Intent()
             returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
@@ -196,4 +199,7 @@ class DeliveryAddress : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    companion object {
+
+    }
 }

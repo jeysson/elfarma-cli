@@ -1,5 +1,6 @@
 package hashtag.alldelivery.ui.address
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -73,7 +74,12 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity) :
                 address[position].longi!!
             )
 
-            activity.finish()
+            activity.apply {
+                val returnIntent = Intent()
+                returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
+                setResult(AppCompatActivity.RESULT_OK, returnIntent)
+                finish()
+            }
         }
 
     }
