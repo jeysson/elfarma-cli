@@ -1,6 +1,8 @@
 package hashtag.alldelivery.ui.products
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER_STORE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
@@ -53,8 +56,6 @@ class ProductSearch : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
         getAll()
-
-
 
         //config rv
         _recyclerProductList.layoutManager = GridLayoutManager(context, 2)
@@ -107,10 +108,12 @@ class ProductSearch : Fragment() {
 
         }
 
-        lifecycleScope.launch(Dispatchers.IO) {
-            getItems()
+        Handler(Looper.getMainLooper()).postDelayed({
+            lifecycleScope.launch(Dispatchers.IO) {
+                getItems()
+            }
+        }, REFRESH_DELAY_TIMER_STORE)
 
-        }
     }
 
     fun getAll() {
