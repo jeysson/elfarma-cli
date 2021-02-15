@@ -6,6 +6,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -68,6 +69,15 @@ class StoresListItemAdapter(
             holder.dividerCategoryDistance.visibility = GONE
             holder.dividerRatingCategory.visibility = GONE
 
+//            Animação de fadeIn
+            holder.logo.alpha = 0f
+            holder.logo.animate().apply {
+                interpolator = LinearInterpolator()
+                duration = 1000
+                alpha(1f)
+                startDelay = 100
+                start()
+            }
 
 //           Inserindo imagem
             if(item.logo != null){

@@ -1,6 +1,8 @@
 package hashtag.alldelivery.ui.home
 
 import android.app.Activity
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -23,6 +25,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS_PREFS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ID_KEY
 import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
@@ -200,8 +204,25 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun carregarUltimoEndereco() = GlobalScope.async {
-        myAddress = addressViewModel.firstAddress()
+        var preferenceAddress : Int = -1
+        activity?.apply {
+//            Pega o Id Salvo no sharedPreferences
+            val preferences = getSharedPreferences(
+                ADDRESS_PREFS,
+                MODE_PRIVATE
+            )
+            preferenceAddress = preferences.getInt(ID_KEY, -1)
+        }
+
         address.text = getString(R.string.address_list_location_activate)
+
+        if (preferenceAddress == -1){
+            myAddress = addressViewModel.firstAddress()
+        }else {
+            myAddress = addressViewModel.loadById(preferenceAddress)
+        }
+
+
 
         if (myAddress != null) {
             ADDRESS = myAddress
@@ -248,7 +269,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     override fun onResume() {
-
         super.onResume()
 
         if (ADDRESS?.id != null) {

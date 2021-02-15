@@ -46,4 +46,8 @@ class AddressViewModel(application: Application): AndroidViewModel(application) 
     fun firstAddress(): Address {
         return repository.firstAddress()
     }
+
+    fun loadById(id: Int): Address {
+        return repository.loadById(id)
+    }
 }

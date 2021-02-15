@@ -12,6 +12,9 @@ interface AddressDao {
     @Query("SELECT * FROM address WHERE id IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): LiveData<List<Address>>
 
+    @Query("SELECT * FROM address WHERE id = :id")
+    fun loadById(id: Int): Address
+
     @Query("SELECT * FROM address WHERE address LIKE :address AND " +
             "number = :number LIMIT 1")
     fun findByName(address: String, number: String): Address

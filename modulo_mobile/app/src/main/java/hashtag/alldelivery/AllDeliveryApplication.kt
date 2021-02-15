@@ -30,6 +30,9 @@ class AllDeliveryApplication : Application() {
 
         const val REFRESH_DELAY_TIMER: Long = 1500
         const val REFRESH_DELAY_TIMER_STORE: Long = 500
+        const val ADDRESS_PREFS = "ADDRESS_PREFS"
+        const val ID_KEY = "MY_PERSONAL_ID"
+
 //        Filtro Default 1 (filtro por Localização)
         var SORT_FILTER = 0
 

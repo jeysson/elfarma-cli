@@ -1,5 +1,7 @@
 package hashtag.alldelivery.ui.address
 
+import android.annotation.SuppressLint
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -19,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS_PREFS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ID_KEY
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
@@ -43,6 +47,7 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity) :
 
     }
 
+    @SuppressLint("CommitPrefEdits")
     override fun onBindViewHolder(holder: AddressItemViewHolder, position: Int) {
 
 
@@ -75,6 +80,13 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity) :
             )
 
             activity.apply {
+//                Armazena como endereço atual
+                val preferences = getSharedPreferences(ADDRESS_PREFS, MODE_PRIVATE)
+                preferences.edit()
+                    .putInt(ID_KEY, ADDRESS!!.id!!)
+                    .apply()
+
+//                Inicia uma nova busca
                 val returnIntent = Intent()
                 returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
                 setResult(AppCompatActivity.RESULT_OK, returnIntent)

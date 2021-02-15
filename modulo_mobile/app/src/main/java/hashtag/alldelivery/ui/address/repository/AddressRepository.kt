@@ -29,4 +29,8 @@ class AddressRepository(private val addressDao: AddressDao) {
     fun firstAddress(): Address{
        return addressDao.firstAddress()
     }
+
+    fun loadById(id: Int): Address{
+        return addressDao.loadById(id)
+    }
 }
