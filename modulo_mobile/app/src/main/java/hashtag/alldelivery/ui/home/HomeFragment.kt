@@ -90,8 +90,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         _homeLoading.visibility = VISIBLE
 
         setupObservers()
-        carregarUltimoEndereco()
-        carregarFiltros()
+        getCurrentAddress()
+        loadFilters()
         carregarTodosEnderecos()
         getActiveStores(true)
 //        setScrollView()
@@ -159,8 +159,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         //        Timer para atrazar o encerramento do loading -> UX
         Handler(Looper.getMainLooper()).postDelayed({
             _swipeRefresh.isRefreshing = false
-            home_cards.visibility = VISIBLE
-            loading.visibility = GONE
+            _homeCards.visibility = VISIBLE
+            _homeLoading.visibility = GONE
         }, REFRESH_DELAY_TIMER)
 
     }
@@ -200,7 +200,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
     }
 
-    private fun carregarUltimoEndereco() = GlobalScope.async {
+    private fun getCurrentAddress() = GlobalScope.async {
         var preferenceAddress : Int = -1
         activity?.apply {
 //            Pega o Id Salvo no sharedPreferences
@@ -234,7 +234,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
     }
 
-    private fun carregarFiltros() = GlobalScope.async {
+    private fun loadFilters() = GlobalScope.async {
         val list = ArrayList<Filter>()
         val f1 = Filter(getString(R.string.filtros))
         list.add(f1)
