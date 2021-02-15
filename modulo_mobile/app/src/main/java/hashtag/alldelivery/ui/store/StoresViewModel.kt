@@ -36,9 +36,8 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
 
 
         _storeRep.getActiveStores(_page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
-            if (it != null && it.isNotEmpty()) {
-                _stores.postValue(it)
-            } else {
+            _stores.postValue(it)
+            if (it.isNullOrEmpty()) {
                 eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
             }
         }, {
@@ -56,8 +55,9 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
         Log.d("PAGE_GET_NEXT", "$_page")
 
         _storeRep.getActiveStores(_page, _controlIndice, latitude, longitude, tipoOrdenacao).subscribe({
-            if (it != null && it.isNotEmpty()) {
-                _stores.postValue(it)
+            _stores.postValue(it)
+            if (it.isNullOrEmpty()) {
+                eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
             }
         }, {
             eventErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))

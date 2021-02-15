@@ -30,6 +30,7 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.utils.OnBackPressedListener
 import hashtag.alldelivery.ui.products.GroupProductsAdapter
 import hashtag.alldelivery.ui.products.ProductSearch
 import hashtag.alldelivery.ui.products.ProductViewModel
@@ -42,7 +43,7 @@ import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class StoreFragment : Fragment(){
+class StoreFragment : Fragment(), OnBackPressedListener{
 
     private var isUserScrolling: Boolean = false
     val viewModelProduct: ProductViewModel by sharedViewModel()
@@ -86,8 +87,7 @@ class StoreFragment : Fragment(){
         }
 
         back_button.setOnClickListener {
-            StatusBarUtil.setLightMode(activity)
-            activity?.onBackPressed()
+            back()
         }
 
         page_header.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
@@ -259,6 +259,17 @@ class StoreFragment : Fragment(){
                 }
             }
         });
+    }
+
+    private fun back(){
+        StatusBarUtil.setLightMode(activity)
+        activity!!.supportFragmentManager.popBackStack()
+        activity!!.supportFragmentManager.beginTransaction()
+            .remove(this).commit()
+    }
+
+    override fun onBackPressed() {
+        back()
     }
 
 }

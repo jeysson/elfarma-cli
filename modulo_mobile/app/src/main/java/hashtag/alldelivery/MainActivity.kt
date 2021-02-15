@@ -5,10 +5,12 @@ import android.os.StrictMode
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jaeger.library.StatusBarUtil
+import hashtag.alldelivery.core.utils.OnBackPressedListener
 import org.jetbrains.anko.toast
 
 
@@ -64,4 +66,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        var fragmentVisible = false
+        this.supportFragmentManager.getFragments().forEach {
+            if((it as? NavHostFragment) == null && it.isVisible){
+                fragmentVisible = true
+                (it as? OnBackPressedListener)?.onBackPressed()
+            }
+        }
+        if(!fragmentVisible){
+            super.onBackPressed()
+        }
+    }
 }

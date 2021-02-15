@@ -1,5 +1,6 @@
 package hashtag.alldelivery.ui.products
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
     var images: MutableLiveData<List<ProductImage>> = MutableLiveData()
     var eventoErro = SingleLiveEvent<BusinessEvent>()
 
+    @SuppressLint("CheckResult")
     fun getAllProducts(id: Int?): MutableLiveData<List<Product>> {
 
         producRep.getAllProducts(id).subscribe({
@@ -44,11 +46,11 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
         return resp.body()!!
     }
 
+    @SuppressLint("CheckResult")
     fun getGroupProductsAsync(store: Int?, group: Int?) : MutableLiveData<List<Product>> {
         producRep.getProductsGroupAsync(store, group).subscribe({
-                if(it != null && it.isNotEmpty()) {
-                    products.postValue(it)
-                } else {
+            products.postValue(it)
+                if(it.isNullOrEmpty()) {
                     eventoErro.postValue(BusinessEvent("Nenhum produto encontrado."))
                 }
             },{
@@ -58,12 +60,12 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
         return products
     }
 
+    @SuppressLint("CheckResult")
     fun getAllGroups(id: Int?): MutableLiveData<List<Group>> {
 
         producRep.getAllGroups(id).subscribe({
-            if(it != null && it.isNotEmpty()) {
-                groups.postValue(it)
-            } else {
+            groups.postValue(it)
+            if(it.isNullOrEmpty()) {
                 eventoErro.postValue(BusinessEvent("Nenhum grupo encontrado."))
             }
         },{
@@ -77,11 +79,11 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
         return producRep.getImages(id).execute().body()!!
     }
 
+    @SuppressLint("CheckResult")
     fun getImagesAsync(id: Int?): MutableLiveData<List<ProductImage>>{
         producRep.getImagesAsync(id).subscribe({
-            if(it != null && it.isNotEmpty()) {
-                images.postValue(it)
-            } else {
+            images.postValue(it)
+            if(it.isNullOrEmpty()) {
                 eventoErro.postValue(BusinessEvent("Nenhuma imagem encontrada."))
             }
         },{

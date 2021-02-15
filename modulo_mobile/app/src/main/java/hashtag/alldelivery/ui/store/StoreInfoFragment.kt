@@ -10,12 +10,13 @@ import androidx.fragment.app.Fragment
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.utils.OnBackPressedListener
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.store_card_toolbar.back_button
 import java.text.NumberFormat
 import java.util.*
 
-class StoreInfoFragment : Fragment() {
+class StoreInfoFragment : Fragment(), OnBackPressedListener {
 
     private lateinit var _viewModel: StoreViewModel
     private lateinit var _view: View
@@ -56,7 +57,7 @@ class StoreInfoFragment : Fragment() {
         deliveryDefaultTimer.text = "${STORE?.tempoMinimo} - ${STORE?.tempoMaximo} min"
         deliveryFee.text = "$storeFee"
         back_button.setOnClickListener {
-            activity?.onBackPressed()
+            back()
         }
 
     }
@@ -75,5 +76,17 @@ class StoreInfoFragment : Fragment() {
 
     companion object {
         fun newInstance() = StoreFragment()
+    }
+
+
+    private fun back(){
+//        StatusBarUtil.setLightMode(activity)
+        activity!!.supportFragmentManager.popBackStack()
+        activity!!.supportFragmentManager.beginTransaction()
+            .remove(this).commit()
+    }
+
+    override fun onBackPressed() {
+        back()
     }
 }

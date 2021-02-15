@@ -20,13 +20,14 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER_
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
+import hashtag.alldelivery.core.utils.OnBackPressedListener
 import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
-class ProductSearch : Fragment() {
+class ProductSearch : Fragment(), OnBackPressedListener {
 
     private lateinit var _view: View
     private lateinit var _productAdapter: ProductsListItemAdapter
@@ -101,7 +102,7 @@ class ProductSearch : Fragment() {
 
         _cancelButton.setOnClickListener {
             if (_editSearch.text.isNullOrBlank()){
-                activity?.onBackPressed()
+                back()
             }else {
                 _editSearch.setText("")
             }
@@ -191,6 +192,18 @@ class ProductSearch : Fragment() {
                 getMoreItems()
             }
         }
+    }
+
+
+    private fun back(){
+//        StatusBarUtil.setLightMode(activity)
+        activity!!.supportFragmentManager.popBackStack()
+        activity!!.supportFragmentManager.beginTransaction()
+            .remove(this).commit()
+    }
+
+    override fun onBackPressed() {
+        back()
     }
 
 
