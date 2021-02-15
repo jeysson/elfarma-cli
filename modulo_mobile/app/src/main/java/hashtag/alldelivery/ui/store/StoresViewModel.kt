@@ -17,7 +17,6 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
 
 
     //    Itens de paginação
-    private var _storesNewSearch: MutableLiveData<List<Store>> = MutableLiveData()
     private var _page = 1
     private var _controlIndice = 10
     private var _lat: Double? = 0.0
