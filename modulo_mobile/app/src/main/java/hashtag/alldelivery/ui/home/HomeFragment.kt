@@ -1,7 +1,6 @@
 package hashtag.alldelivery.ui.home
 
 import android.app.Activity
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
@@ -17,7 +16,6 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -44,7 +42,6 @@ import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.home_cards
-import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -58,7 +55,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private lateinit var homeViewModel: HomeViewModel
     private var isConnected: Boolean = false
     private lateinit var _view: View
-    private lateinit var myAddress: Address
+    private lateinit var _currentAddress: Address
     private val _swipeRefresh by lazy { _view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh) }
     private val _homeCards by lazy { _view.findViewById<RecyclerView>(R.id.home_cards) }
     private val _homeLoading by lazy { _view.findViewById<Loading>(R.id.loading) }
@@ -93,10 +90,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         _homeLoading.visibility = VISIBLE
 
         setupObservers()
-        getActiveStores(true)
         carregarUltimoEndereco()
         carregarFiltros()
         carregarTodosEnderecos()
+        getActiveStores(true)
 //        setScrollView()
 
         address_with_scheduling.setOnClickListener {
@@ -154,7 +151,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             LAT_LONG?.longitude,
             SORT_FILTER
         ).observe(viewLifecycleOwner, Observer<List<Store>> {
-            var x = arrayListOf<Store>(Store())
+            val x = arrayListOf<Store>(Store())
             x.addAll(it)
             showResults(x, isNewSearch)
         })
@@ -217,22 +214,22 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         address.text = getString(R.string.address_list_location_activate)
 
         if (preferenceAddress == -1){
-            myAddress = addressViewModel.firstAddress()
+            _currentAddress = addressViewModel.firstAddress()
         }else {
-            myAddress = addressViewModel.loadById(preferenceAddress)
+            _currentAddress = addressViewModel.loadById(preferenceAddress)
         }
 
 
 
-        if (myAddress != null) {
-            ADDRESS = myAddress
-            LAT_LONG = LatLng(myAddress.lat!!, myAddress.longi!!)
+        if (_currentAddress != null) {
+            ADDRESS = _currentAddress
+            LAT_LONG = LatLng(_currentAddress.lat!!, _currentAddress.longi!!)
 
             address.text = AllDeliveryApplication.getShortAddress(
                 _view.context,
-                myAddress.lat!!,
-                myAddress.longi!!,
-                myAddress.number
+                _currentAddress.lat!!,
+                _currentAddress.longi!!,
+                _currentAddress.number
             )
         }
     }
