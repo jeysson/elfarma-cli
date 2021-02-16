@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -16,6 +17,8 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,12 +39,14 @@ import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
+import hashtag.alldelivery.ui.products.ProductsListItemAdapter
 import hashtag.alldelivery.ui.store.StoresListItemAdapter
 import hashtag.alldelivery.ui.store.StoresViewModel
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.home_cards
+import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -60,12 +65,12 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private val _homeCards by lazy { _view.findViewById<RecyclerView>(R.id.home_cards) }
     private val _homeLoading by lazy { _view.findViewById<Loading>(R.id.loading) }
     private lateinit var _adapter: StoresListItemAdapter
-    private var _storeList = mutableListOf<Store>()
+    private var _storeList = ArrayList<Store>()
 
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
     var page = 1
-    var itemsPerPage = 10
+    var itemsPerPage = 8
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -80,10 +85,25 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         _view = view
         _homeCards.layoutManager = LinearLayoutManager(context)
-        _adapter = StoresListItemAdapter(activity as AppCompatActivity, _storeList)
-        _homeCards.adapter = _adapter
+        //_adapter = StoresListItemAdapter(activity as AppCompatActivity, _storeList)
+        //_homeCards.adapter = _adapter
         _homeCards.setHasFixedSize(true)
+        _homeCards.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val recyclerLayout = (_homeCards.layoutManager as LinearLayoutManager)
 
+                if (!isLoading && !isLastPage) {
+                    //if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 1) {
+                        isLoading = true
+                        loading.visibility = View.VISIBLE
+                        page += 1
+                        getMoreItems()
+                    }
+                }
+            }
+        })
 //        Definindo a cor azul para o swipeRefresh
         _swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
 
@@ -93,7 +113,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         getCurrentAddress()
         loadFilters()
         carregarTodosEnderecos()
-        getActiveStores(true)
+        //getMoreItems()
 //        setScrollView()
 
         address_with_scheduling.setOnClickListener {
@@ -105,10 +125,18 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         _swipeRefresh.setOnRefreshListener {
 //        Timer para atrazar o inicio do swipeRefresh -> UX
             Handler(Looper.getMainLooper()).postDelayed({
-                getActiveStores(true)
-            }, REFRESH_DELAY_TIMER)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    getItems()
+                }
+            }, AllDeliveryApplication.REFRESH_DELAY_TIMER)
 
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            lifecycleScope.launch(Dispatchers.IO) {
+                getItems()
+            }
+        }, AllDeliveryApplication.REFRESH_DELAY_TIMER)
     }
 
 
@@ -116,8 +144,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         this.isConnected = isConnected
         if (!isConnected)
             toast("O dispositivo não está conectado")
-        else
-            getActiveStores(true)
+        else{
+            page = 1
+            getMoreItems()
+        }
     }
 
     private fun setupObservers() {
@@ -144,7 +174,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
 
     }
-
+/*
     fun getActiveStores(isNewSearch: Boolean?) {
         _storeViewModel.getActiveStores(
             LAT_LONG?.latitude,
@@ -192,7 +222,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             }
         })
     }
-
+*/
     private fun carregarTodosEnderecos() {
         addressViewModel.getAll().observe(viewLifecycleOwner) {
             AllDeliveryApplication.ADDRESS_LIST.addAll(it)
@@ -257,8 +287,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 //              Timer para atrazar o encerramento do swipeRefresh -> UX
                 _homeLoading.visibility = VISIBLE
                 _homeCards.visibility = GONE
-                getActiveStores(true)
-
+                page = 1
+                getMoreItems()
             }
         }
     }
@@ -286,4 +316,51 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     }
 
+    private suspend fun getItems() {
+        Log.d("INICIO", "incializando...")
+        isLoading = true
+        val homeFragment = this
+        //config adapter
+        _storeList = _storeViewModel.getPagingStores(
+            page,
+            itemsPerPage,
+            LAT_LONG?.latitude,
+            LAT_LONG?.longitude,
+            SORT_FILTER
+        )
+
+        withContext(Dispatchers.Main) {
+            _adapter = StoresListItemAdapter(
+                homeFragment,
+                _homeCards.layoutManager as LinearLayoutManager,
+                _storeList
+            )
+            _homeCards.adapter = _adapter
+            _adapter.notifyDataSetChanged()
+            loading.visibility = View.INVISIBLE
+            isLoading = false
+        }
+    }
+
+    fun getMoreItems() {
+        Log.d("MAIS", "obtendo...")
+        _homeCards.post {
+            lifecycleScope.launch(Dispatchers.IO) {
+                _storeList = _storeViewModel.getPagingStores(
+                    page,
+                    itemsPerPage,
+                     LAT_LONG?.latitude,
+                    LAT_LONG?.longitude,
+                    SORT_FILTER
+                )
+                withContext(Dispatchers.Main) {
+                    _adapter.addItems(_storeList)
+                    _adapter.notifyDataSetChanged()
+                    loading.visibility = View.INVISIBLE
+                }
+                isLastPage = _storeList.size == 0
+                isLoading = false
+            }
+        }
+    }
 }
