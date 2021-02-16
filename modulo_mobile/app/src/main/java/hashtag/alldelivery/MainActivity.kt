@@ -2,6 +2,8 @@ package hashtag.alldelivery
 
 import android.os.Bundle
 import android.os.StrictMode
+import android.view.View
+import android.view.animation.LinearInterpolator
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -16,19 +18,11 @@ import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var navView: BottomNavigationView
+    final val DURATION: Long = 400
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        /*if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .penaltyDeath().build())
-            StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .penaltyDeath().build())
-        }*/
+
         super.onCreate(savedInstanceState)
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -36,18 +30,8 @@ class MainActivity : AppCompatActivity() {
         StatusBarUtil.setTransparent(this)
 
         setContentView(R.layout.activity_main)
-//        supportActionBar?.hide()
-/*
-        more_icon.setImageResource(R.drawable.ic_medicine)
-        quantity.setText("1x")
-        name.setText("Bezetacil")
-        price.setText("R$87.00")
-        complements.setText("Remedio usado para gripe e sei lá.")
-        observation.setText("indicado para maiores de 18 anos")
-*/
 
-
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -62,8 +46,6 @@ class MainActivity : AppCompatActivity() {
         )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
     }
 
     override fun onBackPressed() {
@@ -76,6 +58,37 @@ class MainActivity : AppCompatActivity() {
         }
         if(!fragmentVisible){
             super.onBackPressed()
+        }
+    }
+
+    public fun hideBottomNavigation() {
+        // bottom_navigation is BottomNavigationView
+        with(navView) {
+            if (visibility == View.VISIBLE) {
+
+                animate().apply {
+                    duration = DURATION
+                    translationY(115f)
+                    withEndAction {
+                        visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
+
+    public fun showBottomNavigation() {
+        // bottom_navigation is BottomNavigationView
+        with(navView) {
+            if (visibility == View.GONE) {
+                animate().apply {
+                    duration = DURATION
+                    translationY(0f)
+                    withStartAction {
+                        visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 }

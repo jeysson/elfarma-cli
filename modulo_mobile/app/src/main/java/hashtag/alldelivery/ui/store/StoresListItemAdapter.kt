@@ -10,20 +10,27 @@ import android.view.animation.LinearInterpolator
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
+import hashtag.alldelivery.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
 
 class StoresListItemAdapter(
-    val act: AppCompatActivity,
-    val itens: List<Store>
+    val frag: Fragment,
+    val lLayoutManager: LinearLayoutManager?,
+    itens: ArrayList<Store>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
@@ -32,7 +39,10 @@ class StoresListItemAdapter(
 
     lateinit var listHeader: View
     lateinit var itemClickListener: AdapterView.OnItemClickListener
-    var activity = act
+    val fragment = frag
+    private val model: ProductViewModel by frag.sharedViewModel()
+    val itens: ArrayList<Store>? = itens
+    private lateinit var myView: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
         if (viewType == TYPE_HEADER) {
@@ -49,12 +59,10 @@ class StoresListItemAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (position > 0) {
             holder as StoreItemViewHolder
-            val item = itens[position]
-
-            val name = item.nomeFantasia
-
+            val item = itens?.get(position)
+            val name = item?.nomeFantasia
 //            Mostra "fechado" + overlay caso a loja esteja indisponível
-            if(!item.disponivel){
+            if(!item!!.disponivel){
                 holder.closedItemOverlay.visibility = VISIBLE
                 holder.closedText.visibility = VISIBLE
             }else {
@@ -91,7 +99,7 @@ class StoresListItemAdapter(
 //            transforma em valor em moeda e verifica se é 0 ou nulo
             var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(item.taxaEntrega)
             if (item.taxaEntrega == 0f || item.taxaEntrega == null) {
-                holder.deliveryFee.setTextColor(activity?.getColor(R.color.green_free_item))
+                holder.deliveryFee.setTextColor(fragment.activity!!.getColor(R.color.green_free_item))
                 storeFee = "Gratis"
             }
 
@@ -107,7 +115,7 @@ class StoresListItemAdapter(
         }
     }
 
-    override fun getItemCount() = itens.size
+    override fun getItemCount() = itens!!.size
 
     override fun getItemViewType(position: Int): Int {
         if (position == 0) {
@@ -141,8 +149,8 @@ class StoresListItemAdapter(
     override fun onClick(view: View?) {
         if (view is CardView) {
             var position = view!!.tag as Int
-            AllDeliveryApplication.STORE = itens[position]
-            val manager: FragmentManager = activity.supportFragmentManager
+            AllDeliveryApplication.STORE = itens!!.get(position)
+            val manager: FragmentManager = fragment.activity!!.supportFragmentManager
             manager.beginTransaction()
             manager.commit {
                 setCustomAnimations(
@@ -155,5 +163,12 @@ class StoresListItemAdapter(
                 addToBackStack(null)
             }
         }
+    }
+
+    fun addItems(lojas: List<Store>) {
+        var tamanhoAtual = itens?.size
+        itens?.addAll(lojas)
+        var tamanhoNovo = itens?.size
+        notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
     }
 }

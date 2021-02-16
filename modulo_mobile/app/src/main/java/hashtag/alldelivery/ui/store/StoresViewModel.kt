@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import hashtag.alldelivery.AllDeliveryApplication.Companion.PAGE_OBSERVER
 import hashtag.alldelivery.core.models.BusinessEvent
+import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.repository.IStoreRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
@@ -64,6 +65,11 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
         })
 
         return _stores
+    }
+
+    fun getPagingStores(page: Int?, total: Int?, lat: Double?, lon: Double?, tipoordenacao: Int?) : ArrayList<Store> {
+        var resp = _storeRep.getPagingStores(page, total, lat, lon, tipoordenacao).execute()
+        return resp.body()!!
     }
 
 }

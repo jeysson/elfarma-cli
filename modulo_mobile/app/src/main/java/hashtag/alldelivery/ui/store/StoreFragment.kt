@@ -27,6 +27,7 @@ import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER_STORE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Group
@@ -147,6 +148,7 @@ class StoreFragment : Fragment(), OnBackPressedListener{
             carregarProdutos()
         }, REFRESH_DELAY_TIMER_STORE)
         syncTabWithRecyclerView()
+        (activity as MainActivity).hideBottomNavigation()
     }
 
     private fun showBanner() {
@@ -266,6 +268,8 @@ class StoreFragment : Fragment(), OnBackPressedListener{
         activity!!.supportFragmentManager.popBackStack()
         activity!!.supportFragmentManager.beginTransaction()
             .remove(this).commit()
+
+        (activity as MainActivity).showBottomNavigation()
     }
 
     override fun onBackPressed() {
