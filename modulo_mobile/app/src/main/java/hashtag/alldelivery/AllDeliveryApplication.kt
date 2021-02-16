@@ -28,7 +28,7 @@ class AllDeliveryApplication : Application() {
         var STORE: Store? = null
         var PRODUCT: Product? = null
 
-        const val REFRESH_DELAY_TIMER: Long = 1500
+        const val REFRESH_DELAY_TIMER: Long = 1000
         const val REFRESH_DELAY_TIMER_STORE: Long = 500
         const val ADDRESS_PREFS = "ADDRESS_PREFS"
         const val ID_KEY = "MY_PERSONAL_ID"

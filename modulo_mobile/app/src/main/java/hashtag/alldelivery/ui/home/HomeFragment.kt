@@ -154,15 +154,14 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             val x = arrayListOf<Store>(Store())
             x.addAll(it)
             showResults(x, isNewSearch)
+
+            //        Timer para atrazar o encerramento do loading -> UX
+            Handler(Looper.getMainLooper()).postDelayed({
+                _swipeRefresh.isRefreshing = false
+                _homeCards.visibility = VISIBLE
+                _homeLoading.visibility = GONE
+            }, REFRESH_DELAY_TIMER)
         })
-
-        //        Timer para atrazar o encerramento do loading -> UX
-        Handler(Looper.getMainLooper()).postDelayed({
-            _swipeRefresh.isRefreshing = false
-            _homeCards.visibility = VISIBLE
-            _homeLoading.visibility = GONE
-        }, REFRESH_DELAY_TIMER)
-
     }
 
     fun setScrollView() {
@@ -202,6 +201,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun getCurrentAddress() = GlobalScope.async {
         var preferenceAddress : Int = -1
+
         activity?.apply {
 //            Pega o Id Salvo no sharedPreferences
             val preferences = getSharedPreferences(
@@ -218,8 +218,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }else {
             _currentAddress = addressViewModel.loadById(preferenceAddress)
         }
-
-
 
         if (_currentAddress != null) {
             ADDRESS = _currentAddress
