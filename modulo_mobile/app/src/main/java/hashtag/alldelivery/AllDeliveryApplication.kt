@@ -20,6 +20,9 @@ import java.util.*
 class AllDeliveryApplication : Application() {
 
     companion object {
+        var FIRST_VISIBLE = 0
+        var LAST_VISIBLE = 0
+
         var EDIT: Boolean = false
         var LAT_LONG: LatLng? = null
         var ADDRESS: Address? = null

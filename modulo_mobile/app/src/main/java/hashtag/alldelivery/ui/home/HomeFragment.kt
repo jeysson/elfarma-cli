@@ -11,13 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -26,10 +23,11 @@ import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS_PREFS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.FIRST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ID_KEY
+import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
-import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.R
 import hashtag.alldelivery.component.Loading
@@ -38,14 +36,11 @@ import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
-import hashtag.alldelivery.ui.products.ProductsListItemAdapter
 import hashtag.alldelivery.ui.store.StoresListItemAdapter
 import hashtag.alldelivery.ui.store.StoresViewModel
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.home_fragment.home_cards
-import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.coroutines.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -69,7 +64,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
     var page = 1
-    var itemsPerPage = 8
+    var itemsPerPage = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -94,7 +89,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
                 if (!isLoading && !isLastPage) {
                     //if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 1) {
+                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 3) {
+//                      corrige bug de fade in quando atualiza o adapter
+                        FIRST_VISIBLE = recyclerLayout.findFirstVisibleItemPosition()
+                        LAST_VISIBLE = recyclerLayout.findLastVisibleItemPosition()
                         isLoading = true
                         loading.visibility = View.VISIBLE
                         page += 1

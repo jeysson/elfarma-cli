@@ -8,17 +8,16 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.AdapterView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.FIRST_VISIBLE
+import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
@@ -78,13 +77,16 @@ class StoresListItemAdapter(
             holder.dividerRatingCategory.visibility = GONE
 
 //            Animação de fadeIn
-            holder.logo.alpha = 0f
-            holder.logo.animate().apply {
-                interpolator = LinearInterpolator()
-                duration = 1000
-                alpha(1f)
-                startDelay = 100
-                start()
+
+            if (position < FIRST_VISIBLE || position > LAST_VISIBLE ){
+                holder.logo.alpha = 0f
+                holder.logo.animate().apply {
+                    interpolator = LinearInterpolator()
+                    duration = 1000
+                    alpha(1f)
+                    startDelay = 100
+                    start()
+                }
             }
 
 //           Inserindo imagem
