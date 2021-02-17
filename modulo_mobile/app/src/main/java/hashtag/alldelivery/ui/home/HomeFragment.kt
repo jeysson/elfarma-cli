@@ -130,9 +130,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            lifecycleScope.launch(Dispatchers.IO) {
-                getItems()
-            }
+
         }, AllDeliveryApplication.REFRESH_DELAY_TIMER)
     }
 
@@ -195,6 +193,14 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 _currentAddress.longi!!,
                 _currentAddress.number
             )
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                getItems()
+            }
+        }else {
+            lifecycleScope.launch(Dispatchers.IO) {
+                getItems()
+            }
         }
     }
 
