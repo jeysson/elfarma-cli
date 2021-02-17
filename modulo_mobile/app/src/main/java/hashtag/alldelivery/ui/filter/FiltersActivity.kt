@@ -14,25 +14,29 @@ import kotlinx.android.synthetic.main.filters_button.*
 class FiltersActivity : AppCompatActivity() {
 
     private val orderAZIcon by lazy { img_order_a_z }
-    private val orderAZCard by lazy { card_view_order_a_z }
+    private val orderAZCard by lazy { internal_view_order_a_z }
+    private val orderAZBorder by lazy { card_view_order_a_z }
     private val orderAZText by lazy { txt_order_a_z }
     private val orderAZView by lazy { view_order_a_z }
     private var isOrderAZChecked = false
 
     private val orderLocationIcon by lazy { img_order_location }
-    private val orderLocationCard by lazy { card_view_order_location }
+    private val orderLocationCard by lazy { internal_view_order_location }
+    private val orderLocationBorder by lazy { card_view_order_location }
     private val orderLocationText by lazy { txt_order_location }
     private val orderLocationView by lazy { view_order_location }
     private var isOrderLocationChecked = false
 
     private val orderTimerIcon by lazy { img_order_timer }
-    private val orderTimerCard by lazy { card_view_order_timer }
+    private val orderTimerCard by lazy { internal_view_order_timer }
+    private val orderTimerBorder by lazy { card_view_order_timer }
     private val orderTimerText by lazy { txt_order_timer }
     private val orderTimerView by lazy { view_order_timer }
     private var isOrderTimerChecked = false
 
     private val orderDeliveryFeeIcon by lazy { img_order_delivery_fee }
-    private val orderDeliveryFeeCard by lazy { card_view_order_delivery_fee }
+    private val orderDeliveryFeeCard by lazy { internal_view_order_delivery_fee }
+    private val orderDeliveryFeeBorder by lazy { card_view_order_delivery_fee }
     private val orderDeliveryFeeText by lazy { txt_order_delivery_fee }
     private val orderDeliveryFeeView by lazy { view_order_delivery_fee }
     private var isOrderDeliveryFeeChecked = false
@@ -126,30 +130,30 @@ class FiltersActivity : AppCompatActivity() {
 
     }
 
-//    Deve mudar a cor da borda de cada card, de acordo com o valor
-    private fun setStrokeCardColor(filterNumber: Int){
-        orderAZCard.strokeColor = getColor(R.color.medium_gray)
-        orderLocationCard.strokeColor = getColor(R.color.medium_gray)
-        orderTimerCard.strokeColor = getColor(R.color.medium_gray)
-        orderDeliveryFeeCard.strokeColor = getColor(R.color.medium_gray)
+    //    Deve mudar a cor da borda de cada card, de acordo com o valor
+    private fun setStrokeCardColor(filterNumber: Int) {
+        orderAZBorder.background.setTint(getColor(R.color.medium_gray))
+        orderLocationBorder.background.setTint(getColor(R.color.medium_gray))
+        orderTimerBorder.background.setTint(getColor(R.color.medium_gray))
+        orderDeliveryFeeBorder.background.setTint(getColor(R.color.medium_gray))
 
-        when (filterNumber){
-            0 -> orderAZCard.strokeColor = getColor(R.color.colorPrimary)
-            1 -> orderLocationCard.strokeColor = getColor(R.color.colorPrimary)
-            2 -> orderTimerCard.strokeColor = getColor(R.color.colorPrimary)
-            3 -> orderDeliveryFeeCard.strokeColor = getColor(R.color.colorPrimary)
+        when (filterNumber) {
+            0 -> orderAZBorder.background.setTint(getColor(R.color.colorPrimary))
+            1 -> orderLocationBorder.background.setTint(getColor(R.color.colorPrimary))
+            2 -> orderTimerBorder.background.setTint(getColor(R.color.colorPrimary))
+            3 -> orderDeliveryFeeBorder.background.setTint(getColor(R.color.colorPrimary))
         }
 
     }
 
-    private fun setIconColor(filterNumber: Int){
+    private fun setIconColor(filterNumber: Int) {
         orderAZIcon.setColorFilter(getColor(R.color.heavy_grey))
         orderLocationIcon.setColorFilter(getColor(R.color.heavy_grey))
         orderTimerIcon.setColorFilter(getColor(R.color.heavy_grey))
         orderDeliveryFeeIcon.setColorFilter(getColor(R.color.heavy_grey))
 
 
-        when (filterNumber){
+        when (filterNumber) {
             0 -> orderAZIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))
             1 -> orderLocationIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))
             2 -> orderTimerIcon.setColorFilter(getColor(R.color.colorPrimaryMedium))

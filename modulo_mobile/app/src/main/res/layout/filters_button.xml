@@ -10,28 +10,41 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_order_a_z"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/medium_gray"
         android:shape="ring"
-        app:cardCornerRadius="35dp"
+        app:cardCornerRadius="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/medium_gray"
-        app:strokeWidth="1dp">
+        app:strokeWidth="0dp">
 
-        <View
-            android:id="@+id/view_order_a_z"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
-        <ImageView
-            android:id="@+id/img_order_a_z"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/internal_view_order_a_z"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="1dp"
             android:layout_gravity="center"
-            android:rotation="90"
-            android:src="@drawable/ic_order_arrows" />
+            android:shape="ring"
+            app:cardCornerRadius="35dp"
+            app:strokeWidth="0dp">
+
+            <View
+                android:id="@+id/view_order_a_z"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <ImageView
+                android:id="@+id/img_order_a_z"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:rotation="90"
+                android:src="@drawable/ic_order_arrows" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -49,28 +62,41 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_order_location"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/medium_gray"
         android:shape="ring"
-        app:cardCornerRadius="35dp"
+        app:cardCornerRadius="36dp"
         app:layout_constraintEnd_toStartOf="@+id/card_view_order_timer"
         app:layout_constraintStart_toEndOf="@+id/card_view_order_a_z"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/medium_gray"
-        app:strokeWidth="1dp">
+        app:strokeWidth="0dp">
 
-        <View
-            android:id="@+id/view_order_location"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
-        <ImageView
-            android:id="@+id/img_order_location"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/internal_view_order_location"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="1dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_outline_location_on_24" />
+            android:shape="ring"
+            app:cardCornerRadius="35dp">
+
+            <View
+                android:id="@+id/view_order_location"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <ImageView
+                android:id="@+id/img_order_location"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_outline_location_on_24" />
+
+        </com.google.android.material.card.MaterialCardView>
+
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -88,27 +114,43 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_order_timer"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/medium_gray"
         android:shape="ring"
-        app:cardCornerRadius="35dp"
+        app:cardCornerRadius="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/medium_gray"
-        app:strokeWidth="1dp">
+        app:strokeWidth="0dp">
 
-        <View
-            android:id="@+id/view_order_timer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
-        <ImageView
-            android:id="@+id/img_order_timer"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/internal_view_order_timer"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_timer_24" />
+            android:shape="ring"
+            android:layout_margin="1dp"
+            app:cardCornerRadius="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/medium_gray"
+            app:strokeWidth="0dp">
+
+            <View
+                android:id="@+id/view_order_timer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <ImageView
+                android:id="@+id/img_order_timer"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_timer_24" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -126,29 +168,45 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_order_delivery_fee"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:backgroundTint="@color/medium_gray"
         android:shape="ring"
-        app:cardCornerRadius="35dp"
+        app:cardCornerRadius="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_view_order_a_z"
         app:strokeColor="@color/medium_gray"
-        app:strokeWidth="1dp">
+        app:strokeWidth="0dp">
 
-        <View
-            android:id="@+id/view_order_delivery_fee"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-
-        <ImageView
-            android:id="@+id/img_order_delivery_fee"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/internal_view_order_delivery_fee"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:shape="ring"
+            android:layout_margin="1dp"
+            app:cardCornerRadius="35dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_attach_money_24" />
+            app:strokeColor="@color/medium_gray"
+            app:strokeWidth="0dp">
+
+            <View
+                android:id="@+id/view_order_delivery_fee"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <ImageView
+                android:id="@+id/img_order_delivery_fee"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_attach_money_24" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
