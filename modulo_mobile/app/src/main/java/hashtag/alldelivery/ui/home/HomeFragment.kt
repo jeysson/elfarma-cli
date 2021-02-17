@@ -9,8 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
@@ -113,8 +112,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         getCurrentAddress()
         loadFilters()
         carregarTodosEnderecos()
-        //getMoreItems()
-//        setScrollView()
 
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -162,67 +159,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
-    fun showResults(list: List<Store>, isNewSearch: Boolean?) {
-        if (isNewSearch == true) {
-            _storeList.clear()
-            _storeList.addAll(list)
-        } else {
-            _storeList.addAll(list)
-        }
-
-        _adapter.notifyDataSetChanged()
-
-
-    }
-/*
-    fun getActiveStores(isNewSearch: Boolean?) {
-        _storeViewModel.getActiveStores(
-            LAT_LONG?.latitude,
-            LAT_LONG?.longitude,
-            SORT_FILTER
-        ).observe(viewLifecycleOwner, Observer<List<Store>> {
-            val x = arrayListOf<Store>(Store())
-            x.addAll(it)
-            showResults(x, isNewSearch)
-
-            //        Timer para atrazar o encerramento do loading -> UX
-            Handler(Looper.getMainLooper()).postDelayed({
-                _swipeRefresh.isRefreshing = false
-                _homeCards.visibility = VISIBLE
-                _homeLoading.visibility = GONE
-            }, REFRESH_DELAY_TIMER)
-        })
-    }
-
-    fun setScrollView() {
-//        Deve mostrar novas lojas
-        _homeCards.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                val target = recyclerView.layoutManager as LinearLayoutManager?
-                val totalItemCount = target!!.itemCount
-                val lastVisible = target.findLastVisibleItemPosition()
-                val lastItem = lastVisible + 1 >= totalItemCount
-
-                if (totalItemCount > 0 && lastItem) {
-
-                    _storeViewModel.getNextPage(
-                        LAT_LONG?.latitude,
-                        LAT_LONG?.longitude,
-                        SORT_FILTER
-                    ).observe(viewLifecycleOwner, {
-                        _storeList.addAll(it)
-                        _adapter.notifyDataSetChanged()
-                    })
-                }
-
-            }
-        })
-    }
-*/
     private fun carregarTodosEnderecos() {
         addressViewModel.getAll().observe(viewLifecycleOwner) {
             AllDeliveryApplication.ADDRESS_LIST.addAll(it)
@@ -288,7 +224,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 _homeLoading.visibility = VISIBLE
                 _homeCards.visibility = GONE
                 page = 1
-                getMoreItems()
+                lifecycleScope.launch(Dispatchers.IO) {
+                    getItems()
+                }
             }
         }
     }
@@ -337,7 +275,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             )
             _homeCards.adapter = _adapter
             _adapter.notifyDataSetChanged()
-            loading.visibility = View.INVISIBLE
+
+            loading.visibility = INVISIBLE
+            _homeCards.visibility = VISIBLE
+            _swipeRefresh.isRefreshing = false
             isLoading = false
         }
     }
@@ -356,7 +297,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 withContext(Dispatchers.Main) {
                     _adapter.addItems(_storeList)
                     _adapter.notifyDataSetChanged()
-                    loading.visibility = View.INVISIBLE
+                    _homeLoading.visibility = INVISIBLE
+                    _homeCards.visibility = VISIBLE
                 }
                 isLastPage = _storeList.size == 0
                 isLoading = false
