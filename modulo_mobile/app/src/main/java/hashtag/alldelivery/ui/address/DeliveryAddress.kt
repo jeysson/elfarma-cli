@@ -60,9 +60,9 @@ class DeliveryAddress : AppCompatActivity() {
         location.setOnClickListener {
 
             val value = getShortAddress(
-                this, ADDRESS!!.lat!!,
-                ADDRESS!!.longi!!,
-                ADDRESS!!.number!!
+                this, LAT_LONG?.latitude!!,
+                LAT_LONG?.longitude!!,
+                null
             )
 
 //            Verifica se o endereço é válido, do contrário direciona o usuário para definir endereço manualmente
