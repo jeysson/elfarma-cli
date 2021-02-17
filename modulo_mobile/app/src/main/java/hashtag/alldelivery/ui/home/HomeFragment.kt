@@ -28,6 +28,7 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.ID_KEY
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
+import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.R
 import hashtag.alldelivery.component.Loading
@@ -48,7 +49,6 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
 
-    private lateinit var stores: List<Store>
     private val _storeViewModel: StoresViewModel by sharedViewModel()
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var homeViewModel: HomeViewModel
@@ -79,33 +79,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         _view = view
         _homeCards.layoutManager = LinearLayoutManager(context)
-        //_adapter = StoresListItemAdapter(activity as AppCompatActivity, _storeList)
-        //_homeCards.adapter = _adapter
         _homeCards.setHasFixedSize(true)
-        _homeCards.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val recyclerLayout = (_homeCards.layoutManager as LinearLayoutManager)
-
-                if (!isLoading && !isLastPage) {
-                    //if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 3) {
-//                      corrige bug de fade in quando atualiza o adapter
-                        FIRST_VISIBLE = recyclerLayout.findFirstVisibleItemPosition()
-                        LAST_VISIBLE = recyclerLayout.findLastVisibleItemPosition()
-                        isLoading = true
-                        loading.visibility = View.VISIBLE
-                        page += 1
-                        getMoreItems()
-                    }
-                }
-            }
-        })
-//        Definindo a cor azul para o swipeRefresh
         _swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
-
         _homeLoading.visibility = VISIBLE
 
+        scrollListener()
         setupObservers()
         getCurrentAddress()
         loadFilters()
@@ -114,7 +92,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         address_with_scheduling.setOnClickListener {
             val intent = Intent(context, DeliveryAddress::class.java)
             startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
-//            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
         }
 
         _swipeRefresh.setOnRefreshListener {
@@ -123,21 +100,37 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 lifecycleScope.launch(Dispatchers.IO) {
                     getItems()
                 }
-            }, AllDeliveryApplication.REFRESH_DELAY_TIMER)
-
+            }, REFRESH_DELAY_TIMER)
         }
-
-        Handler(Looper.getMainLooper()).postDelayed({
-
-        }, AllDeliveryApplication.REFRESH_DELAY_TIMER)
     }
 
+    private fun scrollListener() {
+        _homeCards.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val recyclerLayout = (_homeCards.layoutManager as LinearLayoutManager)
+
+                if (!isLoading && !isLastPage) {
+                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 3) {
+                        //                      corrige bug de fade in quando atualiza o adapter
+                        FIRST_VISIBLE = recyclerLayout.findFirstVisibleItemPosition()
+                        LAST_VISIBLE = recyclerLayout.findLastVisibleItemPosition()
+
+                        isLoading = true
+                        loading.visibility = VISIBLE
+                        page += 1
+                        getMoreItems()
+                    }
+                }
+            }
+        })
+    }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         this.isConnected = isConnected
         if (!isConnected)
             toast("O dispositivo não está conectado")
-        else{
+        else {
             page = 1
             getMoreItems()
         }
@@ -145,13 +138,12 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun setupObservers() {
         _storeViewModel.eventErro.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer<BusinessEvent> {
-                it?.let {
-                    toast(it.message.toString())
-                }
-            })
-
+            viewLifecycleOwner
+        ) {
+            it?.let {
+                toast(it.message.toString())
+            }
+        }
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
@@ -162,7 +154,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun getCurrentAddress() = GlobalScope.async {
-        var preferenceAddress : Int = -1
+        var preferenceAddress: Int = -1
 
         activity?.apply {
 //            Pega o Id Salvo no sharedPreferences
@@ -175,10 +167,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         address.text = getString(R.string.address_list_location_activate)
 
-        if (preferenceAddress == -1){
-            _currentAddress = addressViewModel.firstAddress()
-        }else {
-            _currentAddress = addressViewModel.loadById(preferenceAddress)
+        _currentAddress = if (preferenceAddress == -1) {
+            addressViewModel.firstAddress()
+        } else {
+            addressViewModel.loadById(preferenceAddress)
         }
 
         if (_currentAddress != null) {
@@ -195,7 +187,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             lifecycleScope.launch(Dispatchers.IO) {
                 getItems()
             }
-        }else {
+        } else {
             lifecycleScope.launch(Dispatchers.IO) {
                 getItems()
             }
@@ -223,8 +215,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         if (requestCode == NEW_SEARCH_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-//              Se RequestCode e resultCode forem verdadeiros, é porque o user clicou em mostrar resultados
-//              Timer para atrazar o encerramento do swipeRefresh -> UX
+//              Busca realizada por outras páginas
                 _homeLoading.visibility = VISIBLE
                 _homeCards.visibility = GONE
                 page = 1
@@ -280,7 +271,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             _homeCards.adapter = _adapter
             _adapter.notifyDataSetChanged()
 
-            loading.visibility = INVISIBLE
+            _homeLoading.visibility = INVISIBLE
             _homeCards.visibility = VISIBLE
             _swipeRefresh.isRefreshing = false
             isLoading = false
@@ -294,7 +285,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 _storeList = _storeViewModel.getPagingStores(
                     page,
                     itemsPerPage,
-                     LAT_LONG?.latitude,
+                    LAT_LONG?.latitude,
                     LAT_LONG?.longitude,
                     SORT_FILTER
                 )

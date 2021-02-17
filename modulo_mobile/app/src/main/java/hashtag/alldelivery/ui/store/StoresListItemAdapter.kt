@@ -88,7 +88,7 @@ class StoresListItemAdapter(
                     start()
                 }
             }
-
+            
 //           Inserindo imagem
             if(item.logo != null){
                 val imageBytes = android.util.Base64.decode(item.logo, 0)
