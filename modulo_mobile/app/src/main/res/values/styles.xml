@@ -1,0 +1,373 @@
+<resources>
+
+    <style name="ElFarmaTextViewStyle"></style>
+
+<!--    StatusBar transparente com icones escuros -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/deprecated_white_transparent</item>
+    </style>
+
+    <style name="AppTheme.Transparent2" parent="AppTheme">
+        <item name="statusBarForeground">@color/deprecated_white_transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+
+    <style name="AppTheme.Base">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.CardView" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+
+    <style name="AppTheme.BottomNavigationView">
+        <item name="android:background">@android:color/white</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="itemIconTint">@color/black</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active
+        </item>
+        <item name="itemTextAppearanceInactive">
+            @style/TextAppearance.BottomNavigationView.Inactive
+        </item>
+        <item name="itemTextColor">@color/black</item>
+        <item name="labelVisibilityMode">auto</item>
+    </style>
+
+    <style name="AppTheme.Dialog">
+        <item name="android:backgroundDimAmount">0.7</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/splash_window_background</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+    </style>
+
+    <style name="AppTheme.TextInputEditTextDark">
+        <item name="colorControlActivated">@color/deprecated_medium_papaya</item>
+        <item name="colorControlNormal">@color/deprecated_rose</item>
+    </style>
+
+    <style name="AppTheme.TextInputEditTextLight">
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+        <item name="colorControlActivated">@color/deprecated_medium_grey</item>
+        <item name="colorControlNormal">@color/deprecated_light_grey</item>
+    </style>
+
+    <style name="AppTheme.TextInputEditTextTransparent">
+        <item name="android:textColor">@color/selector_input_light</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:fontFamily">@font/sul_sans_bold</item>
+        <item name="colorControlActivated">@color/deprecated_white_transparent</item>
+        <item name="colorControlNormal">@color/deprecated_white_transparent</item>
+    </style>
+
+    <style name="AppTheme.Transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/deprecated_dark_grey</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="TextAppearance"></style>
+
+    <style name="TextAppearance.DesignSystem"></style>
+
+    <style name="TextAppearance.DesignSystem.Title"></style>
+
+    <style name="TextAppearance.DesignSystem.Title.H4">
+        <item name="android:textSize">@dimen/text_size_h4</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Paragraph"></style>
+
+    <style name="TextAppearance.DesignSystem.Paragraph.P1">
+        <item name="android:textSize">@dimen/text_size_p1</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Paragraph.P3">
+        <item name="android:textSize">@dimen/text_size_p3</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Paragraph.P4">
+        <item name="android:textSize">@dimen/text_size_p4</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Title.H2">
+        <item name="android:textSize">@dimen/text_size_h2</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.BottomNavigationView"></style>
+
+    <style name="TextAppearance.BottomNavigationView.Active">
+        <item name="android:textSize">10sp</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.BottomNavigationView.Inactive">
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Title.H3">
+        <item name="android:textSize">@dimen/text_size_h3</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Button"></style>
+
+    <style name="TextAppearance.DesignSystem.Button.B3">
+        <item name="android:textSize">@dimen/text_size_b3</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Button.B1">
+        <item name="android:textSize">@dimen/text_size_b1</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.H2">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Description">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="Text.Description2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="Text.Description3">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Description5">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Description7">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.ListTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.ListTitleSmall">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Link">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Button"></style>
+
+    <style name="Button.Dark">
+        <item name="android:textAppearance">@style/Text.Button</item>
+        <item name="android:textColor">@color/selector_button_dark_text</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">@drawable/selector_button_dark_background</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="lb_background">@drawable/selector_button_dark_background</item>
+        <item name="lb_textColor">@color/selector_button_dark_text</item>
+    </style>
+
+    <style name="Button.AddressMapContinue">
+        <item name="android:textAppearance">@style/Text.Button</item>
+        <item name="android:textColor">@color/selector_button_dark_text</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">@drawable/selector_button_address_map</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="lb_background">@drawable/selector_button_address_map</item>
+        <item name="lb_textColor">@color/selector_button_dark_text</item>
+    </style>
+
+    <style name="Text.Subtitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextInputLayoutLight">
+        <item name="android:textColorHint">@color/deprecated_medium_grey</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+        <item name="errorTextAppearance">@style/ErrorTextAppearance.Light</item>
+        <item name="hintTextAppearance">@style/HintTextAppearance.Light</item>
+    </style>
+
+    <style name="ErrorTextAppearance">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="ErrorTextAppearance.Light">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="HintTextAppearance">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="HintTextAppearance.Light">
+        <item name="android:textColor">@color/deprecated_medium_grey</item>
+    </style>
+
+    <style name="TextInputEditText">
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextInputEditText.Light">
+        <item name="android:theme">@style/AppTheme.TextInputEditTextLight</item>
+        <item name="android:textColor">@color/selector_input_light</item>
+    </style>
+
+    <style name="Text.MoneySaved">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Button.Borderless">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/green_blue</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Button.B2">
+        <item name="android:textSize">@dimen/text_size_b2</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Page_Title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Sub_Heading_1">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Paragraph.P2">
+        <item name="android:textSize">@dimen/text_size_p2</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Title.H1">
+        <item name="android:textSize">@dimen/text_size_h1</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="StoreTabLayout">
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="tabTextAppearance">@style/StoreTabLayout.TextAppearance</item>
+    </style>
+
+    <style name="StoreTabLayout.TextAppearance">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/deprecated_warm_grey_cc</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Form">
+    </style>
+    <style name="TextAppearance.DesignSystem.Form.F3">
+        <item name="android:textSize">@dimen/text_size_f3</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Form.S1">
+        <item name="android:textSize">@dimen/text_size_s1</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Link4">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Link_6">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+    <style name="Text.DeliveryMethodHeader">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/deprecated_dark_grey</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+    <style name="CustomRadioButton">
+        <item name="android:button">@drawable/selector_radio_button</item>
+    </style>
+    <style name="Text.Body">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+    <style name="Text.Link_3">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+    <style name="TextAppearance.DesignSystem.Title.H2.Light">
+        <item name="android:textSize">@dimen/text_size_h2</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+</resources>

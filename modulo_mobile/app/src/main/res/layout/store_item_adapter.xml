@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="@dimen/home_small_vertical_margin"
+    android:layout_marginRight="16dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:theme="@style/AppTheme.CardView"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/light_gray"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:importantForAccessibility="noHideDescendants">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_medicine"
+            app:layout_constraintBottom_toBottomOf="@+id/header_image"
+            app:layout_constraintLeft_toLeftOf="@+id/header_image"
+            app:layout_constraintRight_toRightOf="@+id/header_image"
+            app:layout_constraintTop_toTopOf="@+id/header_image" />
+
+        <ImageView
+            android:id="@+id/logo_container"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/logo_transparent_background"
+            app:layout_constraintBottom_toBottomOf="@+id/header_image"
+            app:layout_constraintLeft_toLeftOf="@+id/header_image"
+            app:layout_constraintRight_toRightOf="@+id/header_image"
+            app:layout_constraintTop_toTopOf="@+id/header_image" />
+
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="@dimen/store_header_image_width"
+            android:layout_height="90dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:layout_constraintLeft_toLeftOf="@id/header_image"
+            app:layout_constraintTop_toTopOf="@id/header_image" />
+
+<!--        Fechado     -->
+        <View
+            android:id="@+id/image_view_store_closed_overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/deprecated_black_40"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/header_image"
+            app:layout_constraintLeft_toLeftOf="@+id/header_image"
+            app:layout_constraintRight_toRightOf="@+id/header_image"
+            app:layout_constraintTop_toTopOf="@+id/header_image" />
+
+        <TextView
+            android:id="@+id/closed"
+            style="@style/Text.Description7"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="@string/store_details_closed"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/logo"
+            app:layout_constraintLeft_toLeftOf="@+id/logo"
+            app:layout_constraintRight_toRightOf="@+id/logo"
+            app:layout_constraintTop_toTopOf="@+id/logo" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/restaurant_details_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/delivery_container"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/space_start_logo_container">
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/TextAppearance.DesignSystem.Title.H4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Restaurante X"
+                android:textColor="@color/black"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@+id/super_image"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/super_image"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_super_store_12dp"
+                app:layout_constraintBottom_toBottomOf="@+id/name"
+                app:layout_constraintEnd_toEndOf="@id/name"
+                app:layout_constraintStart_toEndOf="@+id/name"
+                app:layout_constraintTop_toTopOf="@+id/name" />
+
+            <!--<p102br.com.ifood.core.restaurant.view.RestaurantEvaluation
+            android:textColor="@color/deprecated_yellow"
+             android:id="@+id/rating"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+              app:layout_constrainedWidth="true"
+              app:layout_constraintStart_toStartOf="0"
+              app:layout_constraintTop_toBottomOf="@+id/name" app:re_style_new="@font/sul_sans_medium" app:re_style_new_star_size="10dp" app:re_style_new_text_size="12sp" app:re_style_quantity="@font/sul_sans_medium" app:re_style_quantity_text_size="12sp" app:re_style_rate="@font/sul_sans_medium"
+            app:re_style_rate_text_size="12sp" style="@style/Text.Description2"/>-->
+            <!--Incluso somente para não dar erro. Quando for incluir o rating, observar a tag acima-->
+            <!--     <hashtag.alldelivery.component.StoreEvaluation
+                     android:textColor="@color/deprecated_yellow"
+                     android:id="@+id/rating"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="5dp"
+                     app:layout_constrainedWidth="true"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/name"
+                     app:re_style_new="@font/sul_sans_medium"
+                     app:re_style_new_star_size="10dp"
+                     app:re_style_new_text_size="12sp"
+                     app:re_style_quantity="@font/sul_sans_medium"
+                     app:re_style_quantity_text_size="12sp"
+                     app:re_style_rate="@font/sul_sans_medium"
+                     app:re_style_rate_text_size="12sp"
+                     style="@style/Text.Description2"/>
+         -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name">
+
+                <ImageView
+                    android:id="@+id/star_icon"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_baseline_star_24"
+                    app:tint="@color/deprecated_yellow" />
+
+                <TextView
+                    android:id="@+id/rating_store_item"
+                    style="@style/Text.Description2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/deprecated_yellow"
+                    tools:text="4,5" />
+
+                <TextView
+                    android:id="@+id/divider_rating_category"
+                    style="@style/TextAppearance.DesignSystem.Paragraph.P4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/divider_simbol_store_item"
+                    android:textColor="@color/heavy_grey" />
+
+
+                <TextView
+                    android:id="@+id/category_store_item"
+                    style="@style/TextAppearance.DesignSystem.Paragraph.P4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/heavy_grey"
+                    tools:text="Farmácia" />
+
+                <TextView
+                    android:id="@+id/divider_category_distance"
+                    style="@style/TextAppearance.DesignSystem.Paragraph.P4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/divider_simbol_store_item"
+                    android:textColor="@color/heavy_grey" />
+
+
+                <TextView
+                    android:id="@+id/distance_store_item"
+                    style="@style/TextAppearance.DesignSystem.Paragraph.P4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/heavy_grey"
+                    tools:text="3,5" />
+
+            </LinearLayout>
+
+
+            <!--Fim-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/delivery_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:tag="binding_1"
+            app:layout_constraintBottom_toTopOf="@+id/promo_background_view"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/space_start_logo_container">
+
+            <ImageView
+                android:id="@+id/tracking_icon"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_baseline_access_time_24"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/delivery_container"
+                app:layout_constraintStart_toStartOf="@id/delivery_container"
+                app:layout_constraintTop_toTopOf="@id/delivery_container"
+                app:tint="@color/deprecated_black_40" />
+
+            <TextView
+                android:id="@+id/delivery_time"
+                style="@style/TextAppearance.DesignSystem.Paragraph.P4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:ellipsize="end"
+                tools:text="10 - 30 min"
+                android:maxLines="1"
+                android:textColor="@color/heavy_grey"
+                app:layout_constraintBottom_toBottomOf="@id/tracking_icon"
+                app:layout_constraintStart_toEndOf="@+id/tracking_icon"
+                app:layout_constraintTop_toTopOf="@id/tracking_icon"
+                app:layout_goneMarginStart="0dp" />
+
+            <include
+                android:id="@+id/delivery_mode_scheduling"
+                layout="@layout/merchant_card_item_scheduling"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tracking_icon"
+                app:layout_constraintStart_toStartOf="@id/tracking_icon"
+                app:layout_constraintTop_toTopOf="@id/tracking_icon" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/delivery_mode_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierAllowsGoneWidgets="false"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="delivery_time,tracking_icon,delivery_mode_scheduling" />
+
+            <TextView
+                android:id="@+id/delivery_free"
+                style="@style/TextAppearance.DesignSystem.Paragraph.P4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/heavy_grey"
+                app:layout_constraintStart_toEndOf="@+id/delivery_time"
+                app:layout_goneMarginBottom="11dp"
+                tools:text="R$ 8,0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/promo_background_view"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:background="@color/deprecated_store_item_promo_background"
+            app:layout_constraintBottom_toBottomOf="@id/header_image"
+            app:layout_constraintEnd_toEndOf="@id/header_image"
+            app:layout_constraintStart_toStartOf="@id/header_image"
+            app:layout_constraintTop_toBottomOf="@+id/header_image" />
+
+        <TextView
+            android:id="@+id/promo_text"
+            style="@style/Text.Description2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/blueberry"
+            app:layout_constraintBottom_toBottomOf="@+id/promo_background_view"
+            app:layout_constraintEnd_toEndOf="@+id/promo_background_view"
+            app:layout_constraintStart_toEndOf="@+id/promo_image"
+            app:layout_constraintTop_toTopOf="@+id/promo_background_view" />
+
+        <ImageView
+            android:id="@+id/promo_image"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="13dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_voucher_mini"
+            app:layout_constraintBottom_toBottomOf="@+id/promo_background_view"
+            app:layout_constraintStart_toStartOf="@+id/promo_background_view"
+            app:layout_constraintTop_toTopOf="@+id/promo_background_view" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/promo_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="promo_image, promo_text,                 promo_background_view" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/header_image"
+            app:layout_constraintGuide_end="@dimen/store_list_margin" />
+
+        <Space
+            android:id="@+id/space_start_logo_container"
+            android:layout_width="12dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/promo_background_view"
+            app:layout_constraintStart_toEndOf="@+id/header_image"
+            app:layout_constraintTop_toTopOf="@id/header_image" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

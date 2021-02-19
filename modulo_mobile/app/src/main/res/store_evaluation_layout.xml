@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="horizontal"
+    android:id="@+id/evaluation_container"
+    android:tag="layout/restaurant_evaluation_layout_0"
+    android:focusable="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView android:layout_gravity="center"
+        android:id="@+id/evaluation_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:importantForAccessibility="no"
+        app:srcCompat="@drawable/ic_evaluation_star"/>
+
+    <TextView android:textColor="@color/deprecated_yellow"
+        android:id="@+id/evaluation_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        style="@style/Text.Page_Title"/>
+
+    <TextView android:textColor="@color/deprecated_yellow"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/evaluation_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Text.Link_6"/>
+
+    <TextView android:textColor="@color/deprecated_yellow"
+        android:id="@+id/evaluation_new"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:text="@string/restaurant_details_new_evaluation"
+        style="@style/Text.Page_Title"/>
+</LinearLayout>
