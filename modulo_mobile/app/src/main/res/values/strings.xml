@@ -111,4 +111,6 @@
     <string name="cancelar">Cancelar</string>
     <string name="loja">Loja</string>
     <string name="hor_rio_de_funcionamento">horário de funcionamento</string>
+    <string name="basket">Basket</string>
+    <string name="ver_cesta">Ver cesta</string>
 </resources>

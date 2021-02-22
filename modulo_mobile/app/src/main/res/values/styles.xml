@@ -97,6 +97,11 @@
         <item name="android:fontFamily">@font/sul_sans_medium</item>
     </style>
 
+    <style name="TextAppearance.DesignSystem.Title.H5">
+        <item name="android:textSize">@dimen/text_size_h5</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
     <style name="TextAppearance.DesignSystem.Paragraph"></style>
 
     <style name="TextAppearance.DesignSystem.Paragraph.P1">

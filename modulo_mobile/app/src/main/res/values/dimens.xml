@@ -18,6 +18,7 @@
     <dimen name="text_size_p4">12sp</dimen>
     <dimen name="text_size_h3">16sp</dimen>
     <dimen name="text_size_h4">14sp</dimen>
+    <dimen name="text_size_h5">10sp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="search_textfield_height">44dp</dimen>
     <dimen name="default_margin">20dp</dimen>
@@ -46,4 +47,10 @@
 
     <dimen name="address_card_selected_bord_width">2dp</dimen>
     <dimen name="address_card_default">1dp</dimen>
+    <dimen name="dim_50_dp">50dp</dimen>
+    <dimen name="dim_0_dp">0dp</dimen>
+    <dimen name="dim_basket_size">28dp</dimen>
+    <dimen name="dim_24_dp">24dp</dimen>
+    <dimen name="dim_22_dp">22dp</dimen>
+    <dimen name="dim_badge">16dp</dimen>
 </resources>

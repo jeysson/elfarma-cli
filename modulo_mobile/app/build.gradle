@@ -110,6 +110,5 @@ dependencies {
 // Material design
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
-
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }
