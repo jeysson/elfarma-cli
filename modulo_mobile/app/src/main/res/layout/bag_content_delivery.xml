@@ -46,6 +46,7 @@
         android:layout_marginBottom="20dp"
         android:contentDescription="@null"
         android:importantForAccessibility="no"
+        android:src="@drawable/ic_map1"
         app:layout_constraintStart_toStartOf="@+id/start_guideline"
         app:layout_constraintTop_toBottomOf="@+id/address_action"/>
 
@@ -58,6 +59,7 @@
         android:maxLines="1"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        tools:text="Alias"
         app:layout_constraintEnd_toStartOf="@+id/address_selection_icon"
         app:layout_constraintStart_toEndOf="@+id/address_icon"
         app:layout_constraintTop_toTopOf="@+id/address_icon"
@@ -72,6 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="430dp"
         android:maxLines="2"
+        tools:text="Endereço"
         android:importantForAccessibility="no"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -88,6 +91,7 @@
         android:layout_height="wrap_content"
         android:maxLines="3"
         android:importantForAccessibility="no"
+        tools:text="Complemento"
         app:layout_constraintEnd_toEndOf="@+id/address_title"
         app:layout_constraintStart_toStartOf="@+id/address_title"
         app:layout_constraintTop_toBottomOf="@+id/address_title"
@@ -95,8 +99,8 @@
 
     <ImageView
         android:id="@+id/address_selection_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/space_size_16dp"
+        android:layout_height="@dimen/space_size_16dp"
         android:contentDescription="@null"
         app:layout_constraintBottom_toBottomOf="@+id/address_icon"
         app:layout_constraintEnd_toStartOf="@+id/end_guideline"
