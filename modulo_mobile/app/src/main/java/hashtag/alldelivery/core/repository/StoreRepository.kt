@@ -31,7 +31,7 @@ class StoreRepository(
         lat: Double?,
         lon: Double?,
         tipoordenacao: Int?
-    ): Call<ArrayList<Store>> {
-        return dataSource.getPagingStores(page, total, lat, lon, tipoordenacao)
+    ): Observable<ArrayList<Store>> {
+        return runOnBackground(dataSource.getPagingStores(page, total, lat, lon, tipoordenacao))
     }
 }

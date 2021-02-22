@@ -1,79 +1,50 @@
 package hashtag.alldelivery.component
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.TranslateAnimation
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.google.android.material.card.MaterialCardView
 import hashtag.alldelivery.R
-import org.jetbrains.anko.attr
+import hashtag.alldelivery.core.utils.OnChangedValueListener
 
 
 /**
  * TODO: document your custom view class.
  */
-class ButtonMinusPlus : ConstraintLayout {
+class ButtonMinusPlus : ConstraintLayout{
 
-    private var _exampleString: String? = null // TODO: use a default from R.string...
-    private var _exampleColor: Int = Color.RED // TODO: use a default from R.color...
-    private var _exampleDimension: Float = 0f // TODO: use a default from R.dimen...
+    private var evento: OnChangedValueListener? = null
+    private var isOpen = false
+    private var _total:Int = 1
+    private var _produto: Int = -1
 
-    private var textPaint: TextPaint? = null
-    private var textWidth: Float = 0f
-    private var textHeight: Float = 0f
+    var produto: Int
+    get() = _produto
+    set(value) {
+        _produto = value
+    }
 
-    private var buttonPlus: ImageView? = null
-    private var txtView: TextView? = null
-    private var buttonMinus: ImageView? = null
+    var total: Int
+    get() = _total
+    set(value) {
+        _total = value
 
-    /**
-     * The text to draw
-     */
-    var exampleString: String?
-        get() = _exampleString
-        set(value) {
-            _exampleString = value
-            invalidateTextPaintAndMeasurements()
-        }
-
-    /**
-     * The font color
-     */
-    var exampleColor: Int
-        get() = _exampleColor
-        set(value) {
-            _exampleColor = value
-            invalidateTextPaintAndMeasurements()
-        }
-
-    /**
-     * In the example view, this dimension is the font size.
-     */
-    var exampleDimension: Float
-        get() = _exampleDimension
-        set(value) {
-            _exampleDimension = value
-            invalidateTextPaintAndMeasurements()
-        }
-
-    /**
-     * In the example view, this drawable is drawn above the text.
-     */
-    var exampleDrawable: Drawable? = null
+        evento?.OnChangedValue(_produto, _total)
+    }
 
     constructor(context: Context) : super(context) {
-        init(null, 0)
+        init(context, null, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(attrs, 0)
+        init(context, attrs, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
@@ -81,106 +52,111 @@ class ButtonMinusPlus : ConstraintLayout {
         attrs,
         defStyle
     ) {
-        init(attrs, defStyle)
+        init(context, attrs, defStyle)
     }
 
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
-        // Load attributes
-        val a = context.obtainStyledAttributes(
-            attrs, R.styleable.ButtonMinusPlus, defStyle, 0
-        )
+    private fun init(context: Context?, attrs: AttributeSet?, defStyle: Int?) {
 
-        _exampleString = a.getString(
-            R.styleable.ButtonMinusPlus_exampleString1
-        )
-        _exampleColor = a.getColor(
-            R.styleable.ButtonMinusPlus_exampleColor1,
-            exampleColor
-        )
-        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
-        // values that should fall on pixel boundaries.
-        _exampleDimension = a.getDimension(
-            R.styleable.ButtonMinusPlus_exampleDimension1,
-            exampleDimension
-        )
-
-        if (a.hasValue(R.styleable.ButtonMinusPlus_exampleDrawable1)) {
-            exampleDrawable = a.getDrawable(
-                R.styleable.ButtonMinusPlus_exampleDrawable1
-            )
-            exampleDrawable?.callback = this
+        var view = LayoutInflater.from(context).inflate(R.layout.button, this, false)
+        val incrementButton = view.findViewById<Button>(R.id.increment_selling_item_button)
+        val decrementButton = view.findViewById<Button>(R.id.decrement_selling_item_button)
+        val textItemCount = view.findViewById<TextView>(R.id.txt_item_result)
+        val cardViewIncrementItem =
+            view.findViewById<MaterialCardView>(R.id.card_view_increment_decrement_item)
+        val plusButton = view.findViewById<ImageView>(R.id.image_button_plus_item)
+        //
+        textItemCount.text = _total.toString()
+        plusButton.setOnClickListener {
+            isOpen = animationListener(plusButton, cardViewIncrementItem, isOpen)
+            evento?.OnChangedValue(_produto, _total)
         }
-
-        a.recycle()
-
-        // Set up a default TextPaint object
-        textPaint = TextPaint().apply {
-            flags = Paint.ANTI_ALIAS_FLAG
-            textAlign = Paint.Align.LEFT
+        incrementButton.setOnClickListener {
+            _total += 1
+            textItemCount.text = _total.toString()
+            evento?.OnChangedValue(_produto, _total)
         }
+        decrementButton.setOnClickListener {
+            if(_total > 0)
+                _total -= 1
 
-        this.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        this.setBackgroundResource(R.drawable.large_quantity_background)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            this.focusable = View.FOCUSABLE
+            if (_total < 1) {
+                isOpen = animationListener(plusButton, cardViewIncrementItem, true)
+
+            } else {
+                textItemCount.text = _total.toString()
+            }
+
+            evento?.OnChangedValue(_produto, _total)
         }
         //
         val set = ConstraintSet()
-        set.connect(100, ConstraintSet.TOP, this.id, 0)
-        buttonMinus?.attr(R.attr.selectableItemBackgroundBorderless)
-        buttonMinus?.setPadding(16, 19, 14, 19)
-        buttonMinus?.layoutParams = LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        )
-     //   buttonMinus?.constr
-        buttonMinus?.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-        addView(buttonMinus)
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements()
+        addView(view)
+        set.clone(this)
+        set.match(view, this)
     }
 
-    private fun invalidateTextPaintAndMeasurements() {
-        textPaint?.let {
-            it.textSize = exampleDimension
-            it.color = exampleColor
-            textWidth = it.measureText(exampleString)
-            textHeight = it.fontMetrics.bottom
+    fun ConstraintSet.match(view: View, parentView: View) {
+        this.connect(view.id, ConstraintSet.TOP, parentView.id, ConstraintSet.TOP)
+        this.connect(view.id, ConstraintSet.START, parentView.id, ConstraintSet.START)
+        this.connect(view.id, ConstraintSet.END, parentView.id, ConstraintSet.END)
+        this.connect(view.id, ConstraintSet.BOTTOM, parentView.id, ConstraintSet.BOTTOM)
+    }
+
+    fun animateAppear(plusButton: ImageView, cardViewIncrementItem: MaterialCardView) {
+        plusButton.animate().apply {
+            alpha(0f)
+            duration = 200
+        }.withEndAction {
+            plusButton.animate().translationY(200f)
+            val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            plusAnimate.duration = 200
+            plusAnimate.fillAfter = true
+
+            cardViewIncrementItem.animate().alpha(1f).duration = 200
+            val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            cardAnimate.duration = 200
+            cardAnimate.fillAfter = true
+
+            cardViewIncrementItem.startAnimation(cardAnimate)
+            plusButton.startAnimation(plusAnimate)
         }
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        // TODO: consider storing these as member variables to reduce
-        // allocations per draw cycle.
-        val paddingLeft = paddingLeft
-        val paddingTop = paddingTop
-        val paddingRight = paddingRight
-        val paddingBottom = paddingBottom
-
-        val contentWidth = width - paddingLeft - paddingRight
-        val contentHeight = height - paddingTop - paddingBottom
-
-        exampleString?.let {
-            // Draw the text.
-            textPaint?.let { it1 ->
-                canvas.drawText(
-                    it,
-                    paddingLeft + (contentWidth - textWidth) / 2,
-                    paddingTop + (contentHeight + textHeight) / 2,
-                    it1
-                )
+    fun animateDisappear(plusButton: ImageView, cardViewIncrementItem: MaterialCardView) {
+        cardViewIncrementItem.animate().apply {
+            alpha(0f)
+            duration = 200
+        }.withEndAction {
+            plusButton.animate().translationY(0f).withEndAction {
+                plusButton.animate().alpha(1f).duration = 200
             }
+            val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            plusAnimate.duration = 200
+            plusAnimate.fillAfter = true
+
+            val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
+            cardAnimate.duration = 200
+            cardAnimate.fillAfter = true
+
+            cardViewIncrementItem.startAnimation(cardAnimate)
+            plusButton.startAnimation(plusAnimate)
+        }
+    }
+
+    fun animationListener(plusButton: ImageView, cardViewIncrementItem: MaterialCardView, isOpen: Boolean): Boolean {
+        var opened = false
+        if (isOpen){
+            animateDisappear(plusButton, cardViewIncrementItem)
+            opened = false
+        }else if (!isOpen){
+            animateAppear(plusButton, cardViewIncrementItem)
+            opened = true
         }
 
-        // Draw the example drawable on top of the text.
-        exampleDrawable?.let {
-            it.setBounds(
-                paddingLeft, paddingTop,
-                paddingLeft + contentWidth, paddingTop + contentHeight
-            )
-            it.draw(canvas)
-        }
+        return opened
+    }
+
+    fun addOnChangeValueListener(ev: OnChangedValueListener){
+        evento = ev
     }
 }

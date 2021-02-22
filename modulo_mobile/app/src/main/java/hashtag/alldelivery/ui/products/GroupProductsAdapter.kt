@@ -3,18 +3,21 @@ package hashtag.alldelivery.ui.products
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.utils.LoadViewItemAdpter
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_item.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.store_title
 import kotlinx.coroutines.*
+import org.jetbrains.anko.doAsync
 
 class GroupProductsAdapter(val frag: StoreFragment, var groups: List<Group>?): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-
+    lateinit var evento: LoadViewItemAdpter
     var fragment = frag
     var recyledViewPool = RecyclerView.RecycledViewPool()
 
@@ -34,7 +37,11 @@ class GroupProductsAdapter(val frag: StoreFragment, var groups: List<Group>?): R
         holder.name.text = group?.nome
         holder.list.removeAllViews()
         //
-        holder.BindItem(AllDeliveryApplication.STORE?.id, group, recyledViewPool)
+        holder.BindItem(AllDeliveryApplication.STORE?.id, group)
+
+        if(evento != null){
+            evento.OnLoadViewItemAdpter(group?.id, position, holder)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -54,34 +61,30 @@ class GroupProductsAdapter(val frag: StoreFragment, var groups: List<Group>?): R
     }
 
     class ProductItemViewHolder(fragment: StoreFragment, view: View): RecyclerView.ViewHolder(view) {
+
         val name = view.store_title
         val list = view.list_horizon
         val frag = fragment
 
-        fun BindItem(store: Int?, group: Group?, viewPool: RecyclerView.RecycledViewPool){
-            //var adapter = ProductsListItemAdapter(frag, ArrayList<Product>())
-          //  adapter.setHasStableIds(true)
+        fun BindItem(store: Int?, group: Group?){
             var layoutManager = LinearLayoutManager(
                 list.context,
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-
             list.layoutManager = layoutManager
-        //    list.setHasFixedSize(true)
-          //  list.setRecycledViewPool(viewPool)
-            
-           runBlocking(Dispatchers.IO) {
-            if(group?.products!!.isEmpty()) {
-                 group?.products = frag.viewModelProduct?.getGroupProducts(store, group?.id)
-            }
-           }
-
-
-            var adapt = ProductsListItemAdapter(frag, layoutManager, null, group?.products!!)
-            //adapt.setHasStableIds(true)
+            var adapt = ProductsListItemAdapter(frag, layoutManager, null, group?.products)
             list.adapter = adapt
-
+            list.alpha = 0f
+            list.animate().apply {
+                interpolator = LinearInterpolator()
+                alpha(1f)
+                duration = 400
+            }
         }
+    }
+
+    fun setOnLoadViewItemAdpter(objeto: LoadViewItemAdpter){
+        evento = objeto
     }
 }

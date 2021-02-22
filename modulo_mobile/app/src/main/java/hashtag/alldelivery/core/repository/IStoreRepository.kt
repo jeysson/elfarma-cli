@@ -15,5 +15,10 @@ interface IStoreRepository {
         tipoOrdenacao: Int
     ): Observable<List<Store>>
 
-    fun getPagingStores(page: Int?, total: Int?, lat: Double?, lon: Double?, tipoordenacao: Int?): Call<ArrayList<Store>>
+    fun getPagingStores(
+        page: Int?,
+        total: Int?,
+        lat: Double?,
+        lon: Double?,
+        tipoordenacao: Int?): Observable<ArrayList<Store>>
 }

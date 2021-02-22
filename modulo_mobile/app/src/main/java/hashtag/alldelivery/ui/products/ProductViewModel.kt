@@ -41,9 +41,18 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
         return products
     }
 
-    fun getGroupProducts(store: Int?, group: Int?) : ArrayList<Product> {
-        var resp = producRep.getProductsGroup(store, group).execute()
-        return resp.body()!!
+    fun getGroupProducts(store: Int?, group: Int?) :MutableLiveData<ArrayList<Product>> {
+        var dados = MutableLiveData<ArrayList<Product>>()
+
+        producRep.getProductsGroup(store, group).subscribe( {
+            dados.postValue(it)
+            if(it.isNullOrEmpty()) {
+                eventoErro.postValue(BusinessEvent("Nenhum produto encontrado."))
+            }
+        },{
+            eventoErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter os produtos para a loja."))
+        })
+        return dados
     }
 
     @SuppressLint("CheckResult")

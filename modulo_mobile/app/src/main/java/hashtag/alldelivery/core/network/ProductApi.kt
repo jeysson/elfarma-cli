@@ -18,7 +18,8 @@ interface ProductApi {
     fun getAllGroups(@Query("loja") id: Int?) : Observable<List<Group>>
 
     @GET("produto/produtosgrupo")
-    fun getProductsGroup(@Query("loja") store: Int?, @Query("grupo") group: Int?) : Call<ArrayList<Product>>
+    fun getProductsGroup(@Query("loja") store: Int?,
+                         @Query("grupo") group: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/produtosgrupo")
     fun getProductsGroupAsync(@Query("loja") store: Int?, @Query("grupo") group: Int?) : Observable<List<Product>>

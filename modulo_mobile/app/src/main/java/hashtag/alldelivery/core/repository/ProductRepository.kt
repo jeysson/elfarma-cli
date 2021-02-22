@@ -19,7 +19,7 @@ class ProductRepository(private val dataSource: ProductApi): IProductRepository,
         return runOnBackground(dataSource.getAllGroups(id))
     }
 
-    override fun getProductsGroup(store: Int?, group: Int?): Call<ArrayList<Product>> {
+    override fun getProductsGroup(store: Int?, group: Int?): Observable<ArrayList<Product>> {
         return dataSource.getProductsGroup(store, group)
     }
 
