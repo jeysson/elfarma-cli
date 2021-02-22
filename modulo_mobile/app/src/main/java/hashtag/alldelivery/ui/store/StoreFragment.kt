@@ -30,6 +30,7 @@ import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.utils.LoadViewItemAdpter
 import hashtag.alldelivery.core.utils.OnBackPressedListener
 import hashtag.alldelivery.ui.products.GroupProductsAdapter
 import hashtag.alldelivery.ui.products.ProductSearch
@@ -43,10 +44,11 @@ import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class StoreFragment : Fragment(), OnBackPressedListener{
+class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter{
 
     private var isUserScrolling: Boolean = false
     val viewModelProduct: ProductViewModel by sharedViewModel()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -141,11 +143,7 @@ class StoreFragment : Fragment(), OnBackPressedListener{
         }
 
         setupObservers()
-
-//      delay para auxilio de UX
-        Handler(Looper.getMainLooper()).postDelayed({
-            carregarProdutos()
-        }, REFRESH_DELAY_TIMER_STORE)
+        carregarGruposProdutos()
         syncTabWithRecyclerView()
         (activity as MainActivity).hideBottomNavigation()
     }
@@ -195,30 +193,28 @@ class StoreFragment : Fragment(), OnBackPressedListener{
             })
     }
 
-    private fun carregarProdutos()
-    {
-        val adapter = GroupProductsAdapter(this, ArrayList<Group>())
-      //  adapter.setHasStableIds(true)
+    private fun carregarGruposProdutos(){
+        viewModelProduct.getAllGroups(AllDeliveryApplication.STORE?.id)
+            .observe(viewLifecycleOwner, Observer<List<Group>> {
+                it?.let {
+                    val adapter = GroupProductsAdapter(this, ArrayList<Group>())
+                    adapter.setOnLoadViewItemAdpter(this)
 
-            list.layoutManager = LinearLayoutManager(context)
-            list.adapter = adapter
-            list.setHasFixedSize(true)
+                    list.layoutManager = LinearLayoutManager(context)
+                    list.adapter = adapter
+                    list.setHasFixedSize(true)
+                    adapter.groups = it
 
-            viewModelProduct.getAllGroups(AllDeliveryApplication.STORE?.id)
-                .observe(viewLifecycleOwner, Observer<List<Group>> {
-                    it?.let {
-                        adapter.groups = it
-
-                        for ((index, grupo) in it.withIndex()) {
-                            var tab = tabs.newTab()
-                            tab.text = grupo.nome as CharSequence
-                            tabs.addTab(tab, index)
-                        }
-                        loading.visibility = View.GONE
-                        list.visibility = View.VISIBLE
-                        adapter.notifyDataSetChanged()
+                    for ((index, grupo) in it.withIndex()) {
+                        var tab = tabs.newTab()
+                        tab.text = grupo.nome as CharSequence
+                        tabs.addTab(tab, index)
                     }
-                })
+                    loading.visibility = View.GONE
+                    list.visibility = View.VISIBLE
+                    adapter.notifyDataSetChanged()
+                }
+            })
     }
 
     private fun syncTabWithRecyclerView() {
@@ -281,6 +277,17 @@ class StoreFragment : Fragment(), OnBackPressedListener{
 
     override fun onBackPressed() {
         back()
+    }
+
+    override fun OnLoadViewItemAdpter(group:Int?, position: Int, holder: GroupProductsAdapter.ProductItemViewHolder) {
+        if((list.adapter as GroupProductsAdapter).groups!![position]?.products?.size == 0){
+            viewModelProduct?.getGroupProducts(STORE?.id, group).observe(viewLifecycleOwner,
+                {
+                    (list.adapter as GroupProductsAdapter).groups!![position]?.products = it
+                    (list.adapter as GroupProductsAdapter).notifyDataSetChanged()
+
+                })
+        }
     }
 
 }

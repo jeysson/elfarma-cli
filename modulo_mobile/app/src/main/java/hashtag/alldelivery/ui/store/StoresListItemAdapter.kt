@@ -19,6 +19,7 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.FIRST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
+import hashtag.alldelivery.core.utils.LoadViewItemAdpter
 import hashtag.alldelivery.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
@@ -35,7 +36,7 @@ class StoresListItemAdapter(
 
     private val TYPE_HEADER = 1
     private val TYPE_BODY = 2
-
+lateinit var evento:LoadViewItemAdpter
     lateinit var listHeader: View
     lateinit var itemClickListener: AdapterView.OnItemClickListener
     val fragment = frag
@@ -94,6 +95,7 @@ class StoresListItemAdapter(
                 val imageBytes = android.util.Base64.decode(item.logo, 0)
                 val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                 holder.logo.setImageBitmap(image)
+
             }else {
                 holder.logo.setImageResource(R.drawable.ic_medicine)
             }

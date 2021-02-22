@@ -23,5 +23,5 @@ interface StoreApi {
         @Query("lat") lat: Double?,
         @Query("lon") lon: Double?,
         @Query("tipoordenacao") tipoOrdenacao: Int?
-    ) : Call<ArrayList<Store>>
+    ) : Observable<ArrayList<Store>>
 }

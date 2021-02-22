@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.core.di.repositoryModule
 import hashtag.alldelivery.core.di.viewModelModule
 import hashtag.alldelivery.core.models.Address
+import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.network.networkModule
@@ -20,6 +21,7 @@ import java.util.*
 class AllDeliveryApplication : Application() {
 
     companion object {
+        var Pedido: Order? = null
         var FIRST_VISIBLE = 0
         var LAST_VISIBLE = 0
 

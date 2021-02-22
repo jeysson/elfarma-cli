@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:id="@+id/context_bar_container"
+    android:tag="layout/bag_bar_0"
+    android:focusableInTouchMode="true"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:animateLayoutChanges="true"
+    android:background="@color/colorPrimary">
+
+    <TextView android:textColor="@color/deprecated_cream"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:id="@+id/item_added"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/context_card_item_added_alert"
+        style="@style/Text.BagTitle"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="center_vertical"
+        android:id="@+id/bag_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="14dp">
+
+        <ImageView android:id="@+id/bag_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bag"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView android:id="@+id/bag_items_quantity"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/bag_icon"
+            app:layout_constraintCircle="@+id/bag_icon"
+            app:layout_constraintCircleAngle="66"
+            app:layout_constraintCircleRadius="7dp"
+            app:layout_constraintLeft_toLeftOf="@+id/bag_icon"
+            app:layout_constraintTop_toTopOf="@+id/bag_icon"
+            style="@style/BadgeWhite"/>
+
+        <TextView android:textColor="@color/white"
+            android:id="@+id/bag_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/context_card_bag_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Text.BagTitle"/>
+
+        <TextView android:textColor="@color/white"
+            android:id="@+id/bag_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Text.Toolbar"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

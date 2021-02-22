@@ -96,12 +96,13 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         _swipeRefresh.setOnRefreshListener {
 //        Timer para atrazar o inicio do swipeRefresh -> UX
-            Handler(Looper.getMainLooper()).postDelayed({
-                lifecycleScope.launch(Dispatchers.IO) {
-                    getItems()
-                }
-            }, REFRESH_DELAY_TIMER)
+            page = 1
+            _homeCards.visibility = GONE
+            isLastPage = false
+            getItems()
         }
+
+        getItems()
     }
 
     private fun scrollListener() {
@@ -111,7 +112,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 val recyclerLayout = (_homeCards.layoutManager as LinearLayoutManager)
 
                 if (!isLoading && !isLastPage) {
-                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 3) {
+                    if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 1) {
                         //                      corrige bug de fade in quando atualiza o adapter
                         FIRST_VISIBLE = recyclerLayout.findFirstVisibleItemPosition()
                         LAST_VISIBLE = recyclerLayout.findLastVisibleItemPosition()
@@ -132,7 +133,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             toast("O dispositivo não está conectado")
         else {
             page = 1
-            getMoreItems()
+            isLastPage = false
+            getItems()
         }
     }
 
@@ -183,14 +185,15 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 _currentAddress.longi!!,
                 _currentAddress.number
             )
-
-            lifecycleScope.launch(Dispatchers.IO) {
-                getItems()
-            }
+            page = 1
+            isLastPage = false
+            _homeCards.visibility = GONE
+            getItems()
         } else {
-            lifecycleScope.launch(Dispatchers.IO) {
-                getItems()
-            }
+            page = 1
+            isLastPage = false
+            _homeCards.visibility = GONE
+            getItems()
         }
     }
 
@@ -219,9 +222,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 _homeLoading.visibility = VISIBLE
                 _homeCards.visibility = GONE
                 page = 1
-                lifecycleScope.launch(Dispatchers.IO) {
-                    getItems()
-                }
+                getItems()
             }
         }
     }
@@ -246,27 +247,25 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 )
             }
         }
-
     }
 
-    private suspend fun getItems() {
+    private fun getItems() {
         Log.d("INICIO", "incializando...")
         isLoading = true
         val homeFragment = this
         //config adapter
-        _storeList = _storeViewModel.getPagingStores(
+        _storeViewModel.getPagingStores(
             page,
             itemsPerPage,
             LAT_LONG?.latitude,
             LAT_LONG?.longitude,
             SORT_FILTER
-        )
+        ).observe(viewLifecycleOwner,{
 
-        withContext(Dispatchers.Main) {
             _adapter = StoresListItemAdapter(
                 homeFragment,
                 _homeCards.layoutManager as LinearLayoutManager,
-                _storeList
+                it
             )
             _homeCards.adapter = _adapter
             _adapter.notifyDataSetChanged()
@@ -275,29 +274,25 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             _homeCards.visibility = VISIBLE
             _swipeRefresh.isRefreshing = false
             isLoading = false
-        }
+        })
     }
 
     fun getMoreItems() {
-        Log.d("MAIS", "obtendo...")
-        _homeCards.post {
-            lifecycleScope.launch(Dispatchers.IO) {
-                _storeList = _storeViewModel.getPagingStores(
-                    page,
-                    itemsPerPage,
-                    LAT_LONG?.latitude,
-                    LAT_LONG?.longitude,
-                    SORT_FILTER
-                )
-                withContext(Dispatchers.Main) {
-                    _adapter.addItems(_storeList)
-                    _adapter.notifyDataSetChanged()
-                    _homeLoading.visibility = INVISIBLE
-                    _homeCards.visibility = VISIBLE
-                }
-                isLastPage = _storeList.size == 0
+        _storeViewModel.getPagingStores(
+                page,
+                itemsPerPage,
+                LAT_LONG?.latitude,
+                LAT_LONG?.longitude,
+                SORT_FILTER
+            ).observe(viewLifecycleOwner,{
+                var countInicio =_adapter.itens!!.size-1
+                _adapter.addItems(it)
+                _adapter.notifyItemRangeChanged(countInicio, _adapter.itens!!.size)
+                _homeLoading.visibility = INVISIBLE
+                _homeCards.visibility = VISIBLE
+
+                isLastPage = it.size == 0
                 isLoading = false
-            }
-        }
+            })
     }
 }

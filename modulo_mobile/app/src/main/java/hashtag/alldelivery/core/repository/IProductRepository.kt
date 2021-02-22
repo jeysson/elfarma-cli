@@ -14,7 +14,7 @@ interface IProductRepository {
 
     fun getAllGroups(id: Int?): Observable<List<Group>>
 
-    fun getProductsGroup(store: Int?, group: Int?): Call<ArrayList<Product>>
+    fun getProductsGroup(store: Int?, group: Int?): Observable<ArrayList<Product>>
 
     fun getProductsGroupAsync(store: Int?, group: Int?): Observable<List<Product>>
 

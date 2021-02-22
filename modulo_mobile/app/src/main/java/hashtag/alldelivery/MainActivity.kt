@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         StrictMode.setThreadPolicy(policy)
         StatusBarUtil.setTransparent(this)
 
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.stores_activity_main)
 
         navView = findViewById(R.id.nav_view)
 

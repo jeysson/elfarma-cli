@@ -1,48 +1,45 @@
 package hashtag.alldelivery.ui.products
 
 import android.app.ActivityOptions
+import android.app.Application
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.Color.alpha
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.view.ViewCompat.animate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Item
+import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.models.Product
+import hashtag.alldelivery.core.utils.OnChangedValueListener
 import kotlinx.android.synthetic.main.product_card_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
-import java.util.logging.Handler
 
 class ProductsListItemAdapter(
     val frag: Fragment,
     val lLayoutManager: LinearLayoutManager?,
     val gLayoutManager: GridLayoutManager?,
-    itens: ArrayList<Product>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+    itens: ArrayList<Product>?
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener, OnChangedValueListener {
 
     lateinit var itemClickListener: AdapterView.OnItemClickListener
     val fragment = frag
     private val model: ProductViewModel by frag.sharedViewModel()
     val itens: ArrayList<Product>? = itens
     private lateinit var myView: View
-
+    var evento: OnChangedValueListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = if (lLayoutManager == null){
@@ -55,45 +52,18 @@ class ProductsListItemAdapter(
         myView = view
 
         var holder = ProductItemCardViewHolder(view)
+
+
         holder.setIsRecyclable(false)
         return holder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-
         holder as ProductItemCardViewHolder
 
-
-
-
-        //        Increment Button
-
-        var isOpen = false
-        var count = 1
-        holder.textItemCount.text = count.toString()
-        holder.plusButton.setOnClickListener {
-            isOpen = animationListener(holder.plusButton, holder.cardViewIncrementItem, isOpen)
-        }
-        holder.incrementButton.setOnClickListener {
-            count += 1
-            holder.textItemCount.text = count.toString()
-        }
-        holder.decrementButton.setOnClickListener {
-            if (count <= 1) {
-                isOpen = animationListener(holder.plusButton, holder.cardViewIncrementItem, isOpen)
-            } else {
-                count -= 1
-                holder.textItemCount.text = count.toString()
-            }
-
-        }
-
-
         var product = itens?.get(position)
-
-
-
+        holder.bt.produto = product?.id!!
         holder.card.tag = position
         holder.card.setOnClickListener(this)
         holder.name.text = product!!.nome
@@ -127,6 +97,7 @@ class ProductsListItemAdapter(
             holder.image.setImageBitmap(image)
         }
 
+        holder.bt.addOnChangeValueListener(this)
     }
 
     override fun getItemCount() = itens!!.size
@@ -141,14 +112,7 @@ class ProductsListItemAdapter(
         val detalhe = view.cross_selling_item_details
         val image = view.cross_selling_item_image
         val card = view.card_product
-
-
-        val incrementButton = view.findViewById<Button>(R.id.increment_selling_item_button)
-        val decrementButton = view.findViewById<Button>(R.id.decrement_selling_item_button)
-        val textItemCount = view.findViewById<TextView>(R.id.txt_item_result)
-        val cardViewIncrementItem =
-            view.findViewById<MaterialCardView>(R.id.card_view_increment_decrement_item)
-        val plusButton = view.findViewById<Button>(R.id.image_button_plus_item)
+        val bt = view.btPlusMinus
     }
 
     override fun onClick(view: View?) {
@@ -170,59 +134,21 @@ class ProductsListItemAdapter(
         notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
     }
 
-    fun animateAppear(plusButton: Button, cardViewIncrementItem: MaterialCardView) {
-        plusButton.animate().apply {
-            alpha(0f)
-            duration = 200
-        }.withEndAction {
-            plusButton.animate().translationY(200f)
-            val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
-            plusAnimate.duration = 200
-            plusAnimate.fillAfter = true
+    override fun OnChangedValue(id:Int, value: Int){
+        if(Pedido == null)
+            Pedido = Order()
+        //
+        var ix = Pedido?.itens?.firstOrNull { p: Item -> p.produto == id   }
 
-            cardViewIncrementItem.animate().alpha(1f).duration = 200
-            val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
-            cardAnimate.duration = 200
-            cardAnimate.fillAfter = true
+        if(ix == null)
+            Pedido?.itens?.add(Item(id, value))
+        else
+            ix.quantidade = value
 
-            cardViewIncrementItem.startAnimation(cardAnimate)
-            plusButton.startAnimation(plusAnimate)
-        }
-
+        evento?.OnChangedValue(id, value)
     }
 
-    fun animateDisappear(plusButton: Button, cardViewIncrementItem: MaterialCardView) {
-        cardViewIncrementItem.animate().apply {
-            alpha(0f)
-            duration = 200
-        }.withEndAction {
-            plusButton.animate().translationY(0f).withEndAction {
-                plusButton.animate().alpha(1f).duration = 200
-            }
-            val plusAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
-            plusAnimate.duration = 200
-            plusAnimate.fillAfter = true
-
-            val cardAnimate = TranslateAnimation(0f, 0f, 0f , 0f)
-            cardAnimate.duration = 200
-            cardAnimate.fillAfter = true
-
-            cardViewIncrementItem.startAnimation(cardAnimate)
-            plusButton.startAnimation(plusAnimate)
-        }
-
-    }
-
-    fun animationListener(plusButton: Button, cardViewIncrementItem: MaterialCardView, isOpen: Boolean): Boolean {
-        var opened = false
-        if (isOpen){
-            animateDisappear(plusButton, cardViewIncrementItem)
-            opened = false
-        }else if (!isOpen){
-            animateAppear(plusButton, cardViewIncrementItem)
-            opened = true
-        }
-
-        return opened
+    fun addOnChangeValueListener(ev:OnChangedValueListener){
+        evento = ev
     }
 }

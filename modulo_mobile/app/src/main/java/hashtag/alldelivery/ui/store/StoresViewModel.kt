@@ -41,9 +41,17 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
         lat: Double?,
         lon: Double?,
         tipoordenacao: Int?
-    ): ArrayList<Store> {
-        var resp = _storeRep.getPagingStores(page, total, lat, lon, tipoordenacao).execute()
-        return resp.body()!!
+    ): MutableLiveData<ArrayList<Store>> {
+        var stores = MutableLiveData<ArrayList<Store>>()
+        _storeRep.getPagingStores(page, total, lat, lon, tipoordenacao).subscribe ({
+                stores.postValue(it)
+            if (it.isNullOrEmpty()) {
+                eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
+            }
+        }, {
+            eventErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))
+        })
+        return stores
     }
 
 }
