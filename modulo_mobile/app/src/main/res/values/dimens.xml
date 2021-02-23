@@ -40,6 +40,7 @@
     <dimen name="text_size_f3">14sp</dimen>
     <dimen name="space_size_120dp">120dp</dimen>
     <dimen name="space_size_40dp">40dp</dimen>
+    <dimen name="space_size_36dp">36dp</dimen>
     <dimen name="space_size_8dp">8dp</dimen>
     <dimen name="text_size_s1">10sp</dimen>
     <dimen name="checkout_toolbar_height">56dp</dimen>

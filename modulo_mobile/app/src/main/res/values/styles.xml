@@ -2,7 +2,7 @@
 
     <style name="ElFarmaTextViewStyle"></style>
 
-<!--    StatusBar transparente com icones escuros -->
+    <!--    StatusBar transparente com icones escuros -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -24,7 +24,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AppTheme.CardView" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+    <style name="AppTheme.CardView" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
     <style name="AppTheme.BottomNavigationView">
         <item name="android:background">@android:color/white</item>
@@ -145,6 +145,11 @@
 
     <style name="TextAppearance.DesignSystem.Button.B1">
         <item name="android:textSize">@dimen/text_size_b1</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Toolbar">
+        <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/sul_sans_medium</item>
     </style>
 
@@ -329,8 +334,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="TextAppearance.DesignSystem.Form">
-    </style>
+    <style name="TextAppearance.DesignSystem.Form"></style>
+
     <style name="TextAppearance.DesignSystem.Form.F3">
         <item name="android:textSize">@dimen/text_size_f3</item>
         <item name="android:fontFamily">@font/sul_sans_light</item>
@@ -350,24 +355,45 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/sul_sans_light</item>
     </style>
+
     <style name="Text.DeliveryMethodHeader">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/deprecated_dark_grey</item>
         <item name="android:fontFamily">@font/sul_sans_regular</item>
     </style>
+
     <style name="CustomRadioButton">
         <item name="android:button">@drawable/selector_radio_button</item>
     </style>
+
     <style name="Text.Body">
         <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">@font/sul_sans_light</item>
     </style>
+
     <style name="Text.Link_3">
         <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">@font/sul_sans_regular</item>
     </style>
+
     <style name="TextAppearance.DesignSystem.Title.H2.Light">
         <item name="android:textSize">@dimen/text_size_h2</item>
         <item name="android:fontFamily">@font/sul_sans_light</item>
     </style>
+
+    <style name="Text.BagTitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="BadgeWhite">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">@drawable/bag_shape_white</item>
+        <item name="android:layout_width">13dp</item>
+        <item name="android:layout_height">13dp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
 </resources>
