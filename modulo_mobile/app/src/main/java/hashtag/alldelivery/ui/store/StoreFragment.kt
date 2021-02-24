@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -15,36 +13,36 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
-import com.squareup.picasso.Picasso
 import hashtag.alldelivery.AllDeliveryApplication
-import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
-import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER_STORE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.models.Item
+import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.utils.LoadViewItemAdpter
 import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.core.utils.OnChangedValueListener
+import hashtag.alldelivery.ui.bag.BagFragment
 import hashtag.alldelivery.ui.products.GroupProductsAdapter
 import hashtag.alldelivery.ui.products.ProductSearch
 import hashtag.alldelivery.ui.products.ProductViewModel
+import kotlinx.android.synthetic.main.bag_bar.*
 import kotlinx.android.synthetic.main.store_card_toolbar.*
 import kotlinx.android.synthetic.main.store_fragment.*
 import kotlinx.android.synthetic.main.store_menu_header.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter{
+class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
+    OnChangedValueListener {
 
     private var isUserScrolling: Boolean = false
     val viewModelProduct: ProductViewModel by sharedViewModel()
@@ -142,6 +140,27 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter{
             }
         }
 
+        btSacola.setOnClickListener {
+            val manager: FragmentManager = activity!!.supportFragmentManager
+            manager.beginTransaction()
+            manager.commit {
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+                replace(
+                    R.id.nav_host_fragment,
+                    BagFragment::class.java,
+                    ActivityOptions.makeSceneTransitionAnimation(
+                        activity
+                    ).toBundle()
+                )
+                addToBackStack(null)
+            }
+        }
+        
         setupObservers()
         carregarGruposProdutos()
         syncTabWithRecyclerView()
@@ -288,6 +307,33 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter{
 
                 })
         }
+    }
+
+    override fun OnChangedValue(id:Int, value: Int){
+        if(AllDeliveryApplication.Pedido == null)
+            AllDeliveryApplication.Pedido = Order()
+        //
+        var ix = AllDeliveryApplication.Pedido?.itens?.firstOrNull { p: Item -> p.produto == id   }
+
+        if(ix == null) {
+            AllDeliveryApplication.Pedido?.itens?.add(Item(id, value))
+            if(AllDeliveryApplication.Pedido!!.itens!!.isNotEmpty()) {
+                var totalQtd = AllDeliveryApplication.Pedido!!.itens!!.sumBy { p: Item -> p.quantidade!! }
+                btSacola.visibility = VISIBLE
+                bag_counter.text = totalQtd.toString()
+            }
+
+        } else {
+            ix.quantidade = value
+            var totalQtd = AllDeliveryApplication.Pedido!!.itens!!.sumBy { p: Item -> p.quantidade!! }
+            bag_counter.text = totalQtd.toString()
+            if(totalQtd == 0) {
+                btSacola.visibility = GONE
+            } else {
+                btSacola.visibility = VISIBLE
+            }
+        }
+        //evento?.OnChangedValue(id, value)
     }
 
 }
