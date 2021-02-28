@@ -1,5 +1,6 @@
  package hashtag.alldelivery.core.di
 
+import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.home.HomeViewModel
 import hashtag.alldelivery.ui.store.StoresViewModel
 import hashtag.alldelivery.ui.products.ProductViewModel

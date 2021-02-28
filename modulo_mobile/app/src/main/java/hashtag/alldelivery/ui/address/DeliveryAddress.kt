@@ -37,7 +37,7 @@ class DeliveryAddress : AppCompatActivity() {
     var PERMISSION_ID = 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
-    private lateinit var addressViewModel: AddressViewModel
+    lateinit var addressViewModel: AddressViewModel
     lateinit var adapter: AddressListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

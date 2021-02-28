@@ -39,9 +39,9 @@ class GroupProductsAdapter(val frag: StoreFragment, var groups: List<Group>?): R
         //
         holder.BindItem(AllDeliveryApplication.STORE?.id, group)
 
-        if(evento != null){
+       /* if(evento != null){
             evento.OnLoadViewItemAdpter(group?.id, position, holder)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {

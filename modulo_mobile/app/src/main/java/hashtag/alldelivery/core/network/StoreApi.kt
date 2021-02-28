@@ -14,7 +14,7 @@ interface StoreApi {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("tipoordenacao") tipoOrdenacao: Int
-    ) : Observable<List<Store>>
+    ) : Observable<ArrayList<Store>>
 
     @GET("loja/paginar?")
     fun getPagingStores(
@@ -24,4 +24,10 @@ interface StoreApi {
         @Query("lon") lon: Double?,
         @Query("tipoordenacao") tipoOrdenacao: Int?
     ) : Observable<ArrayList<Store>>
+
+    @GET("loja/logo?")
+    fun getStoreLogo(@Query("loja") loja: Int?) : Observable<Store>
+
+    @GET("loja/banner?")
+    fun getStoreBanner(@Query("loja") loja: Int?) : Observable<Store>
 }

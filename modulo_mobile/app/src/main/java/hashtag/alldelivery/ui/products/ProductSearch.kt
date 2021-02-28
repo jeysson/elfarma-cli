@@ -21,11 +21,14 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+
+
 
 class ProductSearch : Fragment(), OnBackPressedListener {
 
@@ -37,7 +40,9 @@ class ProductSearch : Fragment(), OnBackPressedListener {
     var isLoading: Boolean = false
     var page = 1
     var itemsPerPage = 6
-
+// insert
+    val frag: StoreFragment = TODO()
+//
     private val _recyclerProductList by lazy { _view.findViewById<RecyclerView>(R.id.recycler_product_list_search) }
     private val _editSearch by lazy { _view.findViewById<EditText>(R.id.edit_text_search_item) }
     private val _cancelButton by lazy { _view.findViewById<Button>(R.id.btn_cancel_search) }
@@ -153,17 +158,18 @@ class ProductSearch : Fragment(), OnBackPressedListener {
             itemsPerPage
         )
 
-        withContext(Dispatchers.Main) {
-            _productAdapter = ProductsListItemAdapter(
-                productSearch,
-                null,
-                _recyclerProductList.layoutManager as GridLayoutManager,
-                _productList
-            )
-            _recyclerProductList.adapter = _productAdapter
-            _productAdapter.notifyDataSetChanged()
-            loadingSearch.visibility = View.INVISIBLE
-        }
+//        withContext(Dispatchers.Main) {
+//            _productAdapter = ProductsListItemAdapter(
+//                productSearch,
+//                null,
+//                _recyclerProductList.layoutManager as GridLayoutManager,
+//                _productList
+//            )
+//            _recyclerProductList.adapter = _productAdapter
+//            _productAdapter.notifyDataSetChanged()
+//            loadingSearch.visibility = View.INVISIBLE
+//        }
+
     }
 
     private fun findItemByName(text: CharSequence) {
@@ -172,26 +178,26 @@ class ProductSearch : Fragment(), OnBackPressedListener {
         val filteredItems = mutableListOf<Product>()
         filteredItems.addAll(byName)
 
-        when {
-            filteredItems.isNotEmpty() -> {
-
-                _productAdapter = ProductsListItemAdapter(
-                    this,
-                    null,
-                    _recyclerProductList.layoutManager as GridLayoutManager,
-                    filteredItems as java.util.ArrayList<Product>
-                )
-                _recyclerProductList.adapter = _productAdapter
-
-            }
-            filteredItems.isEmpty() -> {
-                Toast.makeText(_view.context, "Nenhum item encontrado", Toast.LENGTH_SHORT).show()
-                getMoreItems()
-            }
-            else -> {
-                getMoreItems()
-            }
-        }
+//        when {
+//            filteredItems.isNotEmpty() -> {
+//
+//                _productAdapter = ProductsListItemAdapter(
+//                    this,
+//                    null,
+//                    _recyclerProductList.layoutManager as GridLayoutManager,
+//                    filteredItems as java.util.ArrayList<Product>
+//                )
+//                _recyclerProductList.adapter = _productAdapter
+//
+//            }
+//            filteredItems.isEmpty() -> {
+//                Toast.makeText(_view.context, "Nenhum item encontrado", Toast.LENGTH_SHORT).show()
+//                getMoreItems()
+//            }
+//            else -> {
+//                getMoreItems()
+//            }
+//        }
     }
 
 

@@ -31,4 +31,6 @@ class Address() {
     var lat: Double? =null
     @ColumnInfo
     var longi: Double? = null
+    @ColumnInfo
+    var padrao: Int? = 0
 }

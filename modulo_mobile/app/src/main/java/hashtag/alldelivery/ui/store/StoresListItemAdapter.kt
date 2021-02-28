@@ -20,18 +20,17 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.utils.LoadViewItemAdpter
+import hashtag.alldelivery.ui.home.HomeFragment
 import hashtag.alldelivery.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class StoresListItemAdapter(
-    val frag: Fragment,
-    val lLayoutManager: LinearLayoutManager?,
-    itens: ArrayList<Store>
-) :
+    frag: Fragment) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
 
     private val TYPE_HEADER = 1
@@ -41,7 +40,7 @@ lateinit var evento:LoadViewItemAdpter
     lateinit var itemClickListener: AdapterView.OnItemClickListener
     val fragment = frag
     private val model: ProductViewModel by frag.sharedViewModel()
-    val itens: ArrayList<Store>? = itens
+    var itens: ArrayList<Store>? = null
     private lateinit var myView: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
@@ -83,9 +82,9 @@ lateinit var evento:LoadViewItemAdpter
                 holder.logo.alpha = 0f
                 holder.logo.animate().apply {
                     interpolator = LinearInterpolator()
-                    duration = 1000
+                    duration = 400
                     alpha(1f)
-                    startDelay = 100
+                 //   startDelay = 100
                     start()
                 }
             }
@@ -98,6 +97,8 @@ lateinit var evento:LoadViewItemAdpter
 
             }else {
                 holder.logo.setImageResource(R.drawable.ic_medicine)
+                if(!item.logoCarregado)
+                    (fragment as HomeFragment)._storeViewModel.getStoreLogo(item.id)
             }
 
 //            transforma em valor em moeda e verifica se é 0 ou nulo
@@ -172,6 +173,8 @@ lateinit var evento:LoadViewItemAdpter
     }
 
     fun addItems(lojas: List<Store>) {
+        if(itens.isNullOrEmpty())
+            itens = ArrayList<Store>()
         var tamanhoAtual = itens?.size
         itens?.addAll(lojas)
         var tamanhoNovo = itens?.size

@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.google.android.material.card.MaterialCardView
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnChangedValueListener
 
 
@@ -20,12 +21,15 @@ import hashtag.alldelivery.core.utils.OnChangedValueListener
  */
 class ButtonMinusPlus : ConstraintLayout{
 
+    private var textItemCount: TextView? = null
+    private var cardViewIncrementItem: MaterialCardView? = null
+    private var plusButton: ImageView? = null
     private var evento: OnChangedValueListener? = null
     private var isOpen = false
-    private var _total:Int = 1
-    private var _produto: Int = -1
+    private var _total:Int = 0
+    private var _produto: Product? = null
 
-    var produto: Int
+    var produto: Product?
     get() = _produto
     set(value) {
         _produto = value
@@ -36,7 +40,11 @@ class ButtonMinusPlus : ConstraintLayout{
     set(value) {
         _total = value
 
-        evento?.OnChangedValue(_produto, _total)
+        if(_total > 0)
+            isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, isOpen)
+
+        textItemCount?.text = _total.toString()
+        evento?.OnChangedValue(_produto!!, _total)
     }
 
     constructor(context: Context) : super(context) {
@@ -60,33 +68,35 @@ class ButtonMinusPlus : ConstraintLayout{
         var view = LayoutInflater.from(context).inflate(R.layout.button, this, false)
         val incrementButton = view.findViewById<Button>(R.id.increment_selling_item_button)
         val decrementButton = view.findViewById<Button>(R.id.decrement_selling_item_button)
-        val textItemCount = view.findViewById<TextView>(R.id.txt_item_result)
-        val cardViewIncrementItem =
+        textItemCount = view.findViewById<TextView>(R.id.txt_item_result)
+        cardViewIncrementItem =
             view.findViewById<MaterialCardView>(R.id.card_view_increment_decrement_item)
-        val plusButton = view.findViewById<ImageView>(R.id.image_button_plus_item)
+        plusButton = view.findViewById<ImageView>(R.id.image_button_plus_item)
         //
-        textItemCount.text = _total.toString()
-        plusButton.setOnClickListener {
-            isOpen = animationListener(plusButton, cardViewIncrementItem, isOpen)
-            evento?.OnChangedValue(_produto, _total)
+        textItemCount?.text = _total.toString()
+        plusButton?.setOnClickListener {
+            _total += 1
+            textItemCount?.text = _total.toString()
+            isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, isOpen)
+            evento?.OnChangedValue(_produto!!, _total)
         }
         incrementButton.setOnClickListener {
             _total += 1
-            textItemCount.text = _total.toString()
-            evento?.OnChangedValue(_produto, _total)
+            textItemCount?.text = _total.toString()
+            evento?.OnChangedValue(_produto!!, _total)
         }
         decrementButton.setOnClickListener {
             if(_total > 0)
                 _total -= 1
 
             if (_total < 1) {
-                isOpen = animationListener(plusButton, cardViewIncrementItem, true)
+                isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, true)
 
             } else {
-                textItemCount.text = _total.toString()
+                textItemCount?.text = _total.toString()
             }
 
-            evento?.OnChangedValue(_produto, _total)
+            evento?.OnChangedValue(_produto!!, _total)
         }
         //
         val set = ConstraintSet()

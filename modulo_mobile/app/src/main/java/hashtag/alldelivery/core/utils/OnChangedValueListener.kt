@@ -1,8 +1,10 @@
 package hashtag.alldelivery.core.utils
 
+import hashtag.alldelivery.core.models.Product
+
 interface OnChangedValueListener {
 
-    fun OnChangedValue(id: Int, value: Int){
+    fun OnChangedValue(prod: Product, value: Int){
 
     }
 }

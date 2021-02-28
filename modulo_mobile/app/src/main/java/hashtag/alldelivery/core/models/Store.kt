@@ -22,9 +22,11 @@ class Store{
     @SerializedName("contato") val contato : String? = null
     @SerializedName("disponivel") val disponivel : Boolean = false
     @SerializedName("ativo") val ativo : Boolean = false
-    @SerializedName("logo") val logo : String? = null
+    @SerializedName("logo")
+    var logo : String? = null
     @SerializedName("imgBanner") val imgBanner : String? = null
-    @SerializedName("banner") val banner : String? = null
+    @SerializedName("banner")
+    var banner : String? = null
     @SerializedName("tempoMinimo") val tempoMinimo : Int? = null
     @SerializedName("tempoMaximo") val tempoMaximo : Int? = null
     @SerializedName("hAbre") val hAbre : Int? = null
@@ -33,6 +35,10 @@ class Store{
     @SerializedName("long") val long : String? = null
     @SerializedName("taxaEntrega") val taxaEntrega : Float? = null
     @SerializedName("distancia") val distancia : String? = null
+
+    var logoCarregado: Boolean = false
+
+    var bannerCarregado: Boolean = false
 
     constructor()
 }

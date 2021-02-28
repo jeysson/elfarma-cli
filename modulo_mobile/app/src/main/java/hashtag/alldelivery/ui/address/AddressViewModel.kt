@@ -3,10 +3,11 @@ package hashtag.alldelivery.ui.address
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import hashtag.alldelivery.core.data.AppDatabase
 import hashtag.alldelivery.core.models.Address
-import hashtag.alldelivery.ui.address.repository.AddressRepository
+import hashtag.alldelivery.core.repository.AddressRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -43,11 +44,15 @@ class AddressViewModel(application: Application): AndroidViewModel(application) 
         repository.update(address)
     }
 
-    fun firstAddress(): Address {
+    fun firstAddress(): LiveData<Address>{
         return repository.firstAddress()
     }
 
     fun loadById(id: Int): Address {
         return repository.loadById(id)
+    }
+
+    fun defaultAddress(address: Address)= viewModelScope.launch (Dispatchers.IO){
+        repository.setDefaulAddress(address)
     }
 }

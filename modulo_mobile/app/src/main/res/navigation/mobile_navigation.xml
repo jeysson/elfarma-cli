@@ -22,6 +22,7 @@
         android:name="hashtag.alldelivery.ui.notifications.NotificationsFragment"
         android:label="@string/title_requests"
         tools:layout="@layout/fragment_notifications" />
+
     <fragment
         android:id="@+id/navigation_perfil"
         android:name="hashtag.alldelivery.ui.perfil.PerfilFragment"

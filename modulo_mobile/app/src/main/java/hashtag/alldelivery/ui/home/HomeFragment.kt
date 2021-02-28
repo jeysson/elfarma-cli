@@ -1,23 +1,31 @@
 package hashtag.alldelivery.ui.home
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
@@ -39,6 +47,7 @@ import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
 import hashtag.alldelivery.ui.store.StoresListItemAdapter
 import hashtag.alldelivery.ui.store.StoresViewModel
+import kotlinx.android.synthetic.main.address_list_item.*
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -49,17 +58,19 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
 
-    private val _storeViewModel: StoresViewModel by sharedViewModel()
+    var PERMISSION_ID = 1000
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+
+    val _storeViewModel: StoresViewModel by sharedViewModel()
     private lateinit var addressViewModel: AddressViewModel
     private lateinit var homeViewModel: HomeViewModel
     private var isConnected: Boolean = false
     private lateinit var _view: View
-    private lateinit var _currentAddress: Address
+    private var _currentAddress: MutableLiveData<Address> = MutableLiveData()
     private val _swipeRefresh by lazy { _view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh) }
     private val _homeCards by lazy { _view.findViewById<RecyclerView>(R.id.home_cards) }
     private val _homeLoading by lazy { _view.findViewById<Loading>(R.id.loading) }
-    private lateinit var _adapter: StoresListItemAdapter
-    private var _storeList = ArrayList<Store>()
 
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
@@ -81,28 +92,31 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         _homeCards.layoutManager = LinearLayoutManager(context)
         _homeCards.setHasFixedSize(true)
         _swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
-        _homeLoading.visibility = VISIBLE
 
+        addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
+        getLastLocation()
+
+        initAdapter()
         scrollListener()
         setupObservers()
-        getCurrentAddress()
         loadFilters()
         carregarTodosEnderecos()
 
         address_with_scheduling.setOnClickListener {
-            val intent = Intent(context, DeliveryAddress::class.java)
-            startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
+            selectAddress()
         }
 
         _swipeRefresh.setOnRefreshListener {
-//        Timer para atrazar o inicio do swipeRefresh -> UX
-            page = 1
-            _homeCards.visibility = GONE
-            isLastPage = false
             getItems()
         }
+    }
 
-        getItems()
+    fun initAdapter(){
+        _storeViewModel.adapter = StoresListItemAdapter(
+            this)
+        _storeViewModel.adapter?.itens = ArrayList<Store>()
+        _homeCards.adapter = _storeViewModel.adapter
     }
 
     private fun scrollListener() {
@@ -139,6 +153,36 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun setupObservers() {
+        /*escuta o carregamento dos endereços*/
+        _currentAddress.observe(viewLifecycleOwner){
+            if(it == null)
+                selectAddress()
+            else
+                getItems()
+        }
+
+        /*escuta o retorno das consultas*/
+        _storeViewModel.loading.observe(viewLifecycleOwner){
+
+            isLoading = it
+
+            if(it) {
+                _homeLoading.visibility = View.VISIBLE
+
+                if(page== 1)
+                    _homeCards.visibility = View.GONE
+            }else{
+                _swipeRefresh.isRefreshing = false
+                _homeLoading.visibility = View.INVISIBLE
+                _homeCards.visibility = View.VISIBLE
+            }
+        }
+
+        /*escuta se chegou na ultima página*/
+        _storeViewModel.lastPage.observe(viewLifecycleOwner){
+            isLastPage = it
+        }
+
         _storeViewModel.eventErro.observe(
             viewLifecycleOwner
         ) {
@@ -146,6 +190,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 toast(it.message.toString())
             }
         }
+
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
@@ -155,49 +200,28 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
     }
 
-    private fun getCurrentAddress() = GlobalScope.async {
-        var preferenceAddress: Int = -1
-
-        activity?.apply {
-//            Pega o Id Salvo no sharedPreferences
-            val preferences = getSharedPreferences(
-                ADDRESS_PREFS,
-                MODE_PRIVATE
-            )
-            preferenceAddress = preferences.getInt(ID_KEY, -1)
-        }
+    private fun getCurrentAddress() {
 
         address.text = getString(R.string.address_list_location_activate)
 
-        _currentAddress = if (preferenceAddress == -1) {
-            addressViewModel.firstAddress()
-        } else {
-            addressViewModel.loadById(preferenceAddress)
-        }
+        addressViewModel.firstAddress().observe(viewLifecycleOwner){
+            _currentAddress.postValue(it)
 
-        if (_currentAddress != null) {
-            ADDRESS = _currentAddress
-            LAT_LONG = LatLng(_currentAddress.lat!!, _currentAddress.longi!!)
+            if (it != null) {
+                ADDRESS = it
+                LAT_LONG = LatLng(it?.lat!!, it?.longi!!)
 
-            address.text = AllDeliveryApplication.getShortAddress(
-                _view.context,
-                _currentAddress.lat!!,
-                _currentAddress.longi!!,
-                _currentAddress.number
-            )
-            page = 1
-            isLastPage = false
-            _homeCards.visibility = GONE
-            getItems()
-        } else {
-            page = 1
-            isLastPage = false
-            _homeCards.visibility = GONE
-            getItems()
+                address.text = AllDeliveryApplication.getShortAddress(
+                    _view.context,
+                    it?.lat!!,
+                    it?.longi!!,
+                    it?.number
+                )
+            }
         }
     }
 
-    private fun loadFilters() = GlobalScope.async {
+    private fun loadFilters() {
         val list = ArrayList<Filter>()
         val f1 = Filter(getString(R.string.filtros))
         list.add(f1)
@@ -250,9 +274,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     private fun getItems() {
-        Log.d("INICIO", "incializando...")
-        isLoading = true
-        val homeFragment = this
+        page = 1
+        isLastPage = false
+        _homeCards.visibility = GONE
         //config adapter
         _storeViewModel.getPagingStores(
             page,
@@ -260,21 +284,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             LAT_LONG?.latitude,
             LAT_LONG?.longitude,
             SORT_FILTER
-        ).observe(viewLifecycleOwner,{
-
-            _adapter = StoresListItemAdapter(
-                homeFragment,
-                _homeCards.layoutManager as LinearLayoutManager,
-                it
-            )
-            _homeCards.adapter = _adapter
-            _adapter.notifyDataSetChanged()
-
-            _homeLoading.visibility = INVISIBLE
-            _homeCards.visibility = VISIBLE
-            _swipeRefresh.isRefreshing = false
-            isLoading = false
-        })
+        )
     }
 
     fun getMoreItems() {
@@ -284,15 +294,145 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 LAT_LONG?.latitude,
                 LAT_LONG?.longitude,
                 SORT_FILTER
-            ).observe(viewLifecycleOwner,{
-                var countInicio =_adapter.itens!!.size-1
-                _adapter.addItems(it)
-                _adapter.notifyItemRangeChanged(countInicio, _adapter.itens!!.size)
-                _homeLoading.visibility = INVISIBLE
-                _homeCards.visibility = VISIBLE
+            )
+    }
 
-                isLastPage = it.size == 0
-                isLoading = false
-            })
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("[Address]", "Permissão concedida!")
+                getLastLocation()
+            }
+        }
+    }
+/*
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("[Address]", "Permissão concedida!")
+                getLastLocation()
+            }
+        }
+    }*/
+
+    private fun getLastLocation() {
+        if (CheckPermission()) {
+            if (isLocationEnable()) {
+                if (checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return
+                }
+
+                getCurrentAddress()
+            } else {
+                Toast.makeText(
+                    activity,
+                    "Por favor, habilite seu serviço de localização!",
+                    Toast.LENGTH_SHORT
+                )
+            }
+        } else {
+            RequestPermission()
+        }
+    }
+
+    private fun isLocationEnable(): Boolean {
+        var location = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return location.isProviderEnabled(LocationManager.GPS_PROVIDER) || location.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    private fun getNewLocation() {
+        locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 2
+        if (ActivityCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    fun CheckPermission(): Boolean {
+        return checkSelfPermission(
+            activity!!,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+                || checkSelfPermission(
+            activity!!,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun RequestPermission() {
+        requestPermissions(
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(p0: LocationResult?) {
+            var lastLocation = p0?.lastLocation
+
+            if (lastLocation != null) {
+                AllDeliveryApplication.LAT_LONG =
+                    LatLng(lastLocation.latitude, lastLocation.longitude)
+            }
+
+            description_address.text = AllDeliveryApplication.getAddress(
+                activity!!,
+                lastLocation!!.latitude,
+                lastLocation.longitude
+            )
+        }
+    }
+
+    fun selectAddress(){
+        val intent = Intent(context, DeliveryAddress::class.java)
+        startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
     }
 }

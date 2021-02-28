@@ -20,6 +20,7 @@ import hashtag.alldelivery.core.models.Item
 import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnChangedValueListener
+import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_card_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -28,7 +29,7 @@ import java.text.NumberFormat
 import java.util.*
 
 class ProductsListItemAdapter(
-    val frag: Fragment,
+    val frag: StoreFragment,
     val lLayoutManager: LinearLayoutManager?,
     val gLayoutManager: GridLayoutManager?,
     itens: ArrayList<Product>?
@@ -59,11 +60,18 @@ class ProductsListItemAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        var product = itens?.get(position)
+        var p = Pedido?.itens?.firstOrNull { p-> p.produto?.id == product?.id }
 
         holder as ProductItemCardViewHolder
 
-        var product = itens?.get(position)
-        holder.bt.produto = product?.id!!
+        holder.bt.produto = product
+
+        if(p != null)
+            holder.bt.total = p?.quantidade!!
+        else
+            holder.bt.total = 0
+
         holder.card.tag = position
         holder.card.setOnClickListener(this)
         holder.name.text = product!!.nome
@@ -97,7 +105,7 @@ class ProductsListItemAdapter(
             holder.image.setImageBitmap(image)
         }
 
-        holder.bt.addOnChangeValueListener(this)
+        holder.bt.addOnChangeValueListener(frag)
     }
 
     override fun getItemCount() = itens!!.size
@@ -134,21 +142,21 @@ class ProductsListItemAdapter(
         notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
     }
 
-    override fun OnChangedValue(id:Int, value: Int){
-        if(Pedido == null)
-            Pedido = Order()
-        //
-        var ix = Pedido?.itens?.firstOrNull { p: Item -> p.produto == id   }
+//    override fun OnChangedValue(id:Int, value: Int){
+//        if(Pedido == null)
+//            Pedido = Order()
+//        //
+//        var ix = Pedido?.itens?.firstOrNull { p: Item -> p.produto == id   }
+//
+//        if(ix == null)
+//            Pedido?.itens?.add(Item(id, value))
+//        else
+//            ix.quantidade = value
+//
+//        evento?.OnChangedValue(id, value)
+//    }
 
-        if(ix == null)
-            Pedido?.itens?.add(Item(id, value))
-        else
-            ix.quantidade = value
-
-        evento?.OnChangedValue(id, value)
-    }
-
-    fun addOnChangeValueListener(ev:OnChangedValueListener){
-        evento = ev
-    }
+//    fun addOnChangeValueListener(ev:OnChangedValueListener){
+//        evento = ev
+//    }
 }

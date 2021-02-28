@@ -106,7 +106,7 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
             add.lat = latLng.latitude
             add.longi = latLng.longitude
 
-//            Deve verificar se já existe um item no banco com o mesmo id
+            /*Deve verificar se já existe um item no banco com o mesmo id*/
             for (i in 0 until addressList.size) {
                 if (addressList[i].id == add.id) {
 
@@ -116,14 +116,14 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
 
-//            Atualiza ou insere, de acordo com a variável
+            /*  Atualiza ou insere, de acordo com a variável*/
             if (isUpdateAddress){
                 addressViewModel.update(add)
             } else if(!isUpdateAddress) {
                 addressViewModel.insert(add)
             }
 
-//            AllDeliveryApplication.address = add
+            /*AllDeliveryApplication.address = add*/
             finish()
         }
     }

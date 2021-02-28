@@ -16,7 +16,7 @@ class StoreRepository(
         lat: Double?,
         lon: Double?,
         tipoOrdenacao: Int
-    ): Observable<List<Store>> {
+    ): Observable<ArrayList<Store>> {
         val newLat = -30.09488
         val newLon = -60.0462758
         if (lat == null || lon == null){
@@ -33,5 +33,13 @@ class StoreRepository(
         tipoordenacao: Int?
     ): Observable<ArrayList<Store>> {
         return runOnBackground(dataSource.getPagingStores(page, total, lat, lon, tipoordenacao))
+    }
+
+    override fun getStoreLogo(loja: Int?): Observable<Store> {
+        return runOnBackground(dataSource.getStoreLogo(loja))
+    }
+
+    override fun getStoreBanner(loja: Int?): Observable<Store> {
+        return runOnBackground(dataSource.getStoreLogo(loja))
     }
 }

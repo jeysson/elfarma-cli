@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/checkout_toolbar_height">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/back_button"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="8dp"
+        android:padding="16dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="@dimen/store_toolbar_height"
+        android:clickable="true"
         app:srcCompat="@drawable/ic_arrow_down"
         app:tint="@color/colorPrimary"/>
 

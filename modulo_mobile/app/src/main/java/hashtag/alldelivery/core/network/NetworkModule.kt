@@ -29,6 +29,7 @@ inline fun <reified T> createWebService(baseUrl: String, factory: Converter.Fact
     logging.level = HttpLoggingInterceptor.Level.BODY
 
     val httpClient = OkHttpClient.Builder()
+    httpClient.proxy(null)
     httpClient.connectTimeout(5, TimeUnit.MINUTES)
     httpClient.writeTimeout(5, TimeUnit.MINUTES)
     httpClient.readTimeout(5, TimeUnit.MINUTES)

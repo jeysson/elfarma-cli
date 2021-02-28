@@ -1,8 +1,10 @@
 package hashtag.alldelivery.core.data.dao
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.room.*
 import hashtag.alldelivery.core.models.Address
+import io.reactivex.Observable
 
 @Dao
 interface AddressDao {
@@ -19,8 +21,8 @@ interface AddressDao {
             "number = :number LIMIT 1")
     fun findByName(address: String, number: String): Address
 
-    @Query("SELECT * FROM address LIMIT 1")
-    fun firstAddress(): Address
+    @Query("SELECT * FROM address WHERE padrao = 1 LIMIT 1")
+    fun firstAddress(): LiveData<Address>
 
     @Insert
     fun insert(vararg address: Address)
@@ -33,4 +35,7 @@ interface AddressDao {
 
     @Update
     fun update(address: Address)
+
+    @Query("UPDATE address SET padrao = 0")
+    fun setDefault()
 }

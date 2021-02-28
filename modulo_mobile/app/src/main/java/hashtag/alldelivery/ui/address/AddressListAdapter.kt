@@ -79,19 +79,23 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity) :
                 address[position].longi!!
             )
 
+            ADDRESS?.padrao = 1
+
             activity.apply {
-//                Armazena como endereço atual
+                /*Armazena como endereço atual*/
                 val preferences = getSharedPreferences(ADDRESS_PREFS, MODE_PRIVATE)
                 preferences.edit()
                     .putInt(ID_KEY, ADDRESS!!.id!!)
                     .apply()
 
-//                Inicia uma nova busca
+                /*Inicia uma nova busca*/
                 val returnIntent = Intent()
                 returnIntent.putExtra(AllDeliveryApplication.RESULTS, true)
                 setResult(AppCompatActivity.RESULT_OK, returnIntent)
                 finish()
             }
+            /*Salva na base local o endereço padrão*/
+            (activity as DeliveryAddress).addressViewModel.defaultAddress(ADDRESS!!)
         }
 
     }

@@ -18,7 +18,8 @@ import java.util.*
 
 class StoreInfoFragment : Fragment(), OnBackPressedListener {
 
-    private lateinit var _viewModel: StoreViewModel
+    //private lateinit var _viewModel: StoreViewModel
+    private lateinit var _viewModel: StoresViewModel
     private lateinit var _view: View
     private val storeName by lazy { _view.findViewById<TextView>(R.id.txt_store_name_info_fragment) }
     private val storeDescription by lazy { _view.findViewById<TextView>(R.id.txt_store_description_info_fragment) }
