@@ -3,8 +3,10 @@ package hashtag.alldelivery.ui.store
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -35,19 +37,23 @@ import kotlinx.android.synthetic.main.bag_bar.*
 import kotlinx.android.synthetic.main.store_card_toolbar.*
 import kotlinx.android.synthetic.main.store_fragment.*
 import kotlinx.android.synthetic.main.store_menu_header.*
+import kotlinx.android.synthetic.main.stores_activity_main.*
+import org.jetbrains.anko.doAsyncResult
+import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.concurrent.thread
 
-
-class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
+class StoreFragment : Fragment(), OnBackPressedListener,
     OnChangedValueListener {
 
     private var isUserScrolling: Boolean = false
     val viewModelProduct: ProductViewModel by sharedViewModel()
-
+    val viewModelStore: StoresViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,8 +66,10 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setDarkMode(activity)
-
-        showBanner()
+        AllDeliveryApplication.storeFragment = this
+      //  activity!!.supportFragmentManager.beginTransaction().show(this).commit()
+        list.layoutManager = LinearLayoutManager(context)
+        list.setHasFixedSize(true)
 
         store_name.text = STORE?.nomeFantasia
         store_info.text = "${returnHour(STORE?.hAbre)} - ${returnHour(STORE?.hFecha)}  ${getString(R.string.dot)} ver mais"
@@ -140,55 +148,52 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
                 addToBackStack(null)
             }
         }
-
-        btSacola.setOnClickListener {
-            val manager: FragmentManager = activity!!.supportFragmentManager
-            manager.beginTransaction()
-            manager.commit {
-                setCustomAnimations(
-                    R.anim.enter_from_up,
-                    R.anim.exit_to_down,
-                    R.anim.enter_from_down,
-                    R.anim.exit_to_up
-                )
-
-                setReorderingAllowed(true)
-
-                replace(R.id.nav_host_fragment, BagFragment::class.java, null)
-                addToBackStack(null)
-            }
-        }
         
         setupObservers()
 
-        carregarGruposProdutos()
-
         syncTabWithRecyclerView()
 
-        showBag()
+        initAdapter()
+
+        carregarGruposProdutos()
+
+        thread(true) {
+            viewModelStore.getStoreBanner(STORE?.id)
+        }
 
         (activity as MainActivity).hideBottomNavigation()
+
+        (activity as MainActivity).showBag()
+    }
+
+    fun initAdapter(){
+        viewModelProduct.adapterGroup = GroupProductsAdapter(
+            this)
+        viewModelProduct.adapterGroup?.groups = ArrayList<Group>()
+        list.adapter = viewModelProduct.adapterGroup
     }
 
     private fun showBanner() {
-        if (STORE?.imgBanner != null) {
-            val imageBytes = Base64.decode(STORE?.imgBanner, 0)
+
+        groceries_image_header.setImageResource(R.color.colorPrimary)
+        if (STORE?.disponivel == false || STORE?.disponivel == null) {
+            txt_closed_header_menu.visibility = VISIBLE
+        }else {
+            txt_closed_header_menu.visibility = GONE
+        }
+
+        if (STORE?.banner != null) {
+            image_view_store_closed_overlay_hearder_menu.visibility = VISIBLE
+            val imageBytes = Base64.decode(STORE?.banner, 0)
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            groceries_image_header.setImageBitmap(image)
+            val drawable = BitmapDrawable(resources, image)
+            groceries_image_header.setImageDrawable(drawable)
 
             if (STORE?.disponivel == false || STORE?.disponivel == null) {
                 image_view_store_closed_overlay_hearder_menu.setBackgroundResource(R.color.black_overlay_70)
                 txt_closed_header_menu.visibility = VISIBLE
             }else {
                 image_view_store_closed_overlay_hearder_menu.setBackgroundResource(R.color.black_overlay)
-                txt_closed_header_menu.visibility = GONE
-            }
-        } else {
-            image_view_store_closed_overlay_hearder_menu.visibility = INVISIBLE
-            groceries_image_header.setImageResource(R.color.colorPrimary)
-            if (STORE?.disponivel == false || STORE?.disponivel == null) {
-                txt_closed_header_menu.visibility = VISIBLE
-            }else {
                 txt_closed_header_menu.visibility = GONE
             }
         }
@@ -205,7 +210,77 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
         return newString
     }
 
+    fun ObterImagens(position: Int) =
+        thread(true) {
+            /*
+            * Busca as imagens referentes aos produtos
+            */
+            val grp = viewModelProduct.adapterGroup?.groups?.get(position)
+            var fts = viewModelProduct.getImagesGroup(grp?.id)
+            grp?.carregouImagens = true
+            //
+            for (prod in grp?.products!!) {
+
+                prod?.productImages = fts.filter { p -> p.produtoId == prod.id }
+                prod?.carregouImagens = true
+            }
+
+            runOnUiThread {
+                viewModelProduct.adapterGroup?.adapters?.get(grp?.id)?.notifyDataSetChanged()
+            }
+        }
+
+
     private fun setupObservers() {
+
+        viewModelStore.eventLoadImage.observe(viewLifecycleOwner){
+            thread(true) {
+                /*
+                * Busca as imagens referentes aos produtos
+                */
+                val position = it
+                val grp = viewModelProduct.adapterGroup?.groups?.get(position)
+                var fts = viewModelProduct.getImagesGroup(grp?.id)
+                grp?.carregouImagens = true
+                //
+                for (prod in grp?.products!!){
+
+                    prod?.productImages = fts.filter { p-> p.produtoId == prod.id }
+                    prod?.carregouImagens = true
+                }
+               // Log.d("LOADIMG", "Posição: "+position)
+                viewModelProduct.adapterGroup?.notifyItemChanged(position)
+            }
+        }
+
+        viewModelStore.eventLoadBanner.observe(viewLifecycleOwner){
+            showBanner()
+        }
+
+        viewModelProduct.loading.observe(viewLifecycleOwner){
+            if(it){
+                loading.visibility = VISIBLE
+                list.visibility = GONE
+            }else{
+                loading.visibility = INVISIBLE
+                list.visibility = VISIBLE
+            }
+        }
+
+        viewModelProduct.groups.observe(viewLifecycleOwner){
+
+            tabs.removeAllTabs()
+
+            for ((index, grupo) in it.withIndex()) {
+                var tab = tabs.newTab()
+                tab.text = grupo.nome as CharSequence
+                tabs.addTab(tab, index)
+               /* thread(true) {
+                    viewModelProduct.getGroupProducts(STORE?.id, grupo.id)
+                }*/
+            }
+        }
+
         viewModelProduct.eventoErro.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer<BusinessEvent> {
@@ -216,27 +291,9 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
     }
 
     private fun carregarGruposProdutos(){
-        viewModelProduct.getAllGroups(AllDeliveryApplication.STORE?.id)
-            .observe(viewLifecycleOwner, Observer<List<Group>> {
-                it?.let {
-                    val adapter = GroupProductsAdapter(this, ArrayList<Group>())
-                    adapter.setOnLoadViewItemAdpter(this)
-
-                    list.layoutManager = LinearLayoutManager(context)
-                    list.adapter = adapter
-                    list.setHasFixedSize(true)
-                    adapter.groups = it
-
-                    for ((index, grupo) in it.withIndex()) {
-                        var tab = tabs.newTab()
-                        tab.text = grupo.nome as CharSequence
-                        tabs.addTab(tab, index)
-                    }
-                    loading.visibility = View.GONE
-                    list.visibility = View.VISIBLE
-                    adapter.notifyDataSetChanged()
-                }
-            })
+        thread(true){
+            viewModelProduct.getAllGroups(STORE?.id)
+        }
     }
 
     private fun syncTabWithRecyclerView() {
@@ -290,9 +347,9 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
 
     private fun back(){
         StatusBarUtil.setLightMode(activity)
-        activity!!.supportFragmentManager.popBackStack()
-        activity!!.supportFragmentManager.beginTransaction()
-            .remove(this).commit()
+        activity!!.supportFragmentManager.popBackStackImmediate()
+       /* activity!!.supportFragmentManager.beginTransaction()
+            .remove(this).commit()*/
 
         (activity as MainActivity).showBottomNavigation()
     }
@@ -301,52 +358,13 @@ class StoreFragment : Fragment(), OnBackPressedListener, LoadViewItemAdpter,
         back()
     }
 
-    override fun OnLoadViewItemAdpter(group:Int?, position: Int, holder: GroupProductsAdapter.ProductItemViewHolder) {
-        if((list.adapter as GroupProductsAdapter).groups!![position]?.products?.size == 0){
-            viewModelProduct?.getGroupProducts(STORE?.id, group).observe(viewLifecycleOwner,
-                {
-                    (list.adapter as GroupProductsAdapter).groups!![position]?.products = it
-                    (list.adapter as GroupProductsAdapter).notifyDataSetChanged()
-
-                })
-        }
-    }
-
     override fun OnChangedValue(prod: Product, value: Int){
-        if(AllDeliveryApplication.Pedido == null)
-            AllDeliveryApplication.Pedido = Order()
-        //
-        var ix = AllDeliveryApplication.Pedido?.itens?.firstOrNull { p: Item -> p.produto?.id == prod?.id   }
 
-        if(ix == null) {
-            AllDeliveryApplication.Pedido?.itens?.add(Item(prod, value, prod?.preco))
-        } else {
-            if(value == 0)
-                AllDeliveryApplication.Pedido?.itens?.remove(ix)
-            else
-            ix.quantidade = value
-        }
-
-        showBag()
+        (activity as MainActivity).changeValueBag(prod, value)
     }
 
-    fun showBag(){
-        if(AllDeliveryApplication.Pedido != null && AllDeliveryApplication.Pedido?.itens!!.isNotEmpty()) {
-            var totalQtd = AllDeliveryApplication.Pedido!!.itens!!.sumBy { p: Item -> p.quantidade!! }
-            bag_counter.text = totalQtd.toString()
-
-            bag_total_price.text = NumberFormat.getCurrencyInstance(
-                Locale(
-                    getString(R.string.language),
-                    getString(R.string.country)
-                )
-            ).format(Pedido!!.itens?.sumByDouble { p-> (p.quantidade!! * p.valor!!) })
-
-            if(totalQtd == 0) {
-                btSacola.visibility = GONE
-            } else {
-                btSacola.visibility = VISIBLE
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+       // activity!!.supportFragmentManager.beginTransaction().show(this).commit()
     }
 }

@@ -12,24 +12,27 @@ import retrofit2.http.Query
 
 interface ProductApi {
     @GET("produto/todos")
-    fun getAllProducts(@Query("loja") id: Int?) : Observable<List<Product>>
+    fun getAllProducts(@Query("loja") id: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/grupos")
-    fun getAllGroups(@Query("loja") id: Int?) : Observable<List<Group>>
+    fun getAllGroups(@Query("loja") id: Int?) : Observable<ArrayList<Group>>
 
     @GET("produto/produtosgrupo")
     fun getProductsGroup(@Query("loja") store: Int?,
                          @Query("grupo") group: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/produtosgrupo")
-    fun getProductsGroupAsync(@Query("loja") store: Int?, @Query("grupo") group: Int?) : Observable<List<Product>>
+    fun getProductsGroupAsync(@Query("loja") store: Int?, @Query("grupo") group: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/imagens")
-    fun getImages(@Query("produto") id: Int?) : Call<List<ProductImage>>
+    fun getImages(@Query("produto") id: Int?) : Call<ArrayList<ProductImage>>
 
     @GET("produto/imagens")
-    fun getImagesAsync(@Query("produto") id: Int?) : Observable<List<ProductImage>>
+    fun getImagesAsync(@Query("produto") id: Int?) : Observable<ArrayList<ProductImage>>
 
     @GET("produto/paginar")
     fun getPagingProducts(@Query("loja")store: Int?,@Query("grupo") group: Int?,@Query("indice") page: Int?,@Query("tamanho") total: Int?) : Call<ArrayList<Product>>
+
+    @GET("produto/imagensgrupo")
+    fun getImagesGroupo(@Query("grupo") id: Int?) : Call<ArrayList<ProductImage>>
 }

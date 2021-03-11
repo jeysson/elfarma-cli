@@ -7,20 +7,23 @@ import hashtag.alldelivery.core.models.Store
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Query
 
 interface IProductRepository {
 
-    fun getAllProducts(id: Int?): Observable<List<Product>>
+    fun getAllProducts(id: Int?): Observable<ArrayList<Product>>
 
-    fun getAllGroups(id: Int?): Observable<List<Group>>
+    fun getAllGroups(id: Int?): Observable<ArrayList<Group>>
 
     fun getProductsGroup(store: Int?, group: Int?): Observable<ArrayList<Product>>
 
-    fun getProductsGroupAsync(store: Int?, group: Int?): Observable<List<Product>>
+    fun getProductsGroupAsync(store: Int?, group: Int?): Observable<ArrayList<Product>>
 
-    fun getImages(id: Int?): Call<List<ProductImage>>
+    fun getImages(id: Int?): Call<ArrayList<ProductImage>>
 
-    fun getImagesAsync(id: Int?): Observable<List<ProductImage>>
+    fun getImagesAsync(id: Int?): Observable<ArrayList<ProductImage>>
 
     fun getPagingProducts(store: Int?, group: Int?, page: Int?, total: Int?): Call<ArrayList<Product>>
+
+    fun getImagesGroupo(id: Int?) : Call<ArrayList<ProductImage>>
 }

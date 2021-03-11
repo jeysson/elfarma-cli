@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <hashtag.alldelivery.component.Loading
+    <Button
         android:gravity="center"
         android:id="@+id/action_button"
         android:layout_width="match_parent"
@@ -21,21 +21,10 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="21dp"
         android:minHeight="50dp"
-        app:lv_color="@color/deprecated_papaya"
-        app:exampleString="@string/checkout_action_button_purchase"
-        style="@style/Button.Dark" >
+        android:text="@string/choice_pay"
+        style="@style/Button.Dark">
 
-        <TextView
-            android:id="@+id/text_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Confirmar"
-            android:textAppearance="@style/Text.Button"
-            android:textColor="@color/selector_button_dark_text"
-            android:visibility="gone" />
 
-    </hashtag.alldelivery.component.Loading>
+    </Button>
 
 </FrameLayout>

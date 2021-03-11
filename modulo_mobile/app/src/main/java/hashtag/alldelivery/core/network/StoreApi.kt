@@ -1,5 +1,6 @@
 package hashtag.alldelivery.core.network
 
+import hashtag.alldelivery.core.models.PaymentMethod
 import hashtag.alldelivery.core.models.Store
 import io.reactivex.Observable
 import retrofit2.Call
@@ -30,4 +31,7 @@ interface StoreApi {
 
     @GET("loja/banner?")
     fun getStoreBanner(@Query("loja") loja: Int?) : Observable<Store>
+
+    @GET("loja/formaspagamento?")
+    fun getPaymentMethods(@Query("loja") loja: Int?): Observable<java.util.ArrayList<PaymentMethod>>
 }

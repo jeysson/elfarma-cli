@@ -86,7 +86,7 @@
     <string name="delivery_fee_info_content_description">Informações sobre taxa de entrega</string>
     <string name="payment_movilepay_balance">Saldo da carteira</string>
     <string name="payment_total">Total</string>
-    <string name="payment_minimum_price">O pedido mínimo para este restaurante é de %s, não inclusa a taxa de entrega.</string>
+    <string name="payment_minimum_price">O pedido mínimo para este estabelecimento é de %s, não inclusa a taxa de entrega.</string>
     <string name="payment_authentication_title">Falta pouco!</string>
     <string name="payment_authentication_description">Para concluir o pedido, precisamos que você se identifique. Como quer continuar?</string>
     <string name="checkout_action_button_purchase">Fazer pedido</string>
@@ -113,4 +113,12 @@
     <string name="hor_rio_de_funcionamento">horário de funcionamento</string>
     <string name="context_card_item_added_alert">Item adicionado à sua sacola</string>
     <string name="context_card_bag_title">Ver sacola</string>
+    <string name="choice_pay">Escolher forma de pagamento</string>
+    <string name="offline_payments_fragment_disclaimer">Para pagamento na entrega, o estabelecimento aceita as seguintes opções:</string>
+    <string name="payment_list_empty_state_title">Opção indisponível</string>
+    <string name="offline_payment_empty_state_subtitle">Essa loja não aceita pagamentos na entrega. Mas não se preocupe. Você pode pagar seu pedido pelo aplicativo.</string>
+    <string name="payment_method_title">Formas de Pagamento</string>
+    <string name="bag_payment_method_option">Formas de pagamento</string>
+    <string name="bag_payment_change">Trocar</string>
+    <string name="bag_payment_add">Adicionar</string>
 </resources>

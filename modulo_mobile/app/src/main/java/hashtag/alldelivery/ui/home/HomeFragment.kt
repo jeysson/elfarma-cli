@@ -2,6 +2,7 @@ package hashtag.alldelivery.ui.home
 
 import android.Manifest
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
@@ -16,10 +17,13 @@ import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +42,7 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_C
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
 import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
+import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.component.Loading
 import hashtag.alldelivery.core.models.*
@@ -45,6 +50,7 @@ import hashtag.alldelivery.core.receiver.NetworkReceiver
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
+import hashtag.alldelivery.ui.store.StoreFragment
 import hashtag.alldelivery.ui.store.StoresListItemAdapter
 import hashtag.alldelivery.ui.store.StoresViewModel
 import kotlinx.android.synthetic.main.address_list_item.*
@@ -56,7 +62,7 @@ import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
-class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener {
+class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener  {
 
     var PERMISSION_ID = 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -87,7 +93,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
-
+        AllDeliveryApplication.homeFragment = this
         _view = view
         _homeCards.layoutManager = LinearLayoutManager(context)
         _homeCards.setHasFixedSize(true)
@@ -95,6 +101,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
+        address.text = getString(R.string.address_list_location_activate)
+
         getLastLocation()
 
         initAdapter()
@@ -202,9 +210,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun getCurrentAddress() {
 
-        address.text = getString(R.string.address_list_location_activate)
-
-        addressViewModel.firstAddress().observe(viewLifecycleOwner){
+       addressViewModel.firstAddress().observe(viewLifecycleOwner){
             _currentAddress.postValue(it)
 
             if (it != null) {
@@ -270,21 +276,29 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                     null
                 )
             }
+        }else{
+            toast("Selecione seu endereço!" )
+           // selectAddress()
         }
     }
 
     private fun getItems() {
-        page = 1
-        isLastPage = false
-        _homeCards.visibility = GONE
-        //config adapter
-        _storeViewModel.getPagingStores(
-            page,
-            itemsPerPage,
-            LAT_LONG?.latitude,
-            LAT_LONG?.longitude,
-            SORT_FILTER
-        )
+        if(LAT_LONG != null){
+            page = 1
+            isLastPage = false
+            _homeCards.visibility = GONE
+            //config adapter
+            _storeViewModel.getPagingStores(
+                page,
+                itemsPerPage,
+                LAT_LONG?.latitude,
+                LAT_LONG?.longitude,
+                SORT_FILTER
+            )
+        }else{
+            _swipeRefresh.isRefreshing = false
+            selectAddress()
+        }
     }
 
     fun getMoreItems() {
@@ -297,33 +311,18 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             )
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
+        grantResults: IntArray ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == PERMISSION_ID) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.d("[Address]", "Permissão concedida!")
                 getLastLocation()
-            }
+            }else
+                activity?.finish()
         }
     }
-/*
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == PERMISSION_ID) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d("[Address]", "Permissão concedida!")
-                getLastLocation()
-            }
-        }
-    }*/
 
     private fun getLastLocation() {
         if (CheckPermission()) {
@@ -348,11 +347,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
                 getCurrentAddress()
             } else {
-                Toast.makeText(
-                    activity,
-                    "Por favor, habilite seu serviço de localização!",
-                    Toast.LENGTH_SHORT
-                )
+                toast("Por favor, habilite seu serviço de localização!")
             }
         } else {
             RequestPermission()
@@ -434,5 +429,26 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     fun selectAddress(){
         val intent = Intent(context, DeliveryAddress::class.java)
         startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
+    }
+
+    override fun onClick(view: View?) {
+        if (view is CardView) {
+            var position = view!!.tag as Int
+            STORE = _storeViewModel.adapter?.itens!!.get(position)
+            val manager: FragmentManager = activity!!.supportFragmentManager
+            manager.beginTransaction()
+            manager.commit {
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+
+                addToBackStack(null)
+                replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
+
+            }
+        }
     }
 }

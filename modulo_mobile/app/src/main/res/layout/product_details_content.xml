@@ -6,12 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include android:id="@+id/toolbar"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
+    <include android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         app:layout_constraintTop_toTopOf="parent"
+
         layout="@layout/common_toolbar"/>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -84,58 +100,24 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_size_16dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/item_title"
                 app:layout_constraintStart_toStartOf="@+id/item_title"
-                app:layout_constraintTop_toBottomOf="@+id/info_divider"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@+id/info_divider" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-    <View android:id="@+id/divider"
-        android:background="@color/light_gray"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separator_height"
-        android:layout_above="@+id/cart_button_container"
-        app:layout_constraintBottom_toTopOf="@+id/cart_button_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
-    <FrameLayout android:layout_gravity="bottom"
-        android:id="@+id/selling_modes_notification_layout"
+    <hashtag.alldelivery.component.ButtonMinusPlus
+        android:id="@+id/btMinusPlus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/cart_button_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <LinearLayout android:orientation="horizontal"
-        android:id="@+id/cart_button_container"
-        android:background="@color/white"
-        android:paddingLeft="10dp"
-        android:paddingTop="20dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="20dp"
-        android:visibility="visible"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="@dimen/space_size_16dp"
+        android:layout_marginRight="@dimen/space_size_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
+        open="true"
+        android:background="@drawable/shape_side_input_background"/>
 
-        <include android:id="@+id/quantity"
-            android:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
-            layout="@layout/button_minus_plus"/>
-
-        <include android:id="@+id/cart_button"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            layout="@layout/cart_button"/>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

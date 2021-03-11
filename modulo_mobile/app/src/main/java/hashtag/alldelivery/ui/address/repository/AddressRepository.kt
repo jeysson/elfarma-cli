@@ -26,7 +26,7 @@ class AddressRepository(private val addressDao: AddressDao) {
         addressDao.update(address)
     }
 
-    fun firstAddress(): Address{
+    fun firstAddress(): LiveData<Address>{
        return addressDao.firstAddress()
     }
 

@@ -1,5 +1,6 @@
 package hashtag.alldelivery.core.repository
 
+import hashtag.alldelivery.core.models.PaymentMethod
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import io.reactivex.Observable
@@ -27,4 +28,6 @@ interface IStoreRepository {
     fun getStoreLogo(loja: Int?) : Observable<Store>
 
     fun getStoreBanner(loja: Int?) : Observable<Store>
+
+    fun getPaymentMethods(loja: Int?) : Observable<ArrayList<PaymentMethod>>
 }

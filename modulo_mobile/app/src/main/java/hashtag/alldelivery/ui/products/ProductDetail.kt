@@ -5,9 +5,20 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.PRODUCT
+import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
+import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Item
 import hashtag.alldelivery.core.models.Product
+import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.core.utils.OnChangedValueListener
 import kotlinx.android.synthetic.main.button_minus_plus.*
 import kotlinx.android.synthetic.main.cart_button.*
 import kotlinx.android.synthetic.main.common_toolbar.*
@@ -16,20 +27,41 @@ import kotlinx.android.synthetic.main.product_item_info.*
 import java.text.NumberFormat
 import java.util.*
 
-class ProductDetail : AppCompatActivity() {
+class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener {
 
     private lateinit var product: Product
+    private lateinit var item: Item
     private var quantity: Int = 1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.product_details_content)
-        product = AllDeliveryApplication.PRODUCT!!
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.product_details_content, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        AllDeliveryApplication.productDetailFragment = this
+        activity!!.supportFragmentManager.beginTransaction().show(this).commit()
+        StatusBarUtil.setLightMode(activity)
+        product = PRODUCT!!
+        btMinusPlus.open = true
+        btMinusPlus.animado = false
+        btMinusPlus.produto = product
+        btMinusPlus.addOnChangeValueListener(this)
+
+        if(Pedido != null) {
+            item = Pedido?.itens?.firstOrNull { p -> p?.produto?.id!! == product.id }!!
+
+            if(item != null)
+                btMinusPlus.total = item.quantidade!!
+        }
+
         topbar_title.text = getString(R.string.product_details)
 
         back_button.setOnClickListener {
-            finish()
+            back()
         }
 
         if(product.productImages?.size!! > 0) {
@@ -37,29 +69,33 @@ class ProductDetail : AppCompatActivity() {
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             item_image.setImageBitmap(image)
             item_image.setOnClickListener {
-                val intent = Intent(this, ProductView::class.java)
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, item_image, "robot").toBundle())
+                val intent = Intent(activity, ProductView::class.java)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity,
+                    item_image, "robot").toBundle())
             }
         }
 
         item_title.text = product.nome
         item_unit_description.text = product.descricao
-        txt_quantity.text = quantity.toString()
-        item_weighable_price.text = getFormatedPrice(product.preco)
-        calcPrice()
-        bt_minus.bringToFront()
-        bt_minus.setOnClickListener {
-            if(quantity > 1) {
-                quantity -= 1
-                calcPrice()
-            }
-        }
 
-        bt_plus.bringToFront()
-        bt_plus.setOnClickListener {
-            quantity += 1
-            calcPrice()
-        }
+        // txt_quantity.text = quantity.toString()
+        //  txt_price
+        item_weighable_price.text = getFormatedPrice(product.preco)
+//        calcPrice()
+//        bt_minus.bringToFront()
+        /*  bt_minus.setOnClickListener {
+              if(quantity > 1) {
+                  quantity -= 1
+                  calcPrice()
+              }
+          }
+
+          bt_plus.bringToFront()
+          bt_plus.setOnClickListener {
+              quantity += 1
+              calcPrice()
+          }*/
+
     }
 
     fun getFormatedPrice(valor: Double?): String{
@@ -71,8 +107,19 @@ class ProductDetail : AppCompatActivity() {
         ).format(valor)
     }
 
-    fun calcPrice(){
-        txt_price.text = getFormatedPrice(product.preco?.times(quantity))
-        txt_quantity.text = quantity.toString()
+
+    override fun OnChangedValue(prod: Product, value: Int){
+        (activity as MainActivity).changeValueBag(prod, value)
+    }
+
+    override fun onBackPressed() {
+        back()
+    }
+
+    private fun back(){
+        StatusBarUtil.setLightMode(activity)
+        activity!!.supportFragmentManager.popBackStackImmediate()
+        activity!!.supportFragmentManager.beginTransaction()
+            .remove(this).commit()
     }
 }

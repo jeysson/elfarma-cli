@@ -47,4 +47,7 @@
 
     <dimen name="address_card_selected_bord_width">2dp</dimen>
     <dimen name="address_card_default">1dp</dimen>
+    <dimen name="space_size_32dp">32dp</dimen>
+    <dimen name="space_size_20dp">20dp</dimen>
+    <dimen name="space_size_24dp">24dp</dimen>
 </resources>

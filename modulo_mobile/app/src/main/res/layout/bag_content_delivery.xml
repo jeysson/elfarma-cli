@@ -40,12 +40,12 @@
 
     <ImageView
         android:id="@+id/address_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="20dp"
         android:contentDescription="@null"
         android:importantForAccessibility="no"
+        android:src="@mipmap/ic_mapa_2"
         app:layout_constraintStart_toStartOf="@+id/start_guideline"
         app:layout_constraintTop_toBottomOf="@+id/address_action"/>
 
@@ -160,7 +160,7 @@
         style="@style/Text.Description2"/>
 
     <TextView
-        android:textColor="@color/red"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/mode_selection_button"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"
@@ -182,7 +182,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/mode_description"
         app:layout_constraintEnd_toStartOf="@+id/end_guideline"
         app:layout_constraintTop_toTopOf="@+id/mode_title"
-        app:lv_color="@color/red"/>
+        app:lv_color="@color/colorPrimary"/>
 
     <include
         android:id="@+id/delivery_method"

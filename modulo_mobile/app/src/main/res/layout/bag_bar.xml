@@ -29,7 +29,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="14dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="14dp">
+        android:layout_marginBottom="14dp"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
 
         <ImageView android:id="@+id/bag_icon"
             android:layout_width="wrap_content"

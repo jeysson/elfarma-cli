@@ -2,21 +2,31 @@ package hashtag.alldelivery.ui.store
 
 import android.annotation.SuppressLint
 import android.view.View
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
+import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.repository.IStoreRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
 import java.util.*
 import kotlin.collections.ArrayList
 
-class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
+class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
 
     var adapter: StoresListItemAdapter? = null
     var eventErro = SingleLiveEvent<BusinessEvent>()
     var eventLoadLogo = SingleLiveEvent<Int>()
+    var eventLoadBanner = SingleLiveEvent<Store>()
+    var eventLoadImage = SingleLiveEvent<Int>()
     var stores: MutableLiveData<ArrayList<Store>> = MutableLiveData()
     var loading: MutableLiveData<Boolean> = MutableLiveData()
     var lastPage: MutableLiveData<Boolean> = MutableLiveData()
@@ -86,13 +96,12 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel() {
 
     fun getStoreBanner(loja: Int?){
         _storeRep.getStoreBanner(loja).subscribe ({
-            var store = adapter?.itens?.firstOrNull { p-> p.id == it.id }
-            store?.banner = it.banner
-            var idx = stores.value?.indexOf(store)
-            eventLoadLogo.postValue(idx)
+
+            STORE?.banner = it.banner
+
+            eventLoadBanner.postValue(STORE!!)
         }, {
             //eventErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter informações da loja."))
         })
     }
-
 }

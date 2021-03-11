@@ -5,6 +5,7 @@ import android.content.Context
 import android.location.Geocoder
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.core.di.repositoryModule
 import hashtag.alldelivery.core.di.viewModelModule
@@ -21,6 +22,10 @@ import java.util.*
 class AllDeliveryApplication : Application() {
 
     companion object {
+        var homeFragment: Fragment? = null
+        var productDetailFragment: Fragment? = null
+        var storeFragment: Fragment? = null
+
         var Pedido: Order? = null
         var FIRST_VISIBLE = 0
         var LAST_VISIBLE = 0

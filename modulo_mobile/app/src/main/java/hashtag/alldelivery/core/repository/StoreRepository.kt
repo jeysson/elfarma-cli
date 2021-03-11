@@ -1,5 +1,6 @@
 package hashtag.alldelivery.core.repository
 
+import hashtag.alldelivery.core.models.PaymentMethod
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.network.StoreApi
@@ -40,6 +41,10 @@ class StoreRepository(
     }
 
     override fun getStoreBanner(loja: Int?): Observable<Store> {
-        return runOnBackground(dataSource.getStoreLogo(loja))
+        return runOnBackground(dataSource.getStoreBanner(loja))
+    }
+
+    override fun getPaymentMethods(loja: Int?): Observable<ArrayList<PaymentMethod>> {
+        return  runOnBackground(dataSource.getPaymentMethods(loja))
     }
 }

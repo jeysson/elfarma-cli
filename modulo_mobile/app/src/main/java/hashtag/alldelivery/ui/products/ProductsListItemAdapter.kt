@@ -4,12 +4,16 @@ import android.app.ActivityOptions
 import android.app.Application
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,33 +31,30 @@ import kotlinx.coroutines.runBlocking
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.LinkedHashMap
+import kotlin.concurrent.thread
 
 class ProductsListItemAdapter(
     val frag: StoreFragment,
-    val lLayoutManager: LinearLayoutManager?,
-    val gLayoutManager: GridLayoutManager?,
+    val search:Boolean = false,
     itens: ArrayList<Product>?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener, OnChangedValueListener {
 
-    lateinit var itemClickListener: AdapterView.OnItemClickListener
     val fragment = frag
-    private val model: ProductViewModel by frag.sharedViewModel()
     val itens: ArrayList<Product>? = itens
     private lateinit var myView: View
-    var evento: OnChangedValueListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = if (lLayoutManager == null){
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.product_card_item, parent, false)
-        }else {
+        val view = if (!search){
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.product_card_item_search, parent, false)
+        }else {
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.product_card_item, parent, false)
         }
         myView = view
 
         var holder = ProductItemCardViewHolder(view)
-
 
         holder.setIsRecyclable(false)
         return holder
@@ -82,27 +83,18 @@ class ProductsListItemAdapter(
                 fragment.getString(R.string.country)
             )
         ).format(product.preco)
-
         //
-
-        runBlocking(Dispatchers.IO) {
-            if (!product.carregouImagens && ((gLayoutManager != null
-                        && (gLayoutManager.findLastVisibleItemPosition() + 2) >= position
-                        && gLayoutManager.findFirstVisibleItemPosition() <= position)
-                        ||
-                        (lLayoutManager != null
-                                && (lLayoutManager.findLastVisibleItemPosition() + 1) >= position
-                                && lLayoutManager.findFirstVisibleItemPosition() <= position))
-            ) {
-                product.carregouImagens = true
-                product.productImages = model?.getImages(product.id)
-            }
+        holder.image.alpha = 0f
+        holder.image.animate().apply{
+            duration = 400
+            alpha(1f)
         }
 
         if (product.productImages!!.size > 0) {
             val imageBytes = android.util.Base64.decode(product.productImages!![0].fotoBase64, 0)
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            holder.image.setImageBitmap(image)
+            val drawable = BitmapDrawable(fragment.resources, image)
+            holder.image.setImageDrawable(drawable)
         }
 
         holder.bt.addOnChangeValueListener(frag)
@@ -127,11 +119,21 @@ class ProductsListItemAdapter(
         if (view is CardView) {
             var position = view!!.tag as Int
             AllDeliveryApplication.PRODUCT = itens?.get(position)
-            val intent = Intent(fragment.context, ProductDetail::class.java)
-            fragment.context?.startActivity(
-                intent,
-                ActivityOptions.makeSceneTransitionAnimation(fragment.activity).toBundle()
-            )
+
+            val manager: FragmentManager = fragment.activity!!.supportFragmentManager
+            manager.beginTransaction()
+            manager.commit {
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+
+                addToBackStack(null)
+                replace(R.id.nav_host_fragment, ProductDetail::class.java, null)
+
+            }
         }
     }
 
@@ -141,22 +143,4 @@ class ProductsListItemAdapter(
         var tamanhoNovo = itens?.size
         notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
     }
-
-//    override fun OnChangedValue(id:Int, value: Int){
-//        if(Pedido == null)
-//            Pedido = Order()
-//        //
-//        var ix = Pedido?.itens?.firstOrNull { p: Item -> p.produto == id   }
-//
-//        if(ix == null)
-//            Pedido?.itens?.add(Item(id, value))
-//        else
-//            ix.quantidade = value
-//
-//        evento?.OnChangedValue(id, value)
-//    }
-
-//    fun addOnChangeValueListener(ev:OnChangedValueListener){
-//        evento = ev
-//    }
 }

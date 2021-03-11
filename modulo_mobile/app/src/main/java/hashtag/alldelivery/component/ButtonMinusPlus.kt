@@ -29,6 +29,15 @@ class ButtonMinusPlus : ConstraintLayout{
     private var _total:Int = 0
     private var _produto: Product? = null
 
+    var animado: Boolean = true
+
+    var open: Boolean
+    get() = isOpen
+    set(value){
+        isOpen = value
+        animationListener(plusButton!!, cardViewIncrementItem!!, !isOpen)
+    }
+
     var produto: Product?
     get() = _produto
     set(value) {
@@ -77,7 +86,10 @@ class ButtonMinusPlus : ConstraintLayout{
         plusButton?.setOnClickListener {
             _total += 1
             textItemCount?.text = _total.toString()
-            isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, isOpen)
+
+            if(animado)
+                isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, isOpen)
+
             evento?.OnChangedValue(_produto!!, _total)
         }
         incrementButton.setOnClickListener {
@@ -90,11 +102,12 @@ class ButtonMinusPlus : ConstraintLayout{
                 _total -= 1
 
             if (_total < 1) {
-                isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, true)
+                if(animado)
+                    isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, true)
 
-            } else {
-                textItemCount?.text = _total.toString()
             }
+
+            textItemCount?.text = _total.toString()
 
             evento?.OnChangedValue(_produto!!, _total)
         }

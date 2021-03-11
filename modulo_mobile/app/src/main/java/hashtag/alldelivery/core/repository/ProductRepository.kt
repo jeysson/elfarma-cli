@@ -8,14 +8,15 @@ import hashtag.alldelivery.core.network.StoreApi
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Query
 
 class ProductRepository(private val dataSource: ProductApi): IProductRepository, BaseRepository() {
 
-    override fun getAllProducts(id: Int?): Observable<List<Product>> {
+    override fun getAllProducts(id: Int?): Observable<ArrayList<Product>> {
         return runOnBackground(dataSource.getAllProducts(id))
     }
 
-    override fun getAllGroups(id: Int?): Observable<List<Group>> {
+    override fun getAllGroups(id: Int?): Observable<ArrayList<Group>> {
         return runOnBackground(dataSource.getAllGroups(id))
     }
 
@@ -23,15 +24,15 @@ class ProductRepository(private val dataSource: ProductApi): IProductRepository,
         return dataSource.getProductsGroup(store, group)
     }
 
-    override fun getProductsGroupAsync(store: Int?, group: Int?): Observable<List<Product>> {
+    override fun getProductsGroupAsync(store: Int?, group: Int?): Observable<ArrayList<Product>> {
         return runOnBackground(dataSource.getProductsGroupAsync(store, group))
     }
 
-    override fun getImages(id: Int?): Call<List<ProductImage>> {
+    override fun getImages(id: Int?): Call<ArrayList<ProductImage>> {
         return dataSource.getImages(id)
     }
 
-    override fun getImagesAsync(id: Int?): Observable<List<ProductImage>> {
+    override fun getImagesAsync(id: Int?): Observable<ArrayList<ProductImage>> {
         return runOnBackground(dataSource.getImagesAsync(id))
     }
 
@@ -42,5 +43,9 @@ class ProductRepository(private val dataSource: ProductApi): IProductRepository,
         total: Int?
     ): Call<ArrayList<Product>> {
         return dataSource.getPagingProducts(store, group, page, total)
+    }
+
+    override fun getImagesGroupo(id: Int?) : Call<ArrayList<ProductImage>>{
+        return dataSource.getImagesGroupo(id)
     }
 }

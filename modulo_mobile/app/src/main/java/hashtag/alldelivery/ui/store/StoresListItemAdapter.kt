@@ -1,6 +1,7 @@
 package hashtag.alldelivery.ui.store
 
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -31,11 +32,11 @@ import kotlin.collections.ArrayList
 
 class StoresListItemAdapter(
     frag: Fragment) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val TYPE_HEADER = 1
     private val TYPE_BODY = 2
-lateinit var evento:LoadViewItemAdpter
+    lateinit var evento:LoadViewItemAdpter
     lateinit var listHeader: View
     lateinit var itemClickListener: AdapterView.OnItemClickListener
     val fragment = frag
@@ -60,7 +61,7 @@ lateinit var evento:LoadViewItemAdpter
             holder as StoreItemViewHolder
             val item = itens?.get(position)
             val name = item?.nomeFantasia
-//            Mostra "fechado" + overlay caso a loja esteja indisponível
+            /* Mostra "fechado" + overlay caso a loja esteja indisponível*/
             if(!item!!.disponivel){
                 holder.closedItemOverlay.visibility = VISIBLE
                 holder.closedText.visibility = VISIBLE
@@ -69,15 +70,14 @@ lateinit var evento:LoadViewItemAdpter
                 holder.closedText.visibility = GONE
             }
 
-//            Mudando a visibilidade dos itens
+            /*Mudando a visibilidade dos itens*/
             holder.rating.visibility = GONE
             holder.starIcon.visibility = GONE
             holder.categoryType.visibility = GONE
             holder.dividerCategoryDistance.visibility = GONE
             holder.dividerRatingCategory.visibility = GONE
 
-//            Animação de fadeIn
-
+            /*Animação de fadeIn*/
             if (position < FIRST_VISIBLE || position > LAST_VISIBLE ){
                 holder.logo.alpha = 0f
                 holder.logo.animate().apply {
@@ -89,11 +89,12 @@ lateinit var evento:LoadViewItemAdpter
                 }
             }
             
-//           Inserindo imagem
+            /*Inserindo imagem*/
             if(item.logo != null){
                 val imageBytes = android.util.Base64.decode(item.logo, 0)
                 val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                holder.logo.setImageBitmap(image)
+                val drawableImage = BitmapDrawable(fragment.resources, image)
+                holder.logo.setImageDrawable(drawableImage)
 
             }else {
                 holder.logo.setImageResource(R.drawable.ic_medicine)
@@ -101,7 +102,7 @@ lateinit var evento:LoadViewItemAdpter
                     (fragment as HomeFragment)._storeViewModel.getStoreLogo(item.id)
             }
 
-//            transforma em valor em moeda e verifica se é 0 ou nulo
+            /*transforma em valor em moeda e verifica se é 0 ou nulo*/
             var storeFee = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(item.taxaEntrega)
             if (item.taxaEntrega == 0f || item.taxaEntrega == null) {
                 holder.deliveryFee.setTextColor(fragment.activity!!.getColor(R.color.green_free_item))
@@ -118,7 +119,7 @@ lateinit var evento:LoadViewItemAdpter
             holder.categoryType.text = "Farmácia"
 
             holder.card.setTag(position)
-            holder.card.setOnClickListener(this)
+            holder.card.setOnClickListener(fragment as HomeFragment)
         }
     }
 
@@ -151,25 +152,6 @@ lateinit var evento:LoadViewItemAdpter
         val logo = view.logo
         val closedItemOverlay = view.image_view_store_closed_overlay
         val closedText = view.closed
-    }
-
-    override fun onClick(view: View?) {
-        if (view is CardView) {
-            var position = view!!.tag as Int
-            AllDeliveryApplication.STORE = itens!!.get(position)
-            val manager: FragmentManager = fragment.activity!!.supportFragmentManager
-            manager.beginTransaction()
-            manager.commit {
-                setCustomAnimations(
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right,
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left
-                )
-                replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
-                addToBackStack(null)
-            }
-        }
     }
 
     fun addItems(lojas: List<Store>) {

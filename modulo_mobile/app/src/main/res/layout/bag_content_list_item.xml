@@ -58,7 +58,8 @@
         app:layout_constraintLeft_toRightOf="@+id/price"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_kebab" />
+        app:srcCompat="@drawable/ic_kebab"
+        android:visibility="invisible"/>
 
     <TextView
         android:textColor="@color/deprecated_medium_grey"
@@ -71,7 +72,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name"
-        style="@style/Text.Description"/>
+        style="@style/Text.Description"
+        android:visibility="gone"/>
 
     <TextView
         android:textColor="@color/deprecated_medium_grey"
@@ -84,7 +86,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/complements"
-        style="@style/Text.Description"/>
+        style="@style/Text.Description"
+        android:visibility="gone"/>
     <include
         android:id="@+id/tag_free_delivery"
         android:visibility="gone"

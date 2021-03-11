@@ -257,11 +257,11 @@
             android:visibility="invisible"
             app:lv_color="@color/colorPrimary" />
 
-    <include
+    <!--include
         android:id="@+id/btSacola"
         layout="@layout/bag_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:visibility="invisible"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom"/-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

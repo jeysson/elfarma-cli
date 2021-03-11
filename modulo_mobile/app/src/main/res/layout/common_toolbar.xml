@@ -31,7 +31,8 @@
             android:layout_toStartOf="@+id/space"
             android:layout_toEndOf="@+id/back_button">
 
-            <TextView android:textSize="14sp"
+            <TextView
+                android:textSize="14sp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:layout_gravity="center"

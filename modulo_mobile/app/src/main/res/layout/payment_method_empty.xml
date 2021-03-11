@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:gravity="center" android:orientation="vertical" android:tag="layout/offline_payment_empty_state_0" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="@dimen/space_size_24dp">
+    <ImageView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_size_24dp"
+        android:src="@drawable/ic_payment_method_empty"/>
+
+    <TextView android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_list_empty_state_title"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P1"/>
+
+    <TextView android:textColor="@color/heavy_grey"
+        android:gravity="center" android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_size_12dp"
+        android:text="@string/offline_payment_empty_state_subtitle"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P3"/>
+</LinearLayout>
