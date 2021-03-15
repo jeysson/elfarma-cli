@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/map_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_map_color"
+        android:scaleType="centerCrop"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView android:textColor="@color/avocado"
+        android:gravity="center"
+        android:id="@+id/delivery_success"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:drawableTop="@drawable/ic_order"
+        android:drawablePadding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Text.Link7"/>
+
+    <LinearLayout android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/linear_placed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/linear_confirmed"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delivery_success">
+
+        <TextView android:id="@+id/order_placed_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_status_pending_title"
+            style="@style/Text.Link_6"/>
+
+        <TextView android:textColor="@color/black"
+            android:gravity="center"
+            android:id="@+id/order_placed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="15dp"
+            style="@style/Text.Sub_Heading_1"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/linear_confirmed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linear_placed"
+        app:layout_constraintEnd_toStartOf="@+id/linear_number"
+        app:layout_constraintStart_toEndOf="@+id/linear_placed"
+        app:layout_constraintTop_toTopOf="@+id/linear_placed">
+
+        <TextView android:gravity="center"
+            android:id="@+id/order_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.Link_6"/>
+
+        <TextView android:textColor="@color/black"
+            android:gravity="center"
+            android:id="@+id/order_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/order_status_title"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/order_status_title"
+            app:layout_constraintTop_toBottomOf="@+id/order_status_title"
+            style="@style/Text.Sub_Heading_1"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/linear_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linear_confirmed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linear_confirmed"
+        app:layout_constraintTop_toTopOf="@+id/linear_confirmed">
+
+        <TextView android:gravity="center"
+            android:id="@+id/order_number_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_number_contrac"
+            android:contentDescription="@string/order_number"
+            style="@style/Text.Link_6"/>
+
+        <TextView android:textColor="@color/black"
+            android:gravity="center"
+            android:id="@+id/order_number_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="15dp"
+            style="@style/Text.Sub_Heading_1"/>
+
+    </LinearLayout>
+
+    <!--include android:id="@+id/takeaway_at_park_resume"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/linear_placed"
+        layout="@layout/takeaway_at_park_resume"/-->
+
+    <!--include android:id="@+id/order_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/linear_placed"
+        layout="@layout/ifood_box"/-->
+    <!--androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="2"
+        app:constraint_referenced_ids="driver_tip"/-->
+
+    <!--include android:id="@+id/driver_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="0"
+        app:layout_constraintTop_toBottomOf="@+id/barrier"
+        layout="@layout/waiting_driver_tip"/-->
+</androidx.constraintlayout.widget.ConstraintLayout>

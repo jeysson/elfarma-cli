@@ -3,7 +3,8 @@ package hashtag.alldelivery.core.models
 import com.google.gson.annotations.SerializedName
 
 class Store{
-    @SerializedName("id") val id : Int? = null
+    @SerializedName("id")
+    var id : Int? = null
     @SerializedName("cnpj") val cnpj : Int? = null
     @SerializedName("nomeFantasia") var nomeFantasia : String? = null
     @SerializedName("nomeRazao") var nomeRazao : String? = null
@@ -27,18 +28,23 @@ class Store{
     @SerializedName("imgBanner") val imgBanner : String? = null
     @SerializedName("banner")
     var banner : String? = null
-    @SerializedName("tempoMinimo") val tempoMinimo : Int? = null
-    @SerializedName("tempoMaximo") val tempoMaximo : Int? = null
+    @SerializedName("tempoMinimo")
+    var tempoMinimo : Int? = null
+    @SerializedName("tempoMaximo")
+    var tempoMaximo : Int? = null
     @SerializedName("hAbre") val hAbre : Int? = null
     @SerializedName("hFecha") val hFecha : Int? = null
     @SerializedName("lat") val lat : String? = null
     @SerializedName("long") val long : String? = null
     @SerializedName("taxaEntrega") val taxaEntrega : Float? = null
+    @SerializedName("pedidoMinimo") val pedidoMenimo: Float? = null
     @SerializedName("distancia") val distancia : String? = null
 
     var logoCarregado: Boolean = false
 
     var bannerCarregado: Boolean = false
+
+    var head: Boolean = false
 
     constructor()
 }

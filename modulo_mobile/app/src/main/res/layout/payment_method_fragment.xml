@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:tag="layout/offline_payment_list_fragment_0"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +14,6 @@
 
     <include android:layout_height="0dp"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/space_size_36dp"
         android:id="@+id/toolbar"
         layout="@layout/common_toolbar"
         app:layout_constraintTop_toTopOf="@id/lv"/>
@@ -23,7 +21,6 @@
     <TextView android:textColor="@color/medium_gray"
         android:gravity="center"
         android:id="@+id/title"
-        android:tag="binding_1"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

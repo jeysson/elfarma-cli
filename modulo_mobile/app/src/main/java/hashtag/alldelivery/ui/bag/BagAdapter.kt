@@ -3,30 +3,19 @@ package hashtag.alldelivery.ui.bag
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LinearInterpolator
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.models.Group
-import hashtag.alldelivery.core.models.Item
-import hashtag.alldelivery.core.models.Store
-import hashtag.alldelivery.core.utils.LoadViewItemAdpter
+import hashtag.alldelivery.core.models.OrderItem
 import hashtag.alldelivery.ui.products.ProductDetail
-import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.bag_content_list_item.view.*
-import kotlinx.android.synthetic.main.product_item.view.*
-import kotlinx.android.synthetic.main.store_list_header.view.store_title
-import kotlinx.coroutines.*
-import org.jetbrains.anko.doAsync
 import java.text.NumberFormat
 import java.util.*
 
 class BagAdapter(frag: BagFragment): RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener{
-    private var itens: ArrayList<Item>? = null
+    private var itens: ArrayList<OrderItem>? = null
     var fragment = frag
     var recyledViewPool = RecyclerView.RecycledViewPool()
 
@@ -44,10 +33,10 @@ class BagAdapter(frag: BagFragment): RecyclerView.Adapter<RecyclerView.ViewHolde
         holder as BagItemViewHolder
         var item = itens?.get(position)
         holder.name.text = item?.produto?.nome
-        holder.quantity.text = item?.quantidade.toString()
+        holder.quantity.text = item?.quantity.toString()
         holder.price.text = NumberFormat.getCurrencyInstance(
             Locale(fragment.getString(R.string.language),
-                fragment.getString(R.string.country))).format(item?.valor)
+                fragment.getString(R.string.country))).format(item?.price)
         holder.view.tag = position
         holder.view.setOnClickListener(this)
     }
@@ -77,10 +66,10 @@ class BagAdapter(frag: BagFragment): RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    fun addItems(its: ArrayList<Item>) {
+    fun addItems(its: ArrayList<OrderItem>) {
 
         if(itens.isNullOrEmpty())
-            itens = ArrayList<Item>()
+            itens = ArrayList<OrderItem>()
 
         itens?.addAll(its)
     }

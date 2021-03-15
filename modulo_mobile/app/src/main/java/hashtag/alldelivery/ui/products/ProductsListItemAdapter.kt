@@ -1,38 +1,23 @@
 package hashtag.alldelivery.ui.products
 
-import android.app.ActivityOptions
-import android.app.Application
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LinearInterpolator
-import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.models.Item
-import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnChangedValueListener
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_card_item.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.LinkedHashMap
-import kotlin.concurrent.thread
 
 class ProductsListItemAdapter(
     val frag: StoreFragment,
@@ -69,7 +54,7 @@ class ProductsListItemAdapter(
         holder.bt.produto = product
 
         if(p != null)
-            holder.bt.total = p?.quantidade!!
+            holder.bt.total = p?.quantity!!
         else
             holder.bt.total = 0
 

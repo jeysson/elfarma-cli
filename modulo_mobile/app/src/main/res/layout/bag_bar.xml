@@ -4,10 +4,9 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/context_bar_container"
-    android:tag="layout/bag_bar_0"
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:background="@color/colorPrimary">
 
@@ -25,11 +24,7 @@
         android:layout_gravity="center_vertical"
         android:id="@+id/bag_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="14dp"
+        android:layout_height="match_parent"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground">
 
@@ -38,6 +33,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_bag"
             android:importantForAccessibility="no"
+            android:layout_marginLeft="@dimen/space_size_20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -54,9 +50,11 @@
 
         <TextView android:textColor="@color/white"
             android:id="@+id/bag_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:text="@string/context_card_bag_title"
+            android:textAlignment="center"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -67,6 +65,7 @@
             android:id="@+id/bag_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_size_20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -433,6 +433,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     override fun onClick(view: View?) {
         if (view is CardView) {
+
             var position = view!!.tag as Int
             STORE = _storeViewModel.adapter?.itens!!.get(position)
             val manager: FragmentManager = activity!!.supportFragmentManager
@@ -447,6 +448,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
                 addToBackStack(null)
                 replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
+
 
             }
         }

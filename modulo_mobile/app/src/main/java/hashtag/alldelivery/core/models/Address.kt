@@ -12,25 +12,35 @@ class Address() {
     var description2 : String? = null
 
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    @SerializedName("id") var id: Int? = null
+
     @ColumnInfo
-    var address : String? = null
+    @SerializedName("ender") var address : String? = null
+
     @ColumnInfo
-    var number: String? = null
+    @SerializedName("numero") var number: String? = null
+
     @ColumnInfo
-    var neighborhood : String? = null
+    @SerializedName("bairro") var neighborhood : String? = null
+
     @ColumnInfo
-    var city: String? = null
+    @SerializedName("cidade") var city: String? = null
+
     @ColumnInfo
-    var state: String? = null
+    @SerializedName("estado") var state: String? = null
+
     @ColumnInfo
-    var complement: String? = null
+    @SerializedName("complemento") var complement: String? = null
+
     @ColumnInfo
     var landmark: String? = null
+
     @ColumnInfo
-    var lat: Double? =null
+    @SerializedName("lat") var lat: Double? =null
+
     @ColumnInfo
-    var longi: Double? = null
+    @SerializedName("longi") var longi: Double? = null
+
     @ColumnInfo
     var padrao: Int? = 0
 }

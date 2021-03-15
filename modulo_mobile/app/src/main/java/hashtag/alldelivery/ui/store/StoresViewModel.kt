@@ -63,10 +63,21 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
 
         _storeRep.getPagingStores(page, total, lat, lon, tipoordenacao).subscribe ({
             var countInicio = adapter?.itens!!.size-1
-            adapter?.addItems(it)
+
+            if(page == 1){
+                val arr = ArrayList<Store>()
+                val st = Store()
+                st.nomeFantasia = "Farmácias e Drogarias"
+                st.head = true
+                arr.add(st)
+                arr.addAll(it)
+                adapter?.addItems(arr)
+            }else
+                adapter?.addItems(it)
+
             adapter?.notifyItemRangeChanged(countInicio, adapter?.itens!!.size)
 
-            stores.postValue(it)
+             stores.postValue(it)
             if (it.isNullOrEmpty()) {
                 eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
             }

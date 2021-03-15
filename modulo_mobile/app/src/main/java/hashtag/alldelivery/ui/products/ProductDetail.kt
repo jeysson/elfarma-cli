@@ -3,7 +3,6 @@ package hashtag.alldelivery.ui.products
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +14,10 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.PRODUCT
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
-import hashtag.alldelivery.core.models.Item
+import hashtag.alldelivery.core.models.OrderItem
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnBackPressedListener
 import hashtag.alldelivery.core.utils.OnChangedValueListener
-import kotlinx.android.synthetic.main.button_minus_plus.*
-import kotlinx.android.synthetic.main.cart_button.*
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.product_details_content.*
 import kotlinx.android.synthetic.main.product_item_info.*
@@ -30,7 +27,7 @@ import java.util.*
 class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener {
 
     private lateinit var product: Product
-    private lateinit var item: Item
+    private lateinit var item: OrderItem
     private var quantity: Int = 1
 
     override fun onCreateView(
@@ -55,7 +52,7 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
             item = Pedido?.itens?.firstOrNull { p -> p?.produto?.id!! == product.id }!!
 
             if(item != null)
-                btMinusPlus.total = item.quantidade!!
+                btMinusPlus.total = item.quantity!!
         }
 
         topbar_title.text = getString(R.string.product_details)
@@ -77,25 +74,8 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
 
         item_title.text = product.nome
         item_unit_description.text = product.descricao
-
-        // txt_quantity.text = quantity.toString()
-        //  txt_price
+        //
         item_weighable_price.text = getFormatedPrice(product.preco)
-//        calcPrice()
-//        bt_minus.bringToFront()
-        /*  bt_minus.setOnClickListener {
-              if(quantity > 1) {
-                  quantity -= 1
-                  calcPrice()
-              }
-          }
-
-          bt_plus.bringToFront()
-          bt_plus.setOnClickListener {
-              quantity += 1
-              calcPrice()
-          }*/
-
     }
 
     fun getFormatedPrice(valor: Double?): String{

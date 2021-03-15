@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/box"
+            android:background="@drawable/store_details_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <TextView android:textColor="@color/black"
+                android:id="@+id/order_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/order_qrcode_delivery_title"
+                android:textAlignment="textEnd"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/Text.Sub_Heading_2"/>
+
+            <View android:id="@+id/divider"
+                android:background="@color/deprecated_light_grey"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/order_location"/>
+
+            <ImageView android:id="@+id/qr_delivery_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/divider"/>
+
+            <TextView android:textColor="@color/deprecated_gray_dark"
+                android:id="@+id/qr_delivery_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/qr_delivery_image"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/qr_delivery_image"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                style="@style/Text.Link_6"/>
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/confirm_qr_delivery"
+                android:background="@drawable/selector_button_blue_background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/order_qrcode_delivery_confirmation_button"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/qr_delivery_description"
+                style="@style/Text.Button"/>
+
+            <TextView android:id="@+id/qr_delivery_help"
+                android:tag="binding_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/order_qrcode_delivery_how_it_works"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+                app:layout_constraintStart_toEndOf="@+id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@+id/confirm_qr_delivery"
+                style="@style/Text.Button.Borderless"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="20dp"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="20dp"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="horizontal"
+                android:id="@+id/guideline_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="15dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

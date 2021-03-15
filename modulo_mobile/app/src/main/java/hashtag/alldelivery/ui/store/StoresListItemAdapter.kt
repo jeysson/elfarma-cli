@@ -44,11 +44,11 @@ class StoresListItemAdapter(
     var itens: ArrayList<Store>? = null
     private lateinit var myView: View
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoreItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_HEADER) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.store_list_header, parent, false)
-            return StoreItemViewHolder(view)
+            return StoreHeaderViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.store_item_adapter, parent, false)
@@ -57,9 +57,16 @@ class StoresListItemAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position > 0) {
+
+        val item = itens?.get(position)
+
+        if (item?.head!!) {
+            holder as StoreHeaderViewHolder
+            holder.name.text = item?.nomeFantasia
+        }
+        else{
             holder as StoreItemViewHolder
-            val item = itens?.get(position)
+
             val name = item?.nomeFantasia
             /* Mostra "fechado" + overlay caso a loja esteja indisponível*/
             if(!item!!.disponivel){
@@ -126,7 +133,7 @@ class StoresListItemAdapter(
     override fun getItemCount() = itens!!.size
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 0) {
+        if (itens?.get(position)?.head!!) {
             return TYPE_HEADER;
 
         } else {

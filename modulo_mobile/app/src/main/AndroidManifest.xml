@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="hashtag.alldelivery">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -19,15 +20,22 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ui.filter.FiltersActivity" />
-        <activity android:name=".ui.products.ProductView" />
-        <activity android:name=".ui.products.ProductDetail" />
-        <activity android:name=".ui.store.StoreInfoFragment" />
+        android:supportsRtl="true">
+        <activity
+            android:name=".FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/Theme.AllDelivery.Fullscreen"></activity>
+        <activity
+            android:name=".ui.filter.FiltersActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.products.ProductView"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +46,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.address.DetailAddress" />
+        <activity
+            android:name=".ui.address.DetailAddress"
+            android:theme="@style/AppTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -53,14 +63,18 @@
 
         <activity
             android:name=".ui.address.AddressSet"
-            android:label="@string/title_activity_address_set" />
-        <activity android:name=".ui.address.FindAddress" />
+            android:label="@string/title_activity_address_set"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.address.FindAddress"
+            android:theme="@style/AppTheme" />
 
         <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name=".ui.address.DeliveryAddress"
-            android:label="@string/title_activity_delivery_address" />
+            android:label="@string/title_activity_delivery_address"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

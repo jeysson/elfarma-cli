@@ -66,6 +66,10 @@ class StoreFragment : Fragment(), OnBackPressedListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setDarkMode(activity)
+
+        (activity as MainActivity).hideBottomNavigation()
+        (activity as MainActivity).showBag()
+
         AllDeliveryApplication.storeFragment = this
       //  activity!!.supportFragmentManager.beginTransaction().show(this).commit()
         list.layoutManager = LinearLayoutManager(context)
@@ -160,10 +164,6 @@ class StoreFragment : Fragment(), OnBackPressedListener,
         thread(true) {
             viewModelStore.getStoreBanner(STORE?.id)
         }
-
-        (activity as MainActivity).hideBottomNavigation()
-
-        (activity as MainActivity).showBag()
     }
 
     fun initAdapter(){

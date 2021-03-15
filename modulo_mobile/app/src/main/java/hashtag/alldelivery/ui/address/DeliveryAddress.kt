@@ -39,6 +39,7 @@ class DeliveryAddress : AppCompatActivity() {
     lateinit var locationRequest: LocationRequest
     lateinit var addressViewModel: AddressViewModel
     lateinit var adapter: AddressListAdapter
+    var resultCode: Int? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,7 +229,6 @@ class DeliveryAddress : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-
         adapter = AddressListAdapter(this)
         list_address.adapter = adapter
         list_address.layoutManager = LinearLayoutManager(this)
@@ -243,7 +243,9 @@ class DeliveryAddress : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    companion object {
+    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+        super.startActivityForResult(intent, requestCode)
 
+        resultCode = requestCode
     }
 }

@@ -49,7 +49,7 @@ class AllDeliveryApplication : Application() {
         //      RequestCode Control que solicita a exibição de novos itens, vindo da pagina filtros
         const val RESULTS = "RESULTS"
         const val NEW_SEARCH_REQUEST_CODE = 1
-
+        const val BAG_ORDER_ADDRESS_CHANGE = 2
         //        Para validação de paginas exibidas por InfinityScrow
         var PAGE_OBSERVER = 1
 

@@ -41,7 +41,7 @@ class PaymentMethodAdapter(val fragment: PaymentMethodFragment): RecyclerView.Ad
         }else {
             holder as PaymentMethodItemViewHolder
 
-            if(Pedido?.formaPagamento != null && Pedido?.formaPagamento?.id == item.id){
+            if(Pedido?.paymentMethod != null && Pedido?.paymentMethod?.id == item.id){
                 holder.bt.setBackgroundResource(R.drawable.bg_payment_selected)
             }
 

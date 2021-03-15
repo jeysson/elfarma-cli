@@ -98,7 +98,7 @@ class PaymentMethodFragment : Fragment(), OnBackPressedListener, View.OnClickLis
 
         v?.setBackgroundResource(R.drawable.bg_payment_selected)
 
-        Pedido?.formaPagamento = adapt.itens?.get(position)
+        Pedido?.paymentMethod = adapt.itens?.get(position)
 
         back()
     }

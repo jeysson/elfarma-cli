@@ -17,15 +17,20 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS_PREFS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.BAG_ORDER_ADDRESS_CHANGE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ID_KEY
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
+import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Address
+import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.ui.bag.BagFragment
 import kotlinx.android.synthetic.main.address_list_item.view.*
 
 
@@ -96,6 +101,10 @@ class AddressListAdapter internal constructor(activity: AppCompatActivity) :
             }
             /*Salva na base local o endereço padrão*/
             (activity as DeliveryAddress).addressViewModel.defaultAddress(ADDRESS!!)
+
+            if(Pedido != null){
+                Pedido?.address = ADDRESS
+            }
         }
 
     }

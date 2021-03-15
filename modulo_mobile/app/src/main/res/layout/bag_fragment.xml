@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt"
     android:id="@+id/checkout_container"
-    android:tag="layout/checkout_fragment_0"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="36dp">
+    android:layout_marginTop="@dimen/space_size_36dp">
 
     <LinearLayout
         android:orientation="vertical"
-        android:tag="binding_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="50dp">
@@ -28,7 +26,6 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:id="@+id/scroll_view_child"
-                android:tag="binding_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -41,7 +38,6 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:text="texto teste"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 

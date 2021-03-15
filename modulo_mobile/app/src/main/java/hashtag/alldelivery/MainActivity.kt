@@ -3,26 +3,25 @@ package hashtag.alldelivery
 import android.os.Bundle
 import android.os.StrictMode
 import android.view.View
-import android.view.animation.LinearInterpolator
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jaeger.library.StatusBarUtil
+import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
-import hashtag.alldelivery.core.models.Item
+import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.core.models.OrderItem
 import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.models.Product
+import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.utils.OnBackPressedListener
 import hashtag.alldelivery.ui.bag.BagFragment
 import kotlinx.android.synthetic.main.bag_bar.*
 import kotlinx.android.synthetic.main.stores_activity_main.*
-import org.jetbrains.anko.toast
 import java.text.NumberFormat
 import java.util.*
 
@@ -44,7 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         navView = findViewById(R.id.nav_view)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        //val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -93,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNavigation() {
         // bottom_navigation is BottomNavigationView
         with(navView) {
-            if (visibility == View.VISIBLE) {
+            //if (visibility == View.VISIBLE) {
                 alpha = 1f
                 animate().apply {
                     alpha(0f)
@@ -104,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                         btSacola.translationY = -95f
                     }
                 }
-            }
+           // }
         }
     }
 
@@ -112,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         // bottom_navigation is BottomNavigationView
         with(navView) {
             this.alpha = 0f
-            if (visibility == View.GONE) {
+          //  if (visibility == View.GONE) {
                 translationY = 115f
                 animate().apply {
                     alpha(1f)
@@ -122,26 +125,33 @@ class MainActivity : AppCompatActivity() {
                         visibility = View.VISIBLE
                     }
                 }
-            }
+            //}
         }
 
         btSacola.translationY = 0f
     }
 
-    fun changeValueBag(prod: Product, value: Int){
-        if(Pedido == null)
+    fun changeValueBag(prod: Product, value: Int) {
+        if (Pedido == null) {
             Pedido = Order()
+            Pedido?.address = ADDRESS
+            Pedido?.store = Store()
+            Pedido?.store?.id = STORE?.id
+            Pedido?.store?.nomeFantasia = STORE?.nomeFantasia
+            Pedido?.store?.tempoMaximo = STORE?.tempoMaximo
+            Pedido?.store?.tempoMinimo = STORE?.tempoMinimo
+        }
         //
-        var ix = Pedido?.itens?.firstOrNull { p: Item -> p.produto?.id == prod?.id   }
+        var ix = Pedido?.itens?.firstOrNull { p: OrderItem -> p.produto?.id == prod?.id   }
 
         if(ix == null) {
-            Pedido?.itens?.add(Item(prod, value, prod?.preco))
+            Pedido?.itens?.add(OrderItem(prod, value, prod?.preco))
         } else {
             if(value == 0)
                 Pedido?.itens?.remove(ix)
             else{
 
-                ix.quantidade = value
+                ix.quantity = value
 
                 item_added.alpha = 0f
                 item_added.animate().apply {
@@ -172,7 +182,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showBag(){
         if(Pedido != null) {
-            var totalQtd = Pedido!!.itens!!.sumBy { p: Item -> p.quantidade!! }
+            var totalQtd = Pedido!!.itens!!.sumBy { p: OrderItem -> p.quantity!! }
             bag_counter.text = totalQtd.toString()
 
             bag_total_price.text = NumberFormat.getCurrencyInstance(
@@ -180,7 +190,7 @@ class MainActivity : AppCompatActivity() {
                     getString(R.string.language),
                     getString(R.string.country)
                 )
-            ).format(Pedido!!.itens?.sumByDouble { p-> (p.quantidade!! * p.valor!!) })
+            ).format(Pedido!!.itens?.sumByDouble { p-> (p.quantity!! * p.price!!) })
 
             if(totalQtd < 1) {
                 btSacola.alpha = 1f
@@ -205,5 +215,9 @@ class MainActivity : AppCompatActivity() {
 
     fun hideBag(){
         btSacola.visibility = View.GONE
+    }
+
+    fun select(id: Int) {
+        navView.setSelectedItemId(id)
     }
 }

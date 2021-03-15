@@ -49,14 +49,9 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="AppTheme.Splash">
-        <item name="android:windowBackground">@drawable/splash_window_background</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">false</item>
-    </style>
-
     <style name="AppTheme.TextInputEditTextDark">
-        <item name="colorControlActivated">@color/deprecated_medium_papaya</item>
-        <item name="colorControlNormal">@color/deprecated_rose</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.TextInputEditTextLight">
@@ -397,4 +392,91 @@
         <item name="android:fontFamily">@font/sul_sans_medium</item>
     </style>
 
+    <style name="Text.Description4">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+
+    <style name="Widget.AppTheme.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.AppTheme.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+    <style name="Widget.Theme.AllDelivery.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.AllDelivery.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+    <style name="Text.Link7">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Popup">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="BadgeGrey">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">@drawable/filter_tag_grey</item>
+        <item name="android:layout_width">13dp</item>
+        <item name="android:layout_height">13dp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Text.Display_2">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+
+    <style name="Widget.Theme.AllDelivery.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
+    </style>
+
+    <style name="LeftBar" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:layout_height">3dp</item>
+        <item name="android:progressDrawable">@drawable/left_bar_shape</item>
+    </style>
+
+    <style name="OrderProgressBar" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:layout_height">3dp</item>
+        <item name="android:progressDrawable">@drawable/pulse_bar_shape</item>
+    </style>
+
+    <style name="RightBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_height">3dp</item>
+        <item name="android:progressDrawable">@drawable/right_bar_shape</item>
+    </style>
+
+    <style name="Text.Sub_Heading_2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="TextHomeHeader">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Description6">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="Text.Button_Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
 </resources>

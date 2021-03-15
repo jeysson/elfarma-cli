@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:gravity="right|center_vertical|center_horizontal|center"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView android:id="@+id/card_brand"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerInside"
+        android:importantForAccessibility="no"/>
+
+    <TextView android:textSize="14sp"
+        android:textColor="@color/deprecated_medium_grey"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:id="@+id/selected_credit_card_payment_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        style="@style/Text.Link_6"/>
+
+    <TextView android:textSize="14sp"
+        android:textColor="@color/deprecated_medium_grey"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:id="@+id/selected_money_payment_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        style="@style/Text.Link_6"/>
+
+    <TextView android:textSize="14sp"
+        android:textColor="@color/deprecated_medium_grey"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:id="@+id/selected_offline_payment_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginStart="4dp"
+        style="@style/Text.Link_6"/>
+</LinearLayout>

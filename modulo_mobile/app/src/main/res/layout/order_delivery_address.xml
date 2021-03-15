@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView android:id="@+id/map_background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_map_color"
+        android:scaleType="centerCrop"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/delivery_card_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_size_24dp"
+        android:layout_marginBottom="@dimen/space_size_24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintStart_toStartOf="@+id/map_background"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/address_container"
+            android:background="@color/white"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/start_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="@dimen/space_size_16dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="@dimen/space_size_16dp"/>
+
+            <TextView android:textColor="@color/black"
+                android:id="@+id/address_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bag_confirm_order_dialog_title"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="@+id/start_guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="8dp"
+                style="@style/Text.Toolbar"/>
+
+            <LinearLayout android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/address_block"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                app:layout_constraintStart_toEndOf="@+id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/address_action">
+
+                <TextView android:textColor="@color/black"
+                    android:ellipsize="end"
+                    android:id="@+id/address_alias"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    app:layout_constraintTop_toTopOf="@+id/address_icon"
+                    style="@style/Text.Link_6"/>
+
+                <TextView android:textColor="@color/heavy_grey"
+                    android:ellipsize="end"
+                    android:id="@+id/address_title"
+                    android:paddingTop="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="R. Principal, 2503,Conj. Jornalistas Bloco H Apto 316"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toTopOf="@+id/address_description"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/address_alias"
+                    style="@style/TextAppearance.DesignSystem.Button.B2"/>
+
+                <TextView android:textColor="@color/heavy_grey"
+                    android:ellipsize="end"
+                    android:id="@+id/address_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:text="Chapada - Manaus, Am"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@+id/address_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    style="@style/TextAppearance.DesignSystem.Form.F3"/>
+
+            </LinearLayout>
+
+            <View android:background="@drawable/shape_takeaway_title"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/take_away_title"
+                app:layout_constraintEnd_toEndOf="@+id/take_away_title"
+                app:layout_constraintStart_toStartOf="@+id/take_away_title"
+                app:layout_constraintTop_toTopOf="@+id/take_away_title"/>
+
+            <TextView android:id="@+id/take_away_title"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/address_block"
+                app:layout_constraintTop_toBottomOf="@+id/address_block"
+                style="@style/TextAppearance.DesignSystem.Button.B3"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/delivery_card_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_size_24dp"
+        android:layout_marginBottom="@dimen/space_size_24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="@+id/map_background"
+        app:layout_constraintStart_toStartOf="@+id/map_background"
+        app:layout_constraintTop_toBottomOf="@id/delivery_card_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_container"
+            android:background="@color/off_white"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/start_guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="@dimen/space_size_16dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/end_guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="@dimen/space_size_16dp"/>
+
+            <TextView android:textColor="@color/black_overlay_70"
+                android:id="@+id/info_sec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_sec_title"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="@+id/start_guideline1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="8dp"
+                style="@style/Text.Toolbar"/>
+
+            <LinearLayout android:gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/info_sec_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/end_guideline1"
+                app:layout_constraintStart_toEndOf="@+id/start_guideline1"
+                app:layout_constraintTop_toBottomOf="@+id/info_sec">
+
+                <TextView android:textColor="@color/black"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    app:layout_constraintTop_toTopOf="@+id/address_icon"
+                    style="@style/Text.Link_6"/>
+
+                <TextView android:textColor="@color/heavy_grey"
+                    android:ellipsize="end"
+                    android:id="@+id/info_desc"
+                    android:paddingTop="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Sempre confira o valor na maquininha antes de pagar"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toTopOf="@+id/address_description"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/address_alias"
+                    style="@style/Text.Description"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

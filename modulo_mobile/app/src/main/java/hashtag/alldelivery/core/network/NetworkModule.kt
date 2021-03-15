@@ -30,7 +30,7 @@ inline fun <reified T> createWebService(baseUrl: String, factory: Converter.Fact
 
     val httpClient = OkHttpClient.Builder()
     httpClient.proxy(null)
-    httpClient.connectTimeout(5, TimeUnit.MINUTES)
+    httpClient.connectTimeout(500, TimeUnit.MILLISECONDS)
     httpClient.writeTimeout(5, TimeUnit.MINUTES)
     httpClient.readTimeout(5, TimeUnit.MINUTES)
     httpClient.connectionSpecs(Arrays.asList(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT))
@@ -64,4 +64,5 @@ val networkModule = module {
 
     single { createWebService<StoreApi>(get(BASE_URL), get()) }
     single { createWebService<ProductApi>(get(BASE_URL), get()) }
+    single { createWebService<OrderApi>(get(BASE_URL), get()) }
 }

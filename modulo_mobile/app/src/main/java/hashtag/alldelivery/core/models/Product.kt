@@ -4,8 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 class Product{
 
-    @SerializedName("id") val id : Int? = null
-    @SerializedName("nome") val nome : String? = null
+    @SerializedName("id")
+    var id : Int? = null
+    @SerializedName("nome")
+    var nome : String? = null
     @SerializedName("descricao") val descricao : String? = null
     @SerializedName("preco") val preco : Double? = null
     //@SerializedName("grupoProdutos") val grupoProdutos : List<GroupProduct>? = null

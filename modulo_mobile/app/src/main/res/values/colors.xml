@@ -4,7 +4,9 @@
     <color name="colorPrimaryMedium">#07578C</color>
     <color name="colorPrimaryDark">#1E3D58</color>
     <color name="colorPrimary_75_translucent">#45057DCD</color>
+    <color name="colorAccentDark">#3283B3</color>
     <color name="colorAccent">#43B0F1</color>
+    <color name="colorAccentLight">#D743B0F1</color>
     <color name="colorWhite">#E8EEF1</color>
     <color name="light_gray">#f2f2f2</color>
     <color name="white">#ffffff</color>
@@ -19,7 +21,7 @@
     <color name="deprecated_medium_papaya">#6c89f5</color>
     <color name="deprecated_rose">#4649ee</color>
     <color name="deprecated_medium_grey">#a6a29f</color>
-    <color name="deprecated_light_grey">#f5f0eb</color>
+    <color name="deprecated_light_grey">#EBF1F5</color>
     <color name="deprecated_dark_grey_50">#503f3e3e</color>
     <color name="deprecated_white_transparent">#00ffffff</color>
     <color name="medium_gray">#a6a6a6</color>
@@ -51,4 +53,15 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+
+    <color name="avocado">#50a773</color>
+    <color name="deprecated_dim_gray">#6e6e6e</color>
+    <color name="deprecated_whisper">#ebebeb</color>
+    <color name="deprecated_warm_grey_06">#99717171</color>
+    <color name="deprecated_gray_dark">#959595</color>
+    <color name="deprecated_silver_dark_80">#803e3e3e</color>
+    <color name="deprecated_gray91">#e8e8e8</color>
 </resources>

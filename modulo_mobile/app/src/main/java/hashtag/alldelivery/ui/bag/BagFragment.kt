@@ -1,5 +1,6 @@
 package hashtag.alldelivery.ui.bag
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,12 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.jaeger.library.StatusBarUtil
+import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
+import hashtag.alldelivery.AllDeliveryApplication.Companion.BAG_ORDER_ADDRESS_CHANGE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.paymentmethod.PaymentMethodFragment
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.bag_content_delivery.*
@@ -41,8 +45,10 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        address_title.text =  ADDRESS?.address+", "+ ADDRESS?.number
-        address_description.text = ADDRESS?.complement+", "+ ADDRESS?.neighborhood
+        StatusBarUtil.setLightMode(activity)
+
+        refreshAddress()
+        //
         restaurant_name.text = STORE?.nomeFantasia
         delivery_time.text = "Hoje, ${STORE?.tempoMinimo} - ${STORE?.tempoMaximo} min"
         //
@@ -51,24 +57,29 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         content_list.adapter = adapter
         //
         subtotal.text = NumberFormat.getCurrencyInstance(Locale(getString(R.string.language),
-            getString(R.string.country))).format(Pedido?.itens?.sumByDouble { p-> p.valor!! * p.quantidade!! })
+            getString(R.string.country))).format(Pedido?.itens?.sumByDouble { p-> p.price!! * p.quantity!! })
         delivery_fee_price.text = NumberFormat.getCurrencyInstance(Locale(getString(R.string.language),
             getString(R.string.country))).format(STORE?.taxaEntrega)
         total_price.text = NumberFormat.getCurrencyInstance(Locale(getString(R.string.language),
             getString(R.string.country))).format(Pedido?.itens?.sumByDouble {
-                p-> p.valor!! * p.quantidade!!
+                p-> p.price!! * p.quantity!!
             }!! + STORE?.taxaEntrega!!)
         //
-        if(Pedido?.formaPagamento != null){
+        if(Pedido?.paymentMethod != null){
+            action_button.text = getString(R.string.bag_confirm_order_go)
             action.text = getString(R.string.bag_payment_change)
-            var texto = when(Pedido?.formaPagamento?.tipo){
-                0 -> Pedido?.formaPagamento?.nome
-                1 -> "Débito - " + Pedido?.formaPagamento?.nome + " (máquina)"
-                2 -> "Crédito - " + Pedido?.formaPagamento?.nome + " (máquina)"
+            description.text = when(Pedido?.paymentMethod?.tipo){
+                0 -> Pedido?.paymentMethod?.nome
+                1 -> "Débito - ${Pedido?.paymentMethod?.nome} (máquina)"
+                2 -> "Crédito - ${Pedido?.paymentMethod?.nome} (máquina)"
                 else -> ""
             }
-            description.text = texto
             description.visibility = VISIBLE
+        }
+        //
+        btChangeAddress.setOnClickListener{
+            val intent = Intent(context, DeliveryAddress::class.java)
+            startActivityForResult(intent, BAG_ORDER_ADDRESS_CHANGE)
         }
         //
         add_more_items.setOnClickListener {
@@ -98,6 +109,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         action_button.setOnClickListener(this)
 
         (activity as MainActivity).hideBag()
+        (activity as MainActivity).hideBottomNavigation()
     }
 
     private fun back(){
@@ -106,7 +118,8 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         activity!!.supportFragmentManager.beginTransaction()
             .remove(this).commit()
 
-        (activity as MainActivity).hideBottomNavigation()
+        (activity as MainActivity).showBottomNavigation()
+        (activity as MainActivity).showBag()
     }
 
     override fun onBackPressed() {
@@ -114,6 +127,9 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        if(Pedido?.paymentMethod != null)
+            BagConfirmOrderDialog().show(activity?.supportFragmentManager!!, "")
+            else
         selectPayment()
     }
 
@@ -132,5 +148,18 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
             replace(R.id.nav_host_fragment, PaymentMethodFragment::class.java, null)
 
         }
+    }
+
+    fun refreshAddress(){
+        address_title.text =  "${Pedido?.address?.address}, ${Pedido?.address?.number}"
+        address_description.text = if(Pedido?.address?.complement == "")
+                                        Pedido?.address?.neighborhood
+                                 else
+                                     "${Pedido?.address?.complement}, ${Pedido?.address?.neighborhood}"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshAddress()
     }
 }

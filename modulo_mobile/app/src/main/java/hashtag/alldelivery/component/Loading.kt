@@ -73,13 +73,6 @@ class Loading : LinearLayout {
             lv_color
         )
 
-        if (a.hasValue(R.styleable.Loading_exampleDrawable)) {
-            exampleDrawable = a.getDrawable(
-                R.styleable.Loading_exampleDrawable
-            )
-            exampleDrawable?.callback = this
-        }
-
         a.recycle()
 
         // Set up a default TextPaint object
