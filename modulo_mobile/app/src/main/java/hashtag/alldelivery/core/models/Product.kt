@@ -9,7 +9,8 @@ class Product{
     @SerializedName("nome")
     var nome : String? = null
     @SerializedName("descricao") val descricao : String? = null
-    @SerializedName("preco") val preco : Double? = null
+    @SerializedName("preco")
+    var preco : Double? = null
     //@SerializedName("grupoProdutos") val grupoProdutos : List<GroupProduct>? = null
     var productImages: List<ProductImage>? = ArrayList<ProductImage>()
     var carregouImagens: Boolean = false

@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_requests"
-        android:name="hashtag.alldelivery.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_orders"
+        android:name="hashtag.alldelivery.ui.order.OrderHistoryFragment"
         android:label="@string/title_requests"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/order_history_fragment" />
 
     <fragment
         android:id="@+id/navigation_perfil"

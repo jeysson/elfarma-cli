@@ -103,4 +103,11 @@
             app:layout_constraintBottom_toBottomOf="0"
             app:layout_constraintRight_toRightOf="0"/>
     </androidx.constraintlayout.widget.ConstraintLayout-->
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/deprecated_light_grey"
+        app:layout_constraintBottom_toBottomOf="@+id/map_sheet_coordinator" />
 </androidx.constraintlayout.widget.ConstraintLayout>

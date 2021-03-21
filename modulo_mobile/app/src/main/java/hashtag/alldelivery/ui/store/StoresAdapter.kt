@@ -30,7 +30,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class StoresListItemAdapter(
+class StoresAdapter(
     frag: Fragment) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -134,10 +134,9 @@ class StoresListItemAdapter(
 
     override fun getItemViewType(position: Int): Int {
         if (itens?.get(position)?.head!!) {
-            return TYPE_HEADER;
-
+            return TYPE_HEADER
         } else {
-            return TYPE_BODY;
+            return TYPE_BODY
         }
     }
 

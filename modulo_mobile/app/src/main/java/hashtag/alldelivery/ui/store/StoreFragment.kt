@@ -70,8 +70,6 @@ class StoreFragment : Fragment(), OnBackPressedListener,
         (activity as MainActivity).hideBottomNavigation()
         (activity as MainActivity).showBag()
 
-        AllDeliveryApplication.storeFragment = this
-      //  activity!!.supportFragmentManager.beginTransaction().show(this).commit()
         list.layoutManager = LinearLayoutManager(context)
         list.setHasFixedSize(true)
 
@@ -135,21 +133,16 @@ class StoreFragment : Fragment(), OnBackPressedListener,
         search_background.setOnClickListener {
             val manager: FragmentManager = activity!!.supportFragmentManager
             manager.beginTransaction()
-            manager.commit {
+            manager.commit(true) {
                 setCustomAnimations(
                     R.anim.enter_from_left,
                     R.anim.exit_to_right,
                     R.anim.enter_from_right,
                     R.anim.exit_to_left
                 )
-                replace(
-                    R.id.nav_host_fragment,
-                    ProductSearch::class.java,
-                    ActivityOptions.makeSceneTransitionAnimation(
-                        activity
-                    ).toBundle()
-                )
+
                 addToBackStack(null)
+                replace(R.id.nav_host_fragment, ProductSearch::class.java, null)
             }
         }
         

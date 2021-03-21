@@ -15,6 +15,7 @@ class OrderItem {
         produto = Product()
         produto?.id = prod?.id
         produto?.nome = prod?.nome
+        produto?.preco = vlr
         quantity = qtd
         price = vlr
     }

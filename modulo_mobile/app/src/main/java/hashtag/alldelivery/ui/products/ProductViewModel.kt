@@ -2,7 +2,6 @@ package hashtag.alldelivery.ui.products
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import hashtag.alldelivery.core.models.BusinessEvent
 import hashtag.alldelivery.core.models.Group
@@ -10,20 +9,15 @@ import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.ProductImage
 import hashtag.alldelivery.core.repository.IProductRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.awaitResponse
 
 class ProductViewModel(private val producRep: IProductRepository) : ViewModel() {
 
+    var adapterProduct: ProductAdapter? = null
     var adapterGroup: GroupProductsAdapter? = null
     var groups: MutableLiveData<List<Group>> = MutableLiveData()
     var products: MutableLiveData<ArrayList<Product>> = MutableLiveData()
     var images: MutableLiveData<List<ProductImage>> = MutableLiveData()
+    var eventoProductSearch = SingleLiveEvent<ArrayList<Product>>()
     var eventoErro = SingleLiveEvent<BusinessEvent>()
     var loading: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -104,9 +98,32 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
         return  images
     }
 
-    fun getPagingProducts(store: Int?, group: Int?, page: Int?, total: Int?) : ArrayList<Product> {
-        var resp = producRep.getPagingProducts(store, group, page, total).execute()
-        return resp.body()!!
+    fun getPagingProducts(store: Int?, group: Int?, page: Int?, total: Int?) {
+        loading.postValue(true)
+        producRep.getPagingProducts(store, group, page, total).subscribe({
+            var countInicio = adapterProduct?.itens!!.size-1
+
+            adapterProduct?.addItems(it)
+            adapterProduct?.notifyItemRangeChanged(countInicio, adapterProduct?.itens!!.size)
+            eventoProductSearch.postValue(it)
+            loading.postValue(false)
+        },{
+            eventoErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter as imagens para o produto."))
+        })
+    }
+
+    fun getPagingProducts(store: Int?, filter: String?, page: Int?, total: Int?) {
+        loading.postValue(true)
+        producRep.getPagingProducts(store, filter, page, total).subscribe({
+            var countInicio = adapterProduct?.itens!!.size-1
+
+            adapterProduct?.addItems(it)
+            adapterProduct?.notifyItemRangeChanged(countInicio, adapterProduct?.itens!!.size)
+            eventoProductSearch.postValue(it)
+            loading.postValue(false)
+        },{
+            eventoErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter as imagens para o produto."))
+        })
     }
 
     fun getImagesGroup(id: Int?): ArrayList<ProductImage>{

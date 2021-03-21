@@ -7,24 +7,17 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import hashtag.alldelivery.AllDeliveryApplication
-import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Group
-import hashtag.alldelivery.core.models.Product
-import hashtag.alldelivery.core.models.Store
-import hashtag.alldelivery.core.utils.LoadViewItemAdpter
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_item.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.store_title
-import kotlinx.coroutines.*
-import org.jetbrains.anko.doAsync
 import java.util.ArrayList
 
 class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     lateinit var groups: ArrayList<Group>
     var fragment = frag
-    var adapters: HashMap<Int, ProductsListItemAdapter> = HashMap()
+    var adapters: HashMap<Int, ProductAdapter> = HashMap()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -56,7 +49,7 @@ class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerVi
         }
         else{
 
-            adapters.put(group?.id!!, ProductsListItemAdapter( fragment
+            adapters.put(group?.id!!, ProductAdapter( fragment
                                                              , false
                                                              , group?.products!!))
 

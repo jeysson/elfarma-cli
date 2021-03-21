@@ -3,9 +3,14 @@ package hashtag.alldelivery
 import android.app.Application
 import android.content.Context
 import android.location.Geocoder
+import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.core.di.repositoryModule
 import hashtag.alldelivery.core.di.viewModelModule
@@ -14,6 +19,7 @@ import hashtag.alldelivery.core.models.Order
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.network.networkModule
+import hashtag.alldelivery.ui.order.User
 import org.koin.android.ext.android.startKoin
 import wiki.depasquale.mcache.Cache
 import java.util.*
@@ -22,10 +28,9 @@ import java.util.*
 class AllDeliveryApplication : Application() {
 
     companion object {
-        var homeFragment: Fragment? = null
-        var productDetailFragment: Fragment? = null
-        var storeFragment: Fragment? = null
 
+        var SENDORDER: Boolean = false
+        val USER: User? = User()
         var Pedido: Order? = null
         var FIRST_VISIBLE = 0
         var LAST_VISIBLE = 0
@@ -104,6 +109,70 @@ class AllDeliveryApplication : Application() {
             } else
                 return "Ativar localização"
         }
+
+        fun changeFragment(manager: FragmentManager, fragment: Class<out Fragment>, id: Int, anim: Int){
+            var frag = manager.findFragmentById(id)
+
+            if(frag == null){
+                if(anim == 1){
+                    manager.beginTransaction()
+                    manager.commit {
+                        setCustomAnimations(
+                            R.anim.enter_from_left,
+                            R.anim.exit_to_right,
+                            R.anim.enter_from_right,
+                            R.anim.exit_to_left
+                        )
+
+                        addToBackStack(null)
+                        replace(id, fragment, null)
+                    }
+
+                }else{
+                    manager.beginTransaction()
+                    manager.commit {
+                        setCustomAnimations(
+                            R.anim.enter_from_up,
+                            R.anim.exit_to_down,
+                            R.anim.enter_from_down,
+                            R.anim.exit_to_up
+                        )
+
+                        addToBackStack(null)
+                        add(R.id.nav_host_fragment, fragment, null)
+                    }
+                }
+            }else{
+                if(anim == 1){
+                    manager.beginTransaction()
+                    manager.commit {
+                        setCustomAnimations(
+                            R.anim.enter_from_left,
+                            R.anim.exit_to_right,
+                            R.anim.enter_from_right,
+                            R.anim.exit_to_left
+                        )
+
+                        addToBackStack(null)
+                        replace(id, frag, "")
+                    }
+
+                }else{
+                    manager.beginTransaction()
+                    manager.commit {
+                        setCustomAnimations(
+                            R.anim.enter_from_up,
+                            R.anim.exit_to_down,
+                            R.anim.enter_from_down,
+                            R.anim.exit_to_up
+                        )
+
+                        addToBackStack(null)
+                        add(R.id.nav_host_fragment, frag, null)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreate() {
@@ -141,5 +210,4 @@ class AllDeliveryApplication : Application() {
             )
         }
     }
-
 }

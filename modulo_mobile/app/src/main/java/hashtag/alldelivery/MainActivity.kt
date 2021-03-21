@@ -1,25 +1,31 @@
 package hashtag.alldelivery
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
+import android.view.MenuItem
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
-import hashtag.alldelivery.core.models.OrderItem
+import hashtag.alldelivery.AllDeliveryApplication.Companion.changeFragment
 import hashtag.alldelivery.core.models.Order
+import hashtag.alldelivery.core.models.OrderItem
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.utils.OnBackPressedListener
 import hashtag.alldelivery.ui.bag.BagFragment
+import hashtag.alldelivery.ui.order.OrderFragment
 import kotlinx.android.synthetic.main.bag_bar.*
 import kotlinx.android.synthetic.main.stores_activity_main.*
 import java.text.NumberFormat
@@ -28,6 +34,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var navController: NavController
     lateinit var navView: BottomNavigationView
     final val DURATION: Long = 400
 
@@ -45,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         //val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -54,15 +61,15 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_home,
                 R.id.navigation_search,
-                R.id.navigation_requests,
+                R.id.navigation_orders,
                 R.id.navigation_perfil
             )
         )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        NavigationUI.setupWithNavController(navView, navController)
         //
         bag_container.setOnClickListener {
-            val manager: FragmentManager = supportFragmentManager
+            val manager = supportFragmentManager
             manager.beginTransaction()
             manager.commit {
                 setCustomAnimations(
@@ -72,12 +79,21 @@ class MainActivity : AppCompatActivity() {
                     R.anim.exit_to_up
                 )
 
-                setReorderingAllowed(true)
-
-                replace(R.id.nav_host_fragment, BagFragment::class.java, null)
                 addToBackStack(null)
+                replace(R.id.nav_host_fragment, BagFragment::class.java, null)
             }
+
+           /* changeFragment(
+                supportFragmentManager,
+                BagFragment::class.java,
+                R.id.bag_checkout_container,
+                2
+            )*/
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onBackPressed() {
@@ -151,29 +167,31 @@ class MainActivity : AppCompatActivity() {
                 Pedido?.itens?.remove(ix)
             else{
 
-                ix.quantity = value
-
-                item_added.alpha = 0f
-                item_added.animate().apply {
-                    alpha(1f)
-                    duration = 1000
-                    withStartAction {
-                        bag_container.visibility = View.INVISIBLE
-                    }
-
-                    withEndAction {
-                        item_added.visibility = View.INVISIBLE
-                        bag_container.alpha = 0f
-                        bag_container.animate().apply {
-                            alpha(1f)
-                            duration = 600
+                if(ix.quantity!! < value) {
+                    item_added.alpha = 0f
+                    item_added.animate().apply {
+                        alpha(1f)
+                        duration = 1000
+                        withStartAction {
+                            bag_container.visibility = View.INVISIBLE
                         }
 
-                        bag_container.visibility = View.VISIBLE
+                        withEndAction {
+                            item_added.visibility = View.INVISIBLE
+                            bag_container.alpha = 0f
+                            bag_container.animate().apply {
+                                alpha(1f)
+                                duration = 600
+                            }
+
+                            bag_container.visibility = View.VISIBLE
+                        }
                     }
+
+                    item_added.visibility = View.VISIBLE
                 }
 
-                item_added.visibility = View.VISIBLE
+                ix.quantity = value
             }
         }
 
@@ -190,7 +208,7 @@ class MainActivity : AppCompatActivity() {
                     getString(R.string.language),
                     getString(R.string.country)
                 )
-            ).format(Pedido!!.itens?.sumByDouble { p-> (p.quantity!! * p.price!!) })
+            ).format(Pedido!!.itens?.sumByDouble { p -> (p.quantity!! * p.price!!) })
 
             if(totalQtd < 1) {
                 btSacola.alpha = 1f
@@ -218,6 +236,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun select(id: Int) {
-        navView.setSelectedItemId(id)
+        //Volta para o fragmento da loja
+        supportFragmentManager.popBackStackImmediate()
+        //volta para o fragmento home
+        supportFragmentManager.popBackStackImmediate()
+        //Exibe os botões de navegação
+        showBottomNavigation()
+        //Navega para o histórico
+        navController.navigate(id)
     }
 }
+

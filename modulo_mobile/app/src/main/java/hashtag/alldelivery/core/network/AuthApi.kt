@@ -6,6 +6,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthApi {
-    @POST("auth-token/")
-    fun login(@Body user: UserLogin): Observable<UserLoginResponse>
+  /*  @POST("auth-token/")
+    fun login(@Body user: User): Observable<UserLoginResponse>*/
 }

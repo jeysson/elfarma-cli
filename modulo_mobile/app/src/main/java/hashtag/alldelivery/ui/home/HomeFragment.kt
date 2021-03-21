@@ -2,12 +2,9 @@ package hashtag.alldelivery.ui.home
 
 import android.Manifest
 import android.app.Activity
-import android.app.Application
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
@@ -16,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
@@ -34,13 +30,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
-import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS_PREFS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.FIRST_VISIBLE
-import hashtag.alldelivery.AllDeliveryApplication.Companion.ID_KEY
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
-import hashtag.alldelivery.AllDeliveryApplication.Companion.REFRESH_DELAY_TIMER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
@@ -51,13 +44,12 @@ import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
 import hashtag.alldelivery.ui.store.StoreFragment
-import hashtag.alldelivery.ui.store.StoresListItemAdapter
+import hashtag.alldelivery.ui.store.StoresAdapter
 import hashtag.alldelivery.ui.store.StoresViewModel
 import kotlinx.android.synthetic.main.address_list_item.*
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.coroutines.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -93,7 +85,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
-        AllDeliveryApplication.homeFragment = this
+
         _view = view
         _homeCards.layoutManager = LinearLayoutManager(context)
         _homeCards.setHasFixedSize(true)
@@ -121,7 +113,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     }
 
     fun initAdapter(){
-        _storeViewModel.adapter = StoresListItemAdapter(
+        _storeViewModel.adapter = StoresAdapter(
             this)
         _storeViewModel.adapter?.itens = ArrayList<Store>()
         _homeCards.adapter = _storeViewModel.adapter
@@ -438,7 +430,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             STORE = _storeViewModel.adapter?.itens!!.get(position)
             val manager: FragmentManager = activity!!.supportFragmentManager
             manager.beginTransaction()
-            manager.commit {
+            manager.commit(true) {
                 setCustomAnimations(
                     R.anim.enter_from_left,
                     R.anim.exit_to_right,
@@ -448,8 +440,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
                 addToBackStack(null)
                 replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
-
-
             }
         }
     }

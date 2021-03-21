@@ -10,4 +10,12 @@ class OrderRepository(private val dataSrouce: OrderApi): IOrderRepository, BaseR
     override fun checkoutOrder(order: Order): Observable<Message> {
         return  runOnBackground(dataSrouce.checkoutOrder(order))
     }
+
+    override fun getOrder(id: Int): Observable<Message> {
+        return runOnBackground(dataSrouce.getOrder(id))
+    }
+
+    override fun getOrderHistory(user: Int, page: Int, total: Int): Observable<Message> {
+        return  runOnBackground(dataSrouce.getOrderHistory(user, page, total))
+    }
 }

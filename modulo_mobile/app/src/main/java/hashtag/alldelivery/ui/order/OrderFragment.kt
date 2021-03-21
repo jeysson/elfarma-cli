@@ -46,6 +46,7 @@ class OrderFragment: Fragment(), OnBackPressedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.order_fragment, container, false)
     }
 
@@ -53,10 +54,9 @@ class OrderFragment: Fragment(), OnBackPressedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
-        //
+
         loading_view.visibility = VISIBLE
 
-        //confirmed.progressDrawable.setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN)
         confirmed.setProgress(100)
         confirmed.setAnimate(true)
 
@@ -74,27 +74,26 @@ class OrderFragment: Fragment(), OnBackPressedListener {
 
         setupObservers()
         //
-        thread(true){
-            orderViewModel.checkoutOrder(Pedido!!)
-        }
-        //
         back_button.setOnClickListener {
             back()
         }
 
-        (activity as MainActivity).select(R.id.navigation_requests)
-        (activity as MainActivity).showBottomNavigation()
-/*
-        thread(true){
-            loading.visibility = View.VISIBLE
-            viewModelPaymentMethod.getPaymentMethods(AllDeliveryApplication.STORE?.id!!)
-        }*/
+        (activity as MainActivity).hideBag()
+        (activity as MainActivity).hideBottomNavigation()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun setupObservers(){
         orderViewModel.eventOrder.observe(viewLifecycleOwner){
-            loadData(it)
+            if(it.itens?.size!! > 0)
+                loadData(it)
+            else {
+                thread(true) {
+                    orderViewModel.getOrder(it?.id!!)
+
+                }
+            }
         }
     }
 
@@ -113,12 +112,11 @@ class OrderFragment: Fragment(), OnBackPressedListener {
         val tempoMaximo = order.date?.toInstant()
                                     ?.atZone(ZoneId.systemDefault())
                                     ?.toLocalDateTime()
-                                    ?.plusMinutes(STORE?.tempoMaximo!!.toLong())
+                                    ?.plusMinutes(order?.store?.tempoMaximo!!.toLong())
 
         estimated_time_countdown.text = "${tempoMinimo?.format(formatter)} - ${tempoMaximo?.format(formatter)}"
 
-        // topbar_title.text = getString(R.string.payment_method_title)
-        //
+
         address_title.text = if(order?.address?.complement != "")
             "${order?.address?.address}, ${order?.address?.number}, ${order?.address?.complement}"
         else

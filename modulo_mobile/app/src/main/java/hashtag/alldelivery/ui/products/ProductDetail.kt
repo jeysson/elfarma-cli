@@ -21,14 +21,16 @@ import hashtag.alldelivery.core.utils.OnChangedValueListener
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.product_details_content.*
 import kotlinx.android.synthetic.main.product_item_info.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
 
 class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener {
 
     private lateinit var product: Product
-    private lateinit var item: OrderItem
     private var quantity: Int = 1
+
+    val viewModelProduct: ProductViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,17 +41,23 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AllDeliveryApplication.productDetailFragment = this
-        activity!!.supportFragmentManager.beginTransaction().show(this).commit()
+
+        for (grp in viewModelProduct.adapterGroup?.groups!!){
+            product = grp.products?.firstOrNull { p-> p.id == PRODUCT?.id }!!
+
+            if(product != null)
+                break
+        }
+
         StatusBarUtil.setLightMode(activity)
-        product = PRODUCT!!
+
         btMinusPlus.open = true
         btMinusPlus.animado = false
         btMinusPlus.produto = product
         btMinusPlus.addOnChangeValueListener(this)
 
         if(Pedido != null) {
-            item = Pedido?.itens?.firstOrNull { p -> p?.produto?.id!! == product.id }!!
+            var item = Pedido?.itens?.firstOrNull { p -> p?.produto?.id!! == product.id }
 
             if(item != null)
                 btMinusPlus.total = item.quantity!!

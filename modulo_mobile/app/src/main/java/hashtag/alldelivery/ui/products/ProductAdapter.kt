@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
@@ -18,15 +19,16 @@ import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_card_item.view.*
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class ProductsListItemAdapter(
-    val frag: StoreFragment,
+class ProductAdapter(
+    val frag: Fragment,
     val search:Boolean = false,
-    itens: ArrayList<Product>?
+    val it: ArrayList<Product>?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener, OnChangedValueListener {
 
     val fragment = frag
-    val itens: ArrayList<Product>? = itens
+    var itens: ArrayList<Product>? = it
     private lateinit var myView: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -47,13 +49,13 @@ class ProductsListItemAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var product = itens?.get(position)
-        var p = Pedido?.itens?.firstOrNull { p-> p.produto?.id == product?.id }
+        var p = Pedido?.itens?.firstOrNull { p -> p.produto?.id == product?.id }
 
         holder as ProductItemCardViewHolder
 
         holder.bt.produto = product
 
-        if(p != null)
+        if (p != null)
             holder.bt.total = p?.quantity!!
         else
             holder.bt.total = 0
@@ -70,7 +72,7 @@ class ProductsListItemAdapter(
         ).format(product.preco)
         //
         holder.image.alpha = 0f
-        holder.image.animate().apply{
+        holder.image.animate().apply {
             duration = 400
             alpha(1f)
         }
@@ -82,7 +84,8 @@ class ProductsListItemAdapter(
             holder.image.setImageDrawable(drawable)
         }
 
-        holder.bt.addOnChangeValueListener(frag)
+        if (frag as? StoreFragment != null)
+            holder.bt.addOnChangeValueListener(frag)
     }
 
     override fun getItemCount() = itens!!.size

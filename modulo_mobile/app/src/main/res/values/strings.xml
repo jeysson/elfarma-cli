@@ -171,4 +171,7 @@
     <string name="card_allow_notification_waiting">Permitir notificações</string>
     <string name="order_estimated_label">Previsão de entrega</string>
     <string name="info_sec_title">Dica de segurança</string>
+    <string name="order_history_number">Pedido concluído • #%s</string>
+    <string name="order_history_more">mais %s item</string>
+    <string name="order_history">Histórico</string>
 </resources>

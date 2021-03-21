@@ -15,6 +15,7 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.BAG_ORDER_ADDRESS_CHANGE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.AllDeliveryApplication.Companion.changeFragment
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.utils.OnBackPressedListener
@@ -44,7 +45,8 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        var locale = Locale(getString(R.string.language),
+            getString(R.string.country))
         StatusBarUtil.setLightMode(activity)
 
         refreshAddress()
@@ -56,12 +58,9 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         adapter.addItems(Pedido?.itens!!)
         content_list.adapter = adapter
         //
-        subtotal.text = NumberFormat.getCurrencyInstance(Locale(getString(R.string.language),
-            getString(R.string.country))).format(Pedido?.itens?.sumByDouble { p-> p.price!! * p.quantity!! })
-        delivery_fee_price.text = NumberFormat.getCurrencyInstance(Locale(getString(R.string.language),
-            getString(R.string.country))).format(STORE?.taxaEntrega)
-        total_price.text = NumberFormat.getCurrencyInstance(Locale(getString(R.string.language),
-            getString(R.string.country))).format(Pedido?.itens?.sumByDouble {
+        subtotal.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.itens?.sumByDouble { p-> p.price!! * p.quantity!! })
+        delivery_fee_price.text = NumberFormat.getCurrencyInstance(locale).format(STORE?.taxaEntrega)
+        total_price.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.itens?.sumByDouble {
                 p-> p.price!! * p.quantity!!
             }!! + STORE?.taxaEntrega!!)
         //
@@ -76,6 +75,8 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
             }
             description.visibility = VISIBLE
         }
+        //
+        minimum_price_alert.text = String.format(locale, minimum_price_alert.text.toString(), STORE?.pedidoMenimo)
         //
         btChangeAddress.setOnClickListener{
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -106,6 +107,12 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
             back()
         }
 
+        clear_bag.setOnClickListener {
+            Pedido?.itens?.clear()
+            Pedido = null
+            back()
+        }
+
         action_button.setOnClickListener(this)
 
         (activity as MainActivity).hideBag()
@@ -127,16 +134,18 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if(Pedido?.paymentMethod != null)
-            BagConfirmOrderDialog().show(activity?.supportFragmentManager!!, "")
-            else
-        selectPayment()
+        if (Pedido?.paymentMethod != null) {
+            var modal = BagConfirmOrderDialog()
+            modal.show(activity?.supportFragmentManager!!, "")
+        }
+        else
+            selectPayment()
     }
 
     fun selectPayment(){
         val manager: FragmentManager = activity!!.supportFragmentManager
         manager.beginTransaction()
-        manager.commit {
+        manager.commit(true) {
             setCustomAnimations(
                 R.anim.enter_from_left,
                 R.anim.exit_to_right,
@@ -148,6 +157,8 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
             replace(R.id.nav_host_fragment, PaymentMethodFragment::class.java, null)
 
         }
+
+       // changeFragment(activity!!.supportFragmentManager, PaymentMethodFragment::class.java, R.id.bag_checkout_container, 1)
     }
 
     fun refreshAddress(){

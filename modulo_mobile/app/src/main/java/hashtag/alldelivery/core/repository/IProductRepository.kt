@@ -23,7 +23,9 @@ interface IProductRepository {
 
     fun getImagesAsync(id: Int?): Observable<ArrayList<ProductImage>>
 
-    fun getPagingProducts(store: Int?, group: Int?, page: Int?, total: Int?): Call<ArrayList<Product>>
+    fun getPagingProducts(store: Int?, group: Int?, page: Int?, total: Int?): Observable<ArrayList<Product>>
+
+    fun getPagingProducts(store: Int?, filter: String?, page: Int?, total: Int?): Observable<ArrayList<Product>>
 
     fun getImagesGroupo(id: Int?) : Call<ArrayList<ProductImage>>
 }

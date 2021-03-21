@@ -3,7 +3,7 @@
     <style name="ElFarmaTextViewStyle"></style>
 
     <!--    StatusBar transparente com icones escuros -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -30,13 +30,13 @@
     <style name="AppTheme.BottomNavigationView">
         <item name="android:background">@android:color/white</item>
         <item name="itemIconSize">24dp</item>
-        <item name="itemIconTint">@color/black</item>
+        <item name="itemIconTint">@color/black_overlay_70</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active
         </item>
         <item name="itemTextAppearanceInactive">
             @style/TextAppearance.BottomNavigationView.Inactive
         </item>
-        <item name="itemTextColor">@color/black</item>
+        <item name="itemTextColor">@color/black_overlay_70</item>
         <item name="labelVisibilityMode">auto</item>
     </style>
 

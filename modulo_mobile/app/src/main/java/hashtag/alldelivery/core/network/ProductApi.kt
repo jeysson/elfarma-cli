@@ -31,7 +31,16 @@ interface ProductApi {
     fun getImagesAsync(@Query("produto") id: Int?) : Observable<ArrayList<ProductImage>>
 
     @GET("produto/paginar")
-    fun getPagingProducts(@Query("loja")store: Int?,@Query("grupo") group: Int?,@Query("indice") page: Int?,@Query("tamanho") total: Int?) : Call<ArrayList<Product>>
+    fun getPagingProducts(@Query("loja")store: Int?,
+                          @Query("grupo") group: Int?,
+                          @Query("indice") page: Int?,
+                          @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
+
+    @GET("produto/buscar")
+    fun getPagingProducts(@Query("loja")store: Int?,
+                          @Query("nomeProduto") filter: String?,
+                          @Query("indice") page: Int?,
+                          @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/imagensgrupo")
     fun getImagesGroupo(@Query("grupo") id: Int?) : Call<ArrayList<ProductImage>>

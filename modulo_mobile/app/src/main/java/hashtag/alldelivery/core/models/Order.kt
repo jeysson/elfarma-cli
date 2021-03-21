@@ -6,7 +6,8 @@ import kotlin.collections.ArrayList
 
 class Order {
 
-    @SerializedName("id") val id: Int? = null
+    @SerializedName("id")
+    var id: Int? = null
     @SerializedName("loja")
     var store: Store? = null
     @SerializedName("formaPagamento")
