@@ -71,6 +71,8 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
                 holder.store_item_more.visibility = VISIBLE
                 holder.store_item_more.text = String.format(fragment.getString(R.string.order_history_more),
                     (obj?.itensSize!! - 1))
+                holder.see.tag = position
+                holder.see.setOnClickListener(fragment)
             }
         }else{
             holder as OrderHistoryHeaderHolder
@@ -106,6 +108,7 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
         val order_number = view.order_number
         val store_item_name = view.store_item_name
         val store_item_more = view.store_item_more
+        val see = view.order_see_more
     }
 
     fun addItens(it: ArrayList<Any>){

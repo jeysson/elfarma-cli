@@ -155,10 +155,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
 
             addToBackStack(null)
             replace(R.id.nav_host_fragment, PaymentMethodFragment::class.java, null)
-
         }
-
-       // changeFragment(activity!!.supportFragmentManager, PaymentMethodFragment::class.java, R.id.bag_checkout_container, 1)
     }
 
     fun refreshAddress(){

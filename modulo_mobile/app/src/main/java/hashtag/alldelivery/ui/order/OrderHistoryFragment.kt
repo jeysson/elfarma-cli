@@ -13,15 +13,18 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
+import hashtag.alldelivery.AllDeliveryApplication.Companion.PedidoHistory
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SENDORDER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.USER
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.OrderHistory
+import hashtag.alldelivery.ui.paymentmethod.PaymentMethodFragment
 import kotlinx.android.synthetic.main.order_history_fragment.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import kotlin.concurrent.thread
 
-class OrderHistoryFragment : Fragment() {
+class OrderHistoryFragment : Fragment(), View.OnClickListener {
 
     private val orderViewModel: OrderViewModel by sharedViewModel()
     private val TAM = 5
@@ -97,6 +100,27 @@ class OrderHistoryFragment : Fragment() {
             )
             addToBackStack(null)
             replace(R.id.nav_host_fragment, OrderFragment::class.java, null)
+        }
+    }
+
+    override fun onClick(v: View?) {
+
+        var positions = v?.tag.toString().toInt()
+        PedidoHistory = orderViewModel?.adapter?.itens?.get(positions) as OrderHistory?
+
+        val manager: FragmentManager = activity!!.supportFragmentManager
+        manager.beginTransaction()
+        manager.commit(true) {
+            setCustomAnimations(
+                R.anim.enter_from_left,
+                R.anim.exit_to_right,
+                R.anim.enter_from_right,
+                R.anim.exit_to_left
+            )
+
+            addToBackStack(null)
+            replace(R.id.nav_host_fragment, OrderOneHistoryFragment::class.java, null)
+
         }
     }
 }

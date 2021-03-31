@@ -3,12 +3,10 @@ package hashtag.alldelivery.ui.products
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import hashtag.alldelivery.core.models.BusinessEvent
-import hashtag.alldelivery.core.models.Group
-import hashtag.alldelivery.core.models.Product
-import hashtag.alldelivery.core.models.ProductImage
+import hashtag.alldelivery.core.models.*
 import hashtag.alldelivery.core.repository.IProductRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
+import kotlin.concurrent.thread
 
 class ProductViewModel(private val producRep: IProductRepository) : ViewModel() {
 
@@ -19,7 +17,7 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
     var images: MutableLiveData<List<ProductImage>> = MutableLiveData()
     var eventoProductSearch = SingleLiveEvent<ArrayList<Product>>()
     var eventoErro = SingleLiveEvent<BusinessEvent>()
-    var loading: MutableLiveData<Boolean> = MutableLiveData()
+    var loading: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     @SuppressLint("CheckResult")
     fun getAllProducts(id: Int?): MutableLiveData<ArrayList<Product>> {
@@ -62,8 +60,9 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
 
         producRep.getAllGroups(id).subscribe({
 
-            adapterGroup?.addItems(it)
+            adapterGroup?.groups?.clear()
             adapterGroup?.notifyDataSetChanged()
+            adapterGroup?.addItems(it)
 
             groups.postValue(it)
 
@@ -113,12 +112,40 @@ class ProductViewModel(private val producRep: IProductRepository) : ViewModel() 
     }
 
     fun getPagingProducts(store: Int?, filter: String?, page: Int?, total: Int?) {
-        loading.postValue(true)
-        producRep.getPagingProducts(store, filter, page, total).subscribe({
-            var countInicio = adapterProduct?.itens!!.size-1
+        thread(true) {
+            loading.postValue(true)
+        }
 
+        producRep.getPagingProducts(store, filter, page, total).subscribe({
+
+            if(page == 1){
+                adapterProduct?.itens?.clear()
+                adapterProduct?.notifyDataSetChanged()
+            }
+            //
             adapterProduct?.addItems(it)
-            adapterProduct?.notifyItemRangeChanged(countInicio, adapterProduct?.itens!!.size)
+            //
+            eventoProductSearch.postValue(it)
+            loading.postValue(false)
+        },{
+            eventoErro.postValue(BusinessEvent("Erro de conexão. Não foi possível obter as imagens para o produto."))
+        })
+    }
+
+    fun getPagingProducts(filter: String?, page: Int?, total: Int?) {
+        thread(true) {
+            loading.postValue(true)
+        }
+
+        producRep.getPagingProducts(filter, page, total).subscribe({
+
+            if(page == 1){
+                adapterProduct?.itens?.clear()
+                adapterProduct?.notifyDataSetChanged()
+            }
+            //
+            adapterProduct?.addItems(it)
+            //
             eventoProductSearch.postValue(it)
             loading.postValue(false)
         },{

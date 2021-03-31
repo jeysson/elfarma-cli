@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ui.search.SearchFragment"
     android:layout_marginTop="@dimen/space_size_36dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
             android:background="@drawable/search_rounded_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/btn_cancel_search"
+            app:layout_constraintRight_toLeftOf="@+id/btn_cancel"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginEnd="20dp" />
 
@@ -48,7 +48,7 @@
             app:tint="@color/colorPrimary" />
 
         <EditText
-            android:id="@+id/edit_text_search_item"
+            android:id="@+id/edit_search"
             style="@style/Text.Body2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -65,11 +65,11 @@
             app:layout_constraintBottom_toBottomOf="@+id/search_icon"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/search_icon"
-            app:layout_constraintRight_toLeftOf="@+id/btn_cancel_search"
+            app:layout_constraintRight_toLeftOf="@+id/btn_cancel"
             app:layout_constraintTop_toTopOf="@+id/search_icon" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cancel_search"
+            android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -84,7 +84,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_product_list_search"
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
@@ -106,17 +106,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/recycler_product_list_search"
-        app:layout_constraintEnd_toEndOf="@+id/recycler_product_list_search"
-        app:layout_constraintStart_toStartOf="@+id/recycler_product_list_search"
+        app:layout_constraintBottom_toBottomOf="@+id/list"
+        app:layout_constraintEnd_toEndOf="@+id/list"
+        app:layout_constraintStart_toStartOf="@+id/list"
         app:layout_constraintTop_toTopOf="@+id/toolbar_search_item"
         app:layout_constraintVertical_bias="1.0"
         app:lv_color="@color/colorPrimary" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/deprecated_light_grey"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,10 +14,7 @@ import androidx.fragment.app.commit
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.core.di.repositoryModule
 import hashtag.alldelivery.core.di.viewModelModule
-import hashtag.alldelivery.core.models.Address
-import hashtag.alldelivery.core.models.Order
-import hashtag.alldelivery.core.models.Product
-import hashtag.alldelivery.core.models.Store
+import hashtag.alldelivery.core.models.*
 import hashtag.alldelivery.core.network.networkModule
 import hashtag.alldelivery.ui.order.User
 import org.koin.android.ext.android.startKoin
@@ -29,9 +26,14 @@ class AllDeliveryApplication : Application() {
 
     companion object {
 
+        const val SEARCH_NO = 0
+        const val SEARCH_STORE = 1
+        const val SEARCH_ALL = 2
+
         var SENDORDER: Boolean = false
         val USER: User? = User()
         var Pedido: Order? = null
+        var PedidoHistory: OrderHistory? = null
         var FIRST_VISIBLE = 0
         var LAST_VISIBLE = 0
 

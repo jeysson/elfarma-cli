@@ -42,11 +42,13 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        for (grp in viewModelProduct.adapterGroup?.groups!!){
-            product = grp.products?.firstOrNull { p-> p.id == PRODUCT?.id }!!
+        for (grp in viewModelProduct.adapterGroup?.groups!!) {
+            var p = grp.products?.firstOrNull { p -> p.id == PRODUCT?.id }!!
 
-            if(product != null)
+            if (p != null) {
+                product = p
                 break
+            }
         }
 
         StatusBarUtil.setLightMode(activity)

@@ -29,16 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/space_size_120dp"
-            android:scaleType="center"
-            android:elevation="0dp"
-            android:background="@color/light_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <hashtag.alldelivery.component.ButtonMinusPlus
             android:id="@+id/btPlusMinus"
             android:layout_width="150dp"

@@ -151,12 +151,16 @@ class StoreFragment : Fragment(), OnBackPressedListener,
         syncTabWithRecyclerView()
 
         initAdapter()
+    }
 
-        carregarGruposProdutos()
+    override fun onStart() {
+        super.onStart()
 
         thread(true) {
             viewModelStore.getStoreBanner(STORE?.id)
         }
+
+        carregarGruposProdutos()
     }
 
     fun initAdapter(){
@@ -213,8 +217,7 @@ class StoreFragment : Fragment(), OnBackPressedListener,
             grp?.carregouImagens = true
             //
             for (prod in grp?.products!!) {
-
-                prod?.productImages = fts.filter { p -> p.produtoId == prod.id }
+                prod?.productImages = ArrayList(fts.filter { p -> p.produtoId == prod.id })
                 prod?.carregouImagens = true
             }
 
@@ -226,7 +229,7 @@ class StoreFragment : Fragment(), OnBackPressedListener,
 
     private fun setupObservers() {
 
-        viewModelStore.eventLoadImage.observe(viewLifecycleOwner){
+        /*viewModelStore.eventLoadImage.observe(viewLifecycleOwner){
             thread(true) {
                 /*
                 * Busca as imagens referentes aos produtos
@@ -237,14 +240,13 @@ class StoreFragment : Fragment(), OnBackPressedListener,
                 grp?.carregouImagens = true
                 //
                 for (prod in grp?.products!!){
-
-                    prod?.productImages = fts.filter { p-> p.produtoId == prod.id }
+                    prod?.productImages = ArrayList(fts.filter { p-> p.produtoId == prod.id })
                     prod?.carregouImagens = true
                 }
                // Log.d("LOADIMG", "Posição: "+position)
                 viewModelProduct.adapterGroup?.notifyItemChanged(position)
             }
-        }
+        }*/
 
         viewModelStore.eventLoadBanner.observe(viewLifecycleOwner){
             showBanner()

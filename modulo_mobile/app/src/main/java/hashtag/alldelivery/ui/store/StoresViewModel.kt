@@ -1,13 +1,23 @@
 package hashtag.alldelivery.ui.store
 
 import android.annotation.SuppressLint
+import android.view.View
+import androidx.cardview.widget.CardView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
+import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.BusinessEvent
+import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.repository.IStoreRepository
 import hashtag.alldelivery.core.utils.SingleLiveEvent
+import java.util.*
 import kotlin.collections.ArrayList
 
 class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
@@ -52,7 +62,7 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
         loading.postValue(true)
 
         _storeRep.getPagingStores(page, total, lat, lon, tipoordenacao).subscribe ({
-            var countInicio = adapter?.itens!!.size-1
+          //  var countInicio = adapter?.itens!!.size-1
 
             if(page == 1){
                 val arr = ArrayList<Store>()
@@ -61,11 +71,12 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
                 st.head = true
                 arr.add(st)
                 arr.addAll(it)
+             //   adapter?.setHasStableIds(true)
+                adapter?.itens?.clear()
+                adapter?.notifyDataSetChanged()
                 adapter?.addItems(arr)
             }else
                 adapter?.addItems(it)
-
-            adapter?.notifyItemRangeChanged(countInicio, adapter?.itens!!.size)
 
              stores.postValue(it)
             if (it.isNullOrEmpty()) {

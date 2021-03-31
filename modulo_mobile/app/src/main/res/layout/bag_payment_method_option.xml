@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView android:textColor="@color/deprecated_dark_grey"
-        android:id="@+id/title"
+        android:id="@+id/title_payment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/bag_payment_method_option"

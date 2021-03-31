@@ -11,8 +11,8 @@ class Product{
     @SerializedName("descricao") val descricao : String? = null
     @SerializedName("preco")
     var preco : Double? = null
-    //@SerializedName("grupoProdutos") val grupoProdutos : List<GroupProduct>? = null
-    var productImages: List<ProductImage>? = ArrayList<ProductImage>()
+    @SerializedName("loja") val store : Store? = null
+    var productImages: ArrayList<ProductImage>? = ArrayList<ProductImage>()
     var carregouImagens: Boolean = false
     constructor()
 }

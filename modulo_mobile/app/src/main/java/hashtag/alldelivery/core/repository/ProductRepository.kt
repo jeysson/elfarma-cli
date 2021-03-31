@@ -54,6 +54,14 @@ class ProductRepository(private val dataSource: ProductApi): IProductRepository,
         return dataSource.getPagingProducts(store, filter, page, total)
     }
 
+    override fun getPagingProducts(
+        filter: String?,
+        page: Int?,
+        total: Int?
+    ): Observable<ArrayList<Product>> {
+        return dataSource.getPagingProducts(filter, page, total)
+    }
+
     override fun getImagesGroupo(id: Int?) : Call<ArrayList<ProductImage>>{
         return dataSource.getImagesGroupo(id)
     }

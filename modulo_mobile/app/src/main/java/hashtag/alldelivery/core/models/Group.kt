@@ -1,8 +1,10 @@
 package hashtag.alldelivery.core.models
 
 import com.google.gson.annotations.SerializedName
+import hashtag.alldelivery.ui.products.ProductAdapter
 
 class Group {
+
     @SerializedName("id") val id : Int? = null
     @SerializedName("nome") val nome : String? = null
     @SerializedName("loja") val loja : String? = null

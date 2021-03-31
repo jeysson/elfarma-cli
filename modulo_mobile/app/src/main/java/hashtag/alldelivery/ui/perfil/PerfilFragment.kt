@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import hashtag.alldelivery.R
-import hashtag.alldelivery.ui.dashboard.DashboardViewModel
 
 
 class PerfilFragment : Fragment() {
@@ -23,7 +21,7 @@ class PerfilFragment : Fragment() {
         perfilViewModel =
             ViewModelProviders.of(this).get(PerfilViewModel::class.java)
         val root = inflater.inflate(R.layout.perfil_fragment, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
+      //  val textView: TextView = root.findViewById(R.id.text_dashboard)
       /*  perfilViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })*/

@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="hashtag.alldelivery.ui.dashboard.DashboardFragment"
+        android:name="hashtag.alldelivery.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/search_fragment" />
 
     <fragment
         android:id="@+id/navigation_orders"

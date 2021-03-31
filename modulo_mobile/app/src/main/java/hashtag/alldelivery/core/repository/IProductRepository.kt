@@ -27,5 +27,7 @@ interface IProductRepository {
 
     fun getPagingProducts(store: Int?, filter: String?, page: Int?, total: Int?): Observable<ArrayList<Product>>
 
+    fun getPagingProducts(filter: String?, page: Int?, total: Int?): Observable<ArrayList<Product>>
+
     fun getImagesGroupo(id: Int?) : Call<ArrayList<ProductImage>>
 }

@@ -13,14 +13,17 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.FIRST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Store
 import hashtag.alldelivery.core.utils.LoadViewItemAdpter
+import hashtag.alldelivery.core.utils.StoreDiffCallback
 import hashtag.alldelivery.ui.home.HomeFragment
 import hashtag.alldelivery.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
@@ -29,6 +32,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class StoresAdapter(
     frag: Fragment) :
@@ -45,6 +49,7 @@ class StoresAdapter(
     private lateinit var myView: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
         if (viewType == TYPE_HEADER) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.store_list_header, parent, false)
@@ -99,9 +104,13 @@ class StoresAdapter(
             /*Inserindo imagem*/
             if(item.logo != null){
                 val imageBytes = android.util.Base64.decode(item.logo, 0)
-                val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                val drawableImage = BitmapDrawable(fragment.resources, image)
-                holder.logo.setImageDrawable(drawableImage)
+                //val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+               // val drawableImage = BitmapDrawable(fragment.resources, image)
+                //holder.logo.setImageDrawable(drawableImage)
+
+                Glide.with(fragment).load(imageBytes)
+                    .placeholder(R.drawable.ic_medicine)
+                    .into(holder.logo)
 
             }else {
                 holder.logo.setImageResource(R.drawable.ic_medicine)
@@ -160,12 +169,17 @@ class StoresAdapter(
         val closedText = view.closed
     }
 
-    fun addItems(lojas: List<Store>) {
+    fun addItems(stores: ArrayList<Store>) {
         if(itens.isNullOrEmpty())
             itens = ArrayList<Store>()
-        var tamanhoAtual = itens?.size
-        itens?.addAll(lojas)
-        var tamanhoNovo = itens?.size
-        notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
+        //
+        var old = ArrayList<Store>(itens!!)
+        itens?.addAll(stores)
+        var new = ArrayList<Store>(itens!!)
+        //
+        var diffResult = DiffUtil.calculateDiff(StoreDiffCallback(old, new))
+        thread(true){
+            diffResult.dispatchUpdatesTo(this)
+        }
     }
 }

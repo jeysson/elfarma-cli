@@ -9,21 +9,26 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
 import hashtag.alldelivery.R
+import hashtag.alldelivery.core.models.Group
 import hashtag.alldelivery.core.models.Product
+import hashtag.alldelivery.core.utils.GroupDiffCallback
 import hashtag.alldelivery.core.utils.OnChangedValueListener
+import hashtag.alldelivery.core.utils.ProductDiffCallback
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_card_item.view.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 
 class ProductAdapter(
     val frag: Fragment,
-    val search:Boolean = false,
+    val search:Int = 0,
     val it: ArrayList<Product>?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), View.OnClickListener, OnChangedValueListener {
 
@@ -32,7 +37,7 @@ class ProductAdapter(
     private lateinit var myView: View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = if (!search){
+        val view = if (search==0){
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.product_card_item_search, parent, false)
         }else {
@@ -84,6 +89,16 @@ class ProductAdapter(
             holder.image.setImageDrawable(drawable)
         }
 
+        if(search < 2)
+            holder.car_store.visibility = View.GONE
+        else{
+            holder.car_store.visibility = View.VISIBLE
+            val imageBytes = android.util.Base64.decode(product.store?.logo, 0)
+            val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            val drawable = BitmapDrawable(fragment.resources, image)
+            holder.img_store.setImageDrawable(drawable)
+        }
+
         if (frag as? StoreFragment != null)
             holder.bt.addOnChangeValueListener(frag)
     }
@@ -101,6 +116,8 @@ class ProductAdapter(
         val image = view.cross_selling_item_image
         val card = view.card_product
         val bt = view.btPlusMinus
+        val car_store = view.card_store
+        val img_store = view.img_store
     }
 
     override fun onClick(view: View?) {
@@ -125,10 +142,16 @@ class ProductAdapter(
         }
     }
 
-    fun addItems(produtos: List<Product>) {
-        var tamanhoAtual = itens?.size
-        itens?.addAll(produtos)
-        var tamanhoNovo = itens?.size
-        notifyItemRangeChanged(tamanhoAtual!!, tamanhoNovo!!)
+    fun addItems(products: List<Product>) {
+        if(itens.isNullOrEmpty())
+            itens = java.util.ArrayList<Product>()
+        //
+        var old = ArrayList<Product>(itens!!)
+        itens?.addAll(products)
+        var new = ArrayList<Product>(itens!!)
+        //
+        var diffResult = DiffUtil.calculateDiff(ProductDiffCallback(old, new))
+        //
+        diffResult.dispatchUpdatesTo(this)
     }
 }

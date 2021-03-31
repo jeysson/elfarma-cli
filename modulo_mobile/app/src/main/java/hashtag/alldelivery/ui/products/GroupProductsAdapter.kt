@@ -5,16 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.SEARCH_NO
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Group
+import hashtag.alldelivery.core.models.Store
+import hashtag.alldelivery.core.utils.GroupDiffCallback
+import hashtag.alldelivery.core.utils.ProductDiffCallback
+import hashtag.alldelivery.core.utils.StoreDiffCallback
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_item.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.store_title
 import java.util.ArrayList
+import kotlin.concurrent.thread
 
 class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+    private val sharedPool = RecyclerView.RecycledViewPool()
+
     lateinit var groups: ArrayList<Group>
     var fragment = frag
     var adapters: HashMap<Int, ProductAdapter> = HashMap()
@@ -25,6 +36,15 @@ class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerVi
 
         var holder = ProductItemViewHolder(view)
         holder.setIsRecyclable(false)
+        //
+        val layoutM = LinearLayoutManager(parent.context, LinearLayoutManager.HORIZONTAL, false)
+        layoutM.recycleChildrenOnDetach = true
+        //
+        holder.list.apply {
+            layoutManager = layoutM
+            setRecycledViewPool(sharedPool)
+        }
+        //
         return holder
     }
 
@@ -36,13 +56,17 @@ class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerVi
 
         holder.list.removeAllViews()
         //
-        var layoutManager = LinearLayoutManager(
+       /* var layoutManager = LinearLayoutManager(
             holder.list.context,
             LinearLayoutManager.HORIZONTAL,
             false
         )
 
+        layoutManager.recycleChildrenOnDetach = true
+
         holder.list.layoutManager = layoutManager
+
+        holder.list.recycledViewPool = sharedPool*/
 
         if(adapters.containsKey(group?.id)){
             holder.list.adapter = adapters.get(group?.id)
@@ -50,7 +74,7 @@ class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerVi
         else{
 
             adapters.put(group?.id!!, ProductAdapter( fragment
-                                                             , false
+                                                             , SEARCH_NO
                                                              , group?.products!!))
 
             holder.list.adapter = adapters.get(group?.id)
@@ -100,7 +124,14 @@ class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerVi
 
         if(groups.isNullOrEmpty())
             groups = ArrayList<Group>()
-
+        //
+        var old = ArrayList<Group>(groups!!)
         groups?.addAll(grp)
+        var new = ArrayList<Group>(groups!!)
+        //
+        var diffResult = DiffUtil.calculateDiff(GroupDiffCallback(old, new))
+        thread(true){
+            diffResult.dispatchUpdatesTo(this)
+        }
     }
 }

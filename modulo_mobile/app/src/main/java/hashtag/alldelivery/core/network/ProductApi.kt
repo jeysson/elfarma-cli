@@ -36,9 +36,14 @@ interface ProductApi {
                           @Query("indice") page: Int?,
                           @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
 
-    @GET("produto/buscar")
+    @GET("produto/buscarporloja")
     fun getPagingProducts(@Query("loja")store: Int?,
                           @Query("nomeProduto") filter: String?,
+                          @Query("indice") page: Int?,
+                          @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
+
+    @GET("produto/buscar")
+    fun getPagingProducts(@Query("nomeProduto") filter: String?,
                           @Query("indice") page: Int?,
                           @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
 

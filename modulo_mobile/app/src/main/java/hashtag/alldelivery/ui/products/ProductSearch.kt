@@ -12,11 +12,13 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jaeger.library.StatusBarUtil
+import hashtag.alldelivery.AllDeliveryApplication.Companion.SEARCH_STORE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnBackPressedListener
 import kotlinx.android.synthetic.main.product_search_fragment.*
+import org.jetbrains.anko.support.v4.runOnUiThread
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import kotlin.concurrent.thread
 
@@ -62,10 +64,6 @@ class ProductSearch : Fragment(), OnBackPressedListener {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val recyclerLayout = (_recyclerProductList.layoutManager as GridLayoutManager)
-                /*val visibleItemCount = recyclerLayout.childCount
-                val totalItemCount = recyclerLayout.itemCount
-                val firstVisibleItemPosition = vmm.findFirstVisibleItemPosition()
-                 */
 
                 if (!isLoading && !isLastPage) {
                     //if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
@@ -103,26 +101,26 @@ class ProductSearch : Fragment(), OnBackPressedListener {
 
         }
 
-        thread(true) {
-            getItems()
-        }
-
         initAdapter()
         setObservables()
     }
 
+    override fun onStart() {
+        super.onStart()
+            getItems()
+    }
+
     fun initAdapter(){
         _viewModelProduct.adapterProduct = ProductAdapter(
-            this, true, null)
+            this, SEARCH_STORE, null)
         _viewModelProduct.adapterProduct?.itens = ArrayList<Product>()
         _recyclerProductList.adapter = _viewModelProduct.adapterProduct
     }
 
     fun setObservables(){
-        _viewModelProduct.eventoProductSearch.observe(viewLifecycleOwner){
+      /*  _viewModelProduct.eventoProductSearch.observe(viewLifecycleOwner){
             _recyclerProductList.visibility = VISIBLE
-        }
-
+        }*/
         _viewModelProduct.loading.observe(viewLifecycleOwner){
 
             isLoading = it
@@ -130,11 +128,11 @@ class ProductSearch : Fragment(), OnBackPressedListener {
             if(it) {
                 loadingSearch.visibility = View.VISIBLE
 
-                if(page== 1)
-                    _recyclerProductList.visibility = View.GONE
+               /* if(page== 1)
+                    _recyclerProductList.visibility = View.GONE*/
             }else{
                 loadingSearch.visibility = View.INVISIBLE
-                _recyclerProductList.visibility = View.VISIBLE
+              //  _recyclerProductList.visibility = View.VISIBLE
             }
         }
     }
@@ -156,10 +154,7 @@ class ProductSearch : Fragment(), OnBackPressedListener {
         val productSearch = this
         page = 1
         isLastPage = false
-
         //config adapter
-        _viewModelProduct.adapterProduct?.itens?.clear()
-        _viewModelProduct.adapterProduct?.notifyDataSetChanged()
         _viewModelProduct.getPagingProducts(
             STORE!!.id,
             filter,
@@ -186,9 +181,5 @@ class ProductSearch : Fragment(), OnBackPressedListener {
 
     override fun onBackPressed() {
         back()
-    }
-
-    companion object {
-        fun newInstance() = ProductSearch()
     }
 }

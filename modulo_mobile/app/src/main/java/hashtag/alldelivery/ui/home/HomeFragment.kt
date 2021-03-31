@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -88,9 +89,11 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         _view = view
         _homeCards.layoutManager = LinearLayoutManager(context)
+        _homeCards.itemAnimator = DefaultItemAnimator()
         _homeCards.setHasFixedSize(true)
-        _swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
+        //_homeCards.setItemViewCacheSize(1024 * 1024 * 5)
 
+        _swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
         addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
         address.text = getString(R.string.address_list_location_activate)
@@ -115,6 +118,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     fun initAdapter(){
         _storeViewModel.adapter = StoresAdapter(
             this)
+
         _storeViewModel.adapter?.itens = ArrayList<Store>()
         _homeCards.adapter = _storeViewModel.adapter
     }
