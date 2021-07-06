@@ -66,6 +66,9 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
 
             if(page == 1){
                 val arr = ArrayList<Store>()
+                val mch = Store()
+                mch.publi = true
+                arr.add(mch)
                 val st = Store()
                 st.nomeFantasia = "Farmácias e Drogarias"
                 st.head = true

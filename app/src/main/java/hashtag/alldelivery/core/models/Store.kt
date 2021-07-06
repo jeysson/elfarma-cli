@@ -3,6 +3,7 @@ package hashtag.alldelivery.core.models
 import com.google.gson.annotations.SerializedName
 
 class Store{
+
     @SerializedName("id")
     var id : Int? = null
     @SerializedName("cnpj") val cnpj : Int? = null
@@ -45,6 +46,7 @@ class Store{
     var bannerCarregado: Boolean = false
 
     var head: Boolean = false
+    var publi: Boolean = false
 
     constructor()
 }

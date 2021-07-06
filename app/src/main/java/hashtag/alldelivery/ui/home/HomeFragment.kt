@@ -8,11 +8,14 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
@@ -26,6 +29,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.jaeger.library.StatusBarUtil
@@ -33,8 +38,8 @@ import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.FIRST_VISIBLE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAST_VISIBLE
-import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.LAT_LONG
+import hashtag.alldelivery.AllDeliveryApplication.Companion.NEW_SEARCH_REQUEST_CODE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
@@ -51,6 +56,7 @@ import kotlinx.android.synthetic.main.address_list_item.*
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.publi_home.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -76,6 +82,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     var page = 1
     var itemsPerPage = 10
 
+    var adapter: PubliSliderAdapter? = null
+    lateinit var list: IntArray
+    lateinit var dots: Array<TextView?>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -97,7 +107,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
         address.text = getString(R.string.address_list_location_activate)
-
+        //loadPubli()
         getLastLocation()
 
         initAdapter()
@@ -117,7 +127,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     fun initAdapter(){
         _storeViewModel.adapter = StoresAdapter(
-            this)
+            this
+        )
 
         _storeViewModel.adapter?.itens = ArrayList<Store>()
         _homeCards.adapter = _storeViewModel.adapter
@@ -273,7 +284,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 )
             }
         }else{
-            toast("Selecione seu endereço!" )
+            toast("Selecione seu endereço!")
            // selectAddress()
         }
     }
@@ -299,16 +310,18 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     fun getMoreItems() {
         _storeViewModel.getPagingStores(
-                page,
-                itemsPerPage,
-                LAT_LONG?.latitude,
-                LAT_LONG?.longitude,
-                SORT_FILTER
-            )
+            page,
+            itemsPerPage,
+            LAT_LONG?.latitude,
+            LAT_LONG?.longitude,
+            SORT_FILTER
+        )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>,
-        grantResults: IntArray ) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == PERMISSION_ID) {
@@ -445,6 +458,51 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 addToBackStack(null)
                 replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
             }
+        }
+    }
+
+
+    fun loadPubli(){
+
+        dots = arrayOfNulls<TextView>(6)
+
+        list = IntArray(6)
+        list[0] = R.mipmap.ic_vitaminac_foreground
+        list[1] = R.mipmap.ic_dorflex_foreground
+        list[2] = R.mipmap.ic_hypera_foreground
+        list[3] = R.mipmap.ic_fenaflex_foreground
+        list[4] = R.mipmap.ic_skincare_foreground
+        list[5] = R.mipmap.ic_vitamedley_foreground
+
+        adapter = PubliSliderAdapter(list)
+        image_container.setAdapter(adapter)
+
+        setIndicators()
+
+        /*image_container.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                selectedDots(position)
+                super.onPageSelected(position)
+            }
+        })*/
+    }
+
+    private fun selectedDots(position: Int) {
+        for (i in dots.indices) {
+            if (i == position) {
+                dots.get(i)?.setTextColor(list.get(position))
+            } else {
+                dots.get(i)?.setTextColor(resources.getColor(R.color.black_overlay))
+            }
+        }
+    }
+
+    private fun setIndicators() {
+        for (i in dots.indices) {
+            dots[i] = TextView(this.context)
+            dots.get(i)?.setText(Html.fromHtml("&#9679;"))
+            dots.get(i)?.setTextSize(18f)
+            dots_container.addView(dots.get(i))
         }
     }
 }

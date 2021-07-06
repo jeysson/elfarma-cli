@@ -6,7 +6,7 @@
     android:id="@+id/single_home_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/space_size_36dp">
+    android:paddingTop="10dp">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -67,7 +67,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:paddingTop="18dp"
+            android:paddingTop="0dp"
             android:layout_height="wrap_content">
 
             <include
@@ -75,7 +75,7 @@
                 layout="@layout/filter_bar_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax"
+                app:layout_collapseMode="pin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/topbar" />
 
