@@ -14,13 +14,18 @@ import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.alldelivery.AllDeliveryApplication.Companion.BAG_ORDER_ADDRESS_CHANGE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.Pedido
+import hashtag.alldelivery.AllDeliveryApplication.Companion.PedidoHistory
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.AllDeliveryApplication.Companion.USER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.changeFragment
+import hashtag.alldelivery.AllDeliveryApplication.Companion.pedidocheckout
 import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.utils.OnBackPressedListener
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.paymentmethod.PaymentMethodFragment
+import hashtag.alldelivery.ui.perfil.LoginFragment
+import hashtag.alldelivery.ui.perfil.PerfilFragment
 import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.bag_content_delivery.*
 import kotlinx.android.synthetic.main.bag_content_details.*
@@ -32,6 +37,8 @@ import java.text.NumberFormat
 import java.util.*
 
 class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
+
+    private lateinit var locale: Locale
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +52,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var locale = Locale(getString(R.string.language),
+        locale = Locale(getString(R.string.language),
             getString(R.string.country))
         StatusBarUtil.setLightMode(activity)
 
@@ -76,7 +83,11 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
             description.visibility = VISIBLE
         }
         //
-        minimum_price_alert.text = String.format(locale, minimum_price_alert.text.toString(), STORE?.pedidoMenimo)
+        if(Pedido?.vlrtroco != null && Pedido?.vlrtroco!! > 0){
+            troco_vlr.visibility = View.VISIBLE
+            troco.visibility = View.VISIBLE
+            troco_vlr.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.vlrtroco)
+        }
         //
         btChangeAddress.setOnClickListener{
             val intent = Intent(context, DeliveryAddress::class.java)
@@ -98,6 +109,14 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
                 replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
             }
         }
+        //
+        if(STORE?.pedidoMinimo != null && STORE?.pedidoMinimo!! > 0) {
+            minimum_price_alert.text = String.format(locale,
+                resources.getString(R.string.payment_minimum_price),
+                NumberFormat.getCurrencyInstance(locale).format(STORE?.pedidoMinimo)
+            )
+        }else
+            minimum_price_alert.visibility = View.INVISIBLE
         //
         btChangePayment.setOnClickListener{
             selectPayment()
@@ -134,7 +153,23 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        if (Pedido?.paymentMethod != null) {
+        if(USER == null || USER?.anonimo!! ){
+            pedidocheckout = true
+            val manager: FragmentManager = activity!!.supportFragmentManager
+            manager.beginTransaction()
+            manager.commit(true) {
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+               // addToBackStack(null)
+                replace(R.id.nav_host_fragment, LoginFragment::class.java, null)
+            }
+        }
+        else if (Pedido?.paymentMethod != null) {
+            Pedido?.userId = USER?.id
             var modal = BagConfirmOrderDialog()
             modal.show(activity?.supportFragmentManager!!, "")
         }
@@ -169,5 +204,11 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
     override fun onResume() {
         super.onResume()
         refreshAddress()
+
+        if(Pedido?.vlrtroco != null && Pedido?.vlrtroco!! > 0){
+            troco_vlr.visibility = View.VISIBLE
+            troco.visibility = View.VISIBLE
+            troco_vlr.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.vlrtroco)
+        }
     }
 }

@@ -14,16 +14,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SEARCH_STORE
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
+import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.core.utils.OnChangedValueListener
 import kotlinx.android.synthetic.main.product_search_fragment.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import kotlin.concurrent.thread
 
 
-class ProductSearch : Fragment(), OnBackPressedListener {
+class ProductSearch : Fragment(), OnBackPressedListener, OnChangedValueListener {
 
     private lateinit var _view: View
     private lateinit var _productAdapter: ProductAdapter
@@ -171,6 +173,11 @@ class ProductSearch : Fragment(), OnBackPressedListener {
             page,
             itemsPerPage
         )
+    }
+
+    override fun OnChangedValue(prod: Product, value: Int){
+
+        (activity as MainActivity).changeValueBag(prod, value)
     }
 
     private fun back(){

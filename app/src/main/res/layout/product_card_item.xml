@@ -82,7 +82,8 @@
             android:layout_height="40dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/cross_selling_item_image"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"/>
 
         <TextView
             android:id="@+id/cross_selling_item_total_value"

@@ -479,4 +479,71 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/sul_sans_medium</item>
     </style>
+
+    <style name="Button.White">
+        <item name="android:textAppearance">@style/Text.Button</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">@drawable/selector_button_white_background</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="lb_background">@drawable/selector_button_white_background</item>
+        <item name="lb_textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget">
+    </style>
+
+    <style name="Widget.DesignSystem">
+    </style>
+
+    <style name="Widget.DesignSystem.Button">
+        <item name="android:textAppearance">@style/TextAppearance.DesignSystem.Button.B1</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+    <style name="Widget.DesignSystem.Button.Keyboard">
+        <item name="android:background">@drawable/selector_button_keyboard</item>
+    </style>
+    <style name="Widget.DesignSystem.Button.Loading">
+        <item name="ds_lb_loadingColor">@color/white</item>
+    </style>
+    <style name="Widget.DesignSystem.Button.Loading.Keyboard">
+        <item name="android:background">@drawable/selector_button_keyboard</item>
+    </style>
+    <style name="Widget.DesignSystem.Button.Loading.Primary">
+    </style>
+    <style name="Widget.DesignSystem.Button.Primary">
+        <item name="android:textColor">@color/selector_primary_button_text_colors</item>
+        <item name="android:background">@drawable/selector_button_primary</item>
+    </style>
+
+    <style name="Widget.DesignSystem.Button.Side">
+    </style>
+
+    <style name="Widget.DesignSystem.Button.Side.Primary">
+        <item name="android:textColor">@color/selector_side_button_primary_text_colors</item>
+        <item name="android:background">@drawable/selector_side_button_primary</item>
+    </style>
+    <style name="Widget.DesignSystem.Button.Side.Secondary">
+        <item name="android:textColor">@color/selector_side_button_secondary_text_colors</item>
+        <item name="android:background">@drawable/selector_side_button_secondary</item>
+    </style>
+
+    <style name="Widget.DesignSystem.Button.Side.Tertiary">
+        <item name="android:textColor">@color/selector_side_button_tertiary_text_colors</item>
+        <item name="android:background">@drawable/selector_side_button_tertiary</item>
+    </style>
+
+    <style name="TextAppearance.DesignSystem.Form.F1">
+        <item name="android:textSize">@dimen/text_size_f1</item>
+        <item name="android:fontFamily">@font/sul_sans_regular</item>
+    </style>
+
+    <style name="ButtonGoogle">
+        <item name="ds_lb_drawableLeft">@drawable/ic_google</item>
+        <item name="android:textSize">@dimen/text_size_h3</item>
+        <item name="android:background">@drawable/shape_google_button</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="ds_lb_loadingColor">@color/white</item>
+    </style>
 </resources>

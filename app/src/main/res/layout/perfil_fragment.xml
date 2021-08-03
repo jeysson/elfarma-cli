@@ -1,42 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.perfil.PerfilFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/common_toolbar"
-        />
-
-    <ScrollView android:tag="layout/personal_data_fragmet_0"
+    android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical"
         android:background="@color/white"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:animateLayoutChanges="true">
+        android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:tag="binding_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <include android:id="@+id/toolbar"
+            layout="@layout/deprecated_common_simple_toolbar"/>
 
+        <include android:id="@+id/name"
+            layout="@layout/edit_account_list_item"/>
 
-
-
-
-        <!--    <p102br.com.ifood.userprofile.view.custom.ErrorStateViewWidget android:id="@+id/errorStateView" android:tag="binding_2" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0"/>
-            <p102br.com.ifood.designsystem.textfield.TextInputLayout android:id="@+id/full_name_layout" android:tag="binding_3" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/view_top_spacing_purple" android:hint="@string/personal_data_fragment_full_name_hint" android:layout_marginStart="@dimen/input_field_start_margin" android:layout_marginEnd="@dimen/input_field_end_margin" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@+id/toolbar" style="@style/Widget.DesignSystem.TextInputLayoutOutlinedBoxStyle">
-                <p102br.com.ifood.core.toolkit.view.ClearableEditText android:id="@+id/full_name_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="textAutoComplete" android:imeOptions="actionNext" app:cet_icon="@drawable/ic_search_clear" app:cet_iconColor="@color/deprecated_medium_grey" style="@style/Widget.DesignSystem.TextInputEditTextOutlinedBoxStyle"/>
-            </p102br.com.ifood.designsystem.textfield.TextInputLayout>
-            <p102br.com.ifood.designsystem.textfield.TextInputLayout android:id="@+id/document_layout" android:tag="binding_4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/input_field_top_margin" android:hint="@string/personal_data_fragment_cpf_hint" android:layout_marginStart="@dimen/input_field_start_margin" android:layout_marginEnd="@dimen/input_field_end_margin" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@+id/full_name_layout" style="@style/Widget.DesignSystem.TextInputLayoutOutlinedBoxStyle">
-                <p102br.com.ifood.core.toolkit.view.ClearableEditText android:id="@+id/document_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/personal_data_fragment_cpf_optional_hint" android:maxLines="1" android:maxLength="14" android:digits="0123456789" android:inputType="number" android:imeOptions="actionDone" app:cet_icon="@drawable/ic_search_clear" app:cet_iconColor="@color/deprecated_medium_grey" style="@style/Widget.DesignSystem.TextInputEditTextOutlinedBoxStyle"/>
-            </p102br.com.ifood.designsystem.textfield.TextInputLayout>
-            <p102br.com.ifood.designsystem.button.LoadingButton android:id="@+id/next_button" android:tag="binding_5" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/update" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" style="@style/Widget.DesignSystem.Button.Loading.Keyboard"/>
-       --> </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-</FrameLayout>
+        <include android:id="@+id/document" layout="@layout/edit_account_list_item"/>
+        <include android:id="@+id/phone" layout="@layout/edit_account_list_item"/>
+        <include android:id="@+id/email" layout="@layout/edit_account_list_item"/>
+    </LinearLayout>
+    <FrameLayout android:id="@+id/edit_container" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent"/>
+</RelativeLayout>

@@ -72,8 +72,8 @@ class BagConfirmOrderDialog: BottomSheetDialogFragment() {
         payment_type_icon.setImageDrawable(drawableImage)
         payment_description.text = when (Pedido?.paymentMethod?.tipo) {
             0 -> Pedido?.paymentMethod?.nome
-            1 -> "Débito - ${Pedido?.paymentMethod?.nome} (máquina)"
-            2 -> "Crédito - ${Pedido?.paymentMethod?.nome} (máquina)"
+            1 -> "Débito - ${Pedido?.paymentMethod?.nome}"
+            2 -> "Crédito - ${Pedido?.paymentMethod?.nome}"
             else -> ""
         }
         //

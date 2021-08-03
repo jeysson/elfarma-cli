@@ -14,6 +14,7 @@ import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.PaymentMethod
 import hashtag.alldelivery.core.utils.OnBackPressedListener
+import hashtag.alldelivery.ui.bag.BagConfirmOrderDialog
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.payment_method_fragment.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -98,9 +99,17 @@ class PaymentMethodFragment : Fragment(), OnBackPressedListener, View.OnClickLis
 
         v?.setBackgroundResource(R.drawable.bg_payment_selected)
 
-        Pedido?.paymentMethod = adapt.itens?.get(position)
-
-        back()
+        if(adapt.itens?.get(position)?.troco!!)
+        {
+            Pedido?.paymentMethod = adapt.itens?.get(position)
+            var modal = PaymentMethodChangeDialog()
+            modal.show(activity?.supportFragmentManager!!, "")
+        }
+        else{
+            Pedido?.paymentMethod = adapt.itens?.get(position)
+            Pedido?.vlrtroco = null
+            back()
+        }
     }
 
 }

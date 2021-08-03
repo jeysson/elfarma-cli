@@ -126,7 +126,15 @@ class OrderOneHistoryFragment : Fragment(), OnBackPressedListener {
                description.visibility = VISIBLE
            }
            //
-           minimum_price_alert.text = String.format(locale, minimum_price_alert.text.toString(), it.store?.pedidoMenimo)
+           //
+           if(STORE?.pedidoMinimo != null && STORE?.pedidoMinimo!! > 0) {
+               minimum_price_alert.text = String.format(locale,
+                   resources.getString(R.string.payment_minimum_price),
+                   STORE?.pedidoMinimo
+               )
+           }else
+               minimum_price_alert.visibility = View.INVISIBLE
+
            //
            address_title.text =  "${it?.address?.address}, ${it?.address?.number}"
            address_description.text = if(it?.address?.complement == "")

@@ -44,4 +44,10 @@
     <attr name="crb_rating" format="float">
     </attr>
     </declare-styleable>
+
+    <attr name="ds_lb_loadingColor" format="color">
+    </attr>
+
+    <attr name="ds_lb_drawableLeft" format="reference">
+    </attr>
 </resources>

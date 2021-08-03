@@ -5,6 +5,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class Order {
+    @SerializedName("vlrtroco")
+    var vlrtroco: Double? = null
 
     @SerializedName("id")
     var id: Int? = null
@@ -16,7 +18,7 @@ class Order {
     @SerializedName("dataPedido") val dateOrder: Date? = null
     @SerializedName("endereco")
     var address: Address? = null
-    @SerializedName("usuarioid")var userId: Int = 1
+    @SerializedName("usuarioid")var userId: Int? = null
     @SerializedName("itens")var itens: ArrayList<OrderItem>? = null
 
     constructor(){

@@ -8,45 +8,51 @@ import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface ProductApi {
     @GET("produto/todos")
-    fun getAllProducts(@Query("loja") id: Int?) : Observable<ArrayList<Product>>
+    fun getAllProducts(@Header("Authorization") authHeader: String, @Query("loja") id: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/grupos")
-    fun getAllGroups(@Query("loja") id: Int?) : Observable<ArrayList<Group>>
+    fun getAllGroups(@Header("Authorization") authHeader: String, @Query("loja") id: Int?) : Observable<ArrayList<Group>>
 
     @GET("produto/produtosgrupo")
-    fun getProductsGroup(@Query("loja") store: Int?,
+    fun getProductsGroup(@Header("Authorization") authHeader: String,
+                         @Query("loja") store: Int?,
                          @Query("grupo") group: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/produtosgrupo")
-    fun getProductsGroupAsync(@Query("loja") store: Int?, @Query("grupo") group: Int?) : Observable<ArrayList<Product>>
+    fun getProductsGroupAsync(@Header("Authorization") authHeader: String, @Query("loja") store: Int?, @Query("grupo") group: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/imagens")
-    fun getImages(@Query("produto") id: Int?) : Call<ArrayList<ProductImage>>
+    fun getImages(@Header("Authorization") authHeader: String, @Query("produto") id: Int?) : Call<ArrayList<ProductImage>>
 
     @GET("produto/imagens")
-    fun getImagesAsync(@Query("produto") id: Int?) : Observable<ArrayList<ProductImage>>
+    fun getImagesAsync(@Header("Authorization") authHeader: String, @Query("produto") id: Int?) : Observable<ArrayList<ProductImage>>
 
     @GET("produto/paginar")
-    fun getPagingProducts(@Query("loja")store: Int?,
+    fun getPagingProducts(@Header("Authorization") authHeader: String,
+                          @Query("loja")store: Int?,
                           @Query("grupo") group: Int?,
                           @Query("indice") page: Int?,
                           @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/buscarporloja")
-    fun getPagingProducts(@Query("loja")store: Int?,
+    fun getPagingProducts(@Header("Authorization") authHeader: String,
+                          @Query("loja")store: Int?,
                           @Query("nomeProduto") filter: String?,
                           @Query("indice") page: Int?,
                           @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/buscar")
-    fun getPagingProducts(@Query("nomeProduto") filter: String?,
+    fun getPagingProducts(@Header("Authorization") authHeader: String,
+                          @Query("nomeProduto") filter: String?,
                           @Query("indice") page: Int?,
                           @Query("tamanho") total: Int?) : Observable<ArrayList<Product>>
 
     @GET("produto/imagensgrupo")
-    fun getImagesGroupo(@Query("grupo") id: Int?) : Call<ArrayList<ProductImage>>
+    fun getImagesGroupo(@Header("Authorization") authHeader: String,
+                        @Query("grupo") id: Int?) : Call<ArrayList<ProductImage>>
 }

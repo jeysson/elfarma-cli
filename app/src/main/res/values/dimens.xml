@@ -50,4 +50,8 @@
     <dimen name="space_size_32dp">32dp</dimen>
     <dimen name="space_size_20dp">20dp</dimen>
     <dimen name="space_size_24dp">24dp</dimen>
+
+    <dimen name="button_padding">15dp</dimen>
+    <dimen name="side_button_corners_size">4dp</dimen>
+    <dimen name="text_size_f1">16sp</dimen>
 </resources>

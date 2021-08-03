@@ -64,4 +64,17 @@
     <color name="deprecated_gray_dark">#959595</color>
     <color name="deprecated_silver_dark_80">#803e3e3e</color>
     <color name="deprecated_gray91">#e8e8e8</color>
+
+    <color name="address">#2F7092</color>
+    <color name="followers">#0D5D98</color>
+    <color name="headings">#3797CF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="gradEnd">#67EFC8</color>
+    <color name="gradStart">#63C9FF</color>
+    <color name="followersBg">#65DCE5</color>
+    <color name="followingBg">#49BEFF</color>
+    <color name="grey">#E5E5E5</color>
+
+    <color name="deprecated_google_background">#4285f4</color>
 </resources>

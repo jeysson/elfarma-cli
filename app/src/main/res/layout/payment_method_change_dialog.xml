@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:id="@+id/money_change_dialog_container"
+    android:background="@drawable/shape_checkout_dialog"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <LinearLayout android:orientation="vertical"
+        android:id="@+id/step_one_container"
+        android:padding="20dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView android:gravity="center_horizontal"
+            android:id="@+id/step_one_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/money_change_dialog_step_one_title"
+            style="@style/Text.H2"/>
+
+        <TextView android:textColor="@color/deprecated_medium_grey"
+            android:gravity="center_horizontal"
+            android:id="@+id/step_one_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/money_change_dialog_step_one_description"
+            android:lineSpacingExtra="7dp"
+            style="@style/Text.Description"/>
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
+
+            <TextView android:textColor="@color/deprecated_cream"
+                android:gravity="center"
+                android:id="@+id/negative_button"
+                android:background="@drawable/selector_button_blue_background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:text="@string/no"
+                android:layout_weight="1"
+                style="@style/Text.Button"/>
+
+            <TextView android:textColor="@color/deprecated_cream"
+                android:gravity="center"
+                android:id="@+id/positive_button"
+                android:background="@drawable/selector_button_blue_background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:text="@string/yes"
+                android:layout_weight="1"
+                android:layout_marginStart="20dp"
+                style="@style/Text.Button"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout android:orientation="vertical"
+        android:id="@+id/step_two_container"
+        android:padding="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView android:gravity="center_horizontal"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/money_change_dialog_step_two_title"
+            style="@style/Text.H2"/>
+
+        <TextView android:textColor="@color/deprecated_medium_grey"
+            android:gravity="center_horizontal"
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/money_change_dialog_step_two_description"
+            android:lineSpacingExtra="3.5dp"
+            style="@style/Text.Description"/>
+
+        <LinearLayout android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView android:textColor="@color/deprecated_medium_grey"
+                android:layout_gravity="bottom"
+                android:id="@+id/input_prefix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="6dp"
+                android:importantForAccessibility="no"
+                android:layout_marginEnd="6dp"
+                style="@style/TextInputEditText.Light"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:gravity="center"
+                android:id="@+id/editvlrtroco"
+                android:focusableInTouchMode="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_change_dialog_step_two_input_hint"
+                android:maxLines="1"
+                android:minEms="1"
+                android:maxLength="6"
+                android:inputType="numberDecimal"
+                style="@style/TextInputEditText.Light"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <TextView android:enabled="true"
+                android:gravity="center"
+                android:id="@+id/no_change_button"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="8dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:text="@string/money_change_dialog_no_change"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                style="@style/Button.White"/>
+
+            <TextView android:enabled="false"
+                android:textColor="@color/selector_button_dark_text"
+                android:gravity="center"
+                android:id="@+id/bttroco"
+                android:background="@drawable/selector_button_blue_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="32dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:minHeight="50dp"
+                android:text="@string/money_change_dialog_step_two_confirm_button"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                style="@style/Text.Button"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

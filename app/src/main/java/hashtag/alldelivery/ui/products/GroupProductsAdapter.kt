@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SEARCH_NO
+import hashtag.alldelivery.AllDeliveryApplication.Companion.SEARCH_STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Group
 import hashtag.alldelivery.core.models.Store
@@ -74,7 +75,7 @@ class GroupProductsAdapter(frag: StoreFragment): RecyclerView.Adapter<RecyclerVi
         else{
 
             adapters.put(group?.id!!, ProductAdapter( fragment
-                                                             , SEARCH_NO
+                                                             , SEARCH_STORE
                                                              , group?.products!!))
 
             holder.list.adapter = adapters.get(group?.id)

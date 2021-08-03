@@ -124,7 +124,7 @@ class OrderFragment: Fragment(), OnBackPressedListener {
         address_description.text = "${order?.address?.neighborhood} - ${order?.address?.city}, ${order?.address?.state}"
         //
         if(order?.store?.logo != null) {
-            val imageBytes = android.util.Base64.decode(Pedido?.store?.logo, 0)
+            val imageBytes = android.util.Base64.decode(order?.store?.logo, 0)
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             val drawable = BitmapDrawable(resources, image)
             store_image.setImageDrawable(drawable)

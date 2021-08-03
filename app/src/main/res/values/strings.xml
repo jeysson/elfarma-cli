@@ -174,4 +174,22 @@
     <string name="order_history_number">Pedido concluído • #%s</string>
     <string name="order_history_more">mais %s item</string>
     <string name="order_history">Histórico</string>
+    <string name="money_change_dialog_step_one_title">Dinheiro</string>
+    <string name="money_change_dialog_step_one_description">Você vai precisar de troco?</string>
+    <string name="money_change_dialog_step_two_title">Troco pra quanto?</string>
+    <string name="money_change_dialog_step_two_description">Seu pedido deu %1$s.\10Digite quanto vai pagar em dinheiro para\10que o entregador leve o seu troco.</string>
+    <string name="money_change_dialog_step_two_input_hint">0,00</string>
+    <string name="money_change_dialog_no_change">Não quero troco</string>
+    <string name="money_change_dialog_step_two_confirm_button">Confirmar</string>
+    <string name="checkout_account_plugin_title">Falta pouco!</string>
+    <string name="checkout_account_plugin_description">Para concluir o pedido, precisamos que você se identifique. Como quer continuar?</string>
+    <string name="checkout_account_plugin_action_button_label">Entrar ou cadastrar</string>
+    <string name="authentication_home_title">Falta pouco pra cuidar da sua saúde!</string>
+    <string name="authentication_home_subtitle">Como deseja continuar?</string>
+    <string name="continue_as_guest">Continuar como convidado</string>
+    <string name="authentication_other_options">Outras opções</string>
+    <string name="authentication_sign_out">Sair</string>
+    <string name="no">Não</string>
+    <string name="yes">Sim</string>
+    <string name="authenticate_with_google">Continuar com o Google</string>
 </resources>

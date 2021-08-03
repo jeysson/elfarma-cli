@@ -43,7 +43,7 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
         super.onViewCreated(view, savedInstanceState)
 
         for (grp in viewModelProduct.adapterGroup?.groups!!) {
-            var p = grp.products?.firstOrNull { p -> p.id == PRODUCT?.id }!!
+            var p = grp.products?.firstOrNull { p -> p.id == PRODUCT?.id }
 
             if (p != null) {
                 product = p

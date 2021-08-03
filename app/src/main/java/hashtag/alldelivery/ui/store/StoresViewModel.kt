@@ -74,6 +74,7 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
                 st.head = true
                 arr.add(st)
                 arr.addAll(it)
+
              //   adapter?.setHasStableIds(true)
                 adapter?.itens?.clear()
                 adapter?.notifyDataSetChanged()

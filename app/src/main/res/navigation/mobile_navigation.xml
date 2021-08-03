@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_perfil"
-        android:name="hashtag.alldelivery.ui.perfil.PerfilFragment"
+        android:name="hashtag.alldelivery.ui.perfil.LoginFragment"
         android:label="fragment_perfil"
-        tools:layout="@layout/perfil_fragment" />
+        tools:layout="@layout/fragment_login" />
 </navigation>

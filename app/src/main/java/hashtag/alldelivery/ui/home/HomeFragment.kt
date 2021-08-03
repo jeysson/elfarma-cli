@@ -16,6 +16,7 @@ import android.view.View.*
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
@@ -33,6 +34,12 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.jaeger.library.StatusBarUtil
 import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.ADDRESS
@@ -44,11 +51,15 @@ import hashtag.alldelivery.AllDeliveryApplication.Companion.SORT_FILTER
 import hashtag.alldelivery.AllDeliveryApplication.Companion.STORE
 import hashtag.alldelivery.R
 import hashtag.alldelivery.component.Loading
+import hashtag.alldelivery.core.async.JsonPostData
 import hashtag.alldelivery.core.models.*
 import hashtag.alldelivery.core.receiver.NetworkReceiver
+import hashtag.alldelivery.core.utils.DateDeserializer
+import hashtag.alldelivery.core.utils.OnTaskCompleted
 import hashtag.alldelivery.ui.address.AddressViewModel
 import hashtag.alldelivery.ui.address.DeliveryAddress
 import hashtag.alldelivery.ui.filter.FiltersActivity
+import hashtag.alldelivery.ui.order.User
 import hashtag.alldelivery.ui.store.StoreFragment
 import hashtag.alldelivery.ui.store.StoresAdapter
 import hashtag.alldelivery.ui.store.StoresViewModel
@@ -57,11 +68,20 @@ import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.publi_home.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
+import org.json.JSONException
+import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener  {
+class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener,
+    OnTaskCompleted {
 
     var PERMISSION_ID = 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -107,10 +127,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
         address.text = getString(R.string.address_list_location_activate)
+        loadUser(this)
         //loadPubli()
-        getLastLocation()
 
-        initAdapter()
+        initAdapter(this)
         scrollListener()
         setupObservers()
         loadFilters()
@@ -121,20 +141,87 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
 
         _swipeRefresh.setOnRefreshListener {
+            Log.d("[ELFARMA]","Carregando itens após o refresh.")
             getItems()
         }
     }
 
-    fun initAdapter(){
+    fun loadUser(context: HomeFragment) = doAsync {
+
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+
+                    //  Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val currentUser = FirebaseAuth.getInstance().currentUser
+
+                if (currentUser != null) {
+                    val login = Login()
+                    login.email = currentUser.email
+                    login.tokenFCM = task.result
+                    //
+                    JsonPostData(
+                        AllDeliveryApplication.APIAddress.LOGIN.toString(), login,
+                        context, ""
+                    ).execute()
+                } else {
+                    val login = Login()
+                    login.tokenFCM = task.result
+
+                    JsonPostData(
+                        AllDeliveryApplication.APIAddress.LOGINTOKEN.toString(), login,
+                        context, ""
+                    ).execute()
+                }
+            })
+
+    }
+
+    override fun onTaskCompleted(data: JSONObject?) {
+
+        if (data != null) {
+            try {
+                val mm: Message = Gson().fromJson<Any>(
+                    data.toString(),
+                    object : TypeToken<Message?>() {}.type
+                ) as Message
+                if (mm.code!! > 300) {
+                    throw Exception(mm.message)
+                } else {
+                    val gson = GsonBuilder().registerTypeAdapter(
+                        Date::class.java,
+                        DateDeserializer()
+                    ).create()
+                    val user: User = gson.fromJson(
+                        data.getJSONObject("dados").toString(),
+                        object : TypeToken<User?>() {}.type
+                    )
+                    //
+                    AllDeliveryApplication.USER = user
+                    getLastLocation()
+                }
+            } catch (e: JSONException) {
+
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun initAdapter(context: HomeFragment) = doAsync{
         _storeViewModel.adapter = StoresAdapter(
-            this
+            context
         )
 
         _storeViewModel.adapter?.itens = ArrayList<Store>()
         _homeCards.adapter = _storeViewModel.adapter
     }
 
-    private fun scrollListener() {
+    private fun scrollListener() = doAsync {
         _homeCards.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -161,35 +248,40 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         if (!isConnected)
             toast("O dispositivo não está conectado")
         else {
+            Log.d("[ELFARMA]","Carregando itens a partir da mudança na rede.")
             page = 1
             isLastPage = false
             getItems()
         }
     }
 
-    private fun setupObservers() {
+    private fun setupObservers(){
         /*escuta o carregamento dos endereços*/
         _currentAddress.observe(viewLifecycleOwner){
             if(it == null)
                 selectAddress()
             else
+            {
+                Log.d("[ELFARMA]","Carregando itens a partir do carregamento do endereço.")
                 getItems()
+            }
         }
 
         /*escuta o retorno das consultas*/
         _storeViewModel.loading.observe(viewLifecycleOwner){
+            runOnUiThread {
+                isLoading = it
 
-            isLoading = it
+                if (it) {
+                    _homeLoading.visibility = View.VISIBLE
 
-            if(it) {
-                _homeLoading.visibility = View.VISIBLE
-
-                if(page== 1)
-                    _homeCards.visibility = View.GONE
-            }else{
-                _swipeRefresh.isRefreshing = false
-                _homeLoading.visibility = View.INVISIBLE
-                _homeCards.visibility = View.VISIBLE
+                    if (page == 1)
+                        _homeCards.visibility = View.GONE
+                } else {
+                    _swipeRefresh.isRefreshing = false
+                    _homeLoading.visibility = View.INVISIBLE
+                    _homeCards.visibility = View.VISIBLE
+                }
             }
         }
 
@@ -209,7 +301,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
     }
 
-    private fun carregarTodosEnderecos() {
+    private fun carregarTodosEnderecos() = doAsync {
         addressViewModel.getAll().observe(viewLifecycleOwner) {
             AllDeliveryApplication.ADDRESS_LIST.addAll(it)
         }
@@ -230,11 +322,13 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                     it?.longi!!,
                     it?.number
                 )
+                Log.d("[ELFARMA]","Carregando itens a partir do endereço corrente.")
+                getItems()
             }
         }
     }
 
-    private fun loadFilters() {
+    private fun loadFilters() = doAsync{
         val list = ArrayList<Filter>()
         val f1 = Filter(getString(R.string.filtros))
         list.add(f1)
@@ -255,6 +349,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
         if (requestCode == NEW_SEARCH_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+                Log.d("[ELFARMA]","Carregando itens a partir do resulte.")
 //              Busca realizada por outras páginas
                 _homeLoading.visibility = VISIBLE
                 _homeCards.visibility = GONE
@@ -289,7 +384,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
     }
 
-    private fun getItems() {
+    private fun getItems() = doAsync {
         if(LAT_LONG != null){
             page = 1
             isLastPage = false
@@ -308,7 +403,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
     }
 
-    fun getMoreItems() {
+    fun getMoreItems() = doAsync{
         _storeViewModel.getPagingStores(
             page,
             itemsPerPage,
@@ -351,7 +446,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-                    return
+
                 }
 
                 getCurrentAddress()
@@ -370,7 +465,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         )
     }
 
-    private fun getNewLocation() {
+    private fun getNewLocation() = doAsync {
         locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 0
@@ -391,7 +486,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return
+
         }
         fusedLocationProviderClient.requestLocationUpdates(
             locationRequest,
@@ -411,7 +506,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun RequestPermission() {
+    fun RequestPermission() = doAsync {
         requestPermissions(
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_ID
@@ -435,7 +530,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         }
     }
 
-    fun selectAddress(){
+    fun selectAddress() = doAsync{
         val intent = Intent(context, DeliveryAddress::class.java)
         startActivityForResult(intent, NEW_SEARCH_REQUEST_CODE)
     }
@@ -460,7 +555,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             }
         }
     }
-
 
     fun loadPubli(){
 

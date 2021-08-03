@@ -3,13 +3,10 @@ package hashtag.alldelivery
 import android.app.Application
 import android.content.Context
 import android.location.Geocoder
-import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
-import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import com.google.android.gms.maps.model.LatLng
 import hashtag.alldelivery.core.di.repositoryModule
@@ -24,14 +21,25 @@ import java.util.*
 
 class AllDeliveryApplication : Application() {
 
+
+
     companion object {
+        var pedidocheckout: Boolean = false
+
+
+        // public      static      String      tokenFCM            = FirebaseInstanceId.getInstance().getToken();
+        private const val URLADDRESS = "elfarmaapi.hashtagmobile.com.br"
+
+        // private     static      String      URLADDRESS          = "192.168.0.16/mybb.api";
+        private const val PROTOCOL = "https://"
+        //private     static      String      URLADDRESS          = "192.168.0.38/mybb.api";
 
         const val SEARCH_NO = 0
         const val SEARCH_STORE = 1
         const val SEARCH_ALL = 2
 
         var SENDORDER: Boolean = false
-        val USER: User? = User()
+        var USER: User? = null
         var Pedido: Order? = null
         var PedidoHistory: OrderHistory? = null
         var FIRST_VISIBLE = 0
@@ -112,7 +120,12 @@ class AllDeliveryApplication : Application() {
                 return "Ativar localização"
         }
 
-        fun changeFragment(manager: FragmentManager, fragment: Class<out Fragment>, id: Int, anim: Int){
+        fun changeFragment(
+            manager: FragmentManager,
+            fragment: Class<out Fragment>,
+            id: Int,
+            anim: Int
+        ){
             var frag = manager.findFragmentById(id)
 
             if(frag == null){
@@ -211,5 +224,37 @@ class AllDeliveryApplication : Application() {
                     .build()
             )
         }
+    }
+
+    enum class APIAddress(  /*!!***********************************************************************************/
+        private val string: String
+    ) {
+        /*NEW(PROTOCOL + URLADDRESS + "/api/users/new/"),*/
+
+        LOGIN(PROTOCOL + URLADDRESS + "/api/usuario/autenticar/"),
+        LOGINTOKEN(PROTOCOL + URLADDRESS + "/api/usuario/autenticartoken/"),
+        VERIFICATION(PROTOCOL + URLADDRESS + "/api/usuario/verificar/")/*,
+        PASSWORDRECORVER(
+            com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/users/passwordrecover/"
+        ),
+        CHANGEPASSWORD(com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/users/changepassword/"), UPDATE(
+            com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/users/update/"
+        ),
+        UPDATEPHOTOSVALIDATION(com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/updatephotosvalidation/"), UPDATEPHOTO(
+            com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/updatephoto/"
+        ),
+        UPDATEPHOTOS(com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/updatephotos/"), PHOTOSVALIDATION(
+            com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/photosvalidation?id=:id"
+        ),
+        PHOTOS(com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/photos?id=:id"), PHOTO(
+            com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/photo?id=:id"
+        ),
+        DELETEPHOTO(com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/photos/deletephoto/"), TIMELINE(
+            com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/publishers/timeline/"
+        )*/;
+
+        override fun toString(): String {
+            return string
+        } /*!!***********************************************************************************/
     }
 }

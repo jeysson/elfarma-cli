@@ -1,5 +1,6 @@
 package hashtag.alldelivery.core.repository
 
+import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.core.models.PaymentMethod
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.models.Store
@@ -21,9 +22,9 @@ class StoreRepository(
         val newLat = -30.09488
         val newLon = -60.0462758
         if (lat == null || lon == null){
-            return runOnBackground(dataSource.getActiveStores(indice,tamanho, newLat, newLon, tipoOrdenacao))
+            return runOnBackground(dataSource.getActiveStores("Bearer " + AllDeliveryApplication.USER?.token, indice,tamanho, newLat, newLon, tipoOrdenacao))
         }
-        return runOnBackground(dataSource.getActiveStores(indice,tamanho, lat, lon, tipoOrdenacao))
+        return runOnBackground(dataSource.getActiveStores("Bearer " + AllDeliveryApplication.USER?.token, indice,tamanho, lat, lon, tipoOrdenacao))
     }
 
     override fun getPagingStores(
@@ -33,18 +34,18 @@ class StoreRepository(
         lon: Double?,
         tipoordenacao: Int?
     ): Observable<ArrayList<Store>> {
-        return runOnBackground(dataSource.getPagingStores(page, total, lat, lon, tipoordenacao))
+        return runOnBackground(dataSource.getPagingStores("Bearer " + AllDeliveryApplication.USER?.token, page, total, lat, lon, tipoordenacao))
     }
 
     override fun getStoreLogo(loja: Int?): Observable<Store> {
-        return runOnBackground(dataSource.getStoreLogo(loja))
+        return runOnBackground(dataSource.getStoreLogo("Bearer " + AllDeliveryApplication.USER?.token, loja))
     }
 
     override fun getStoreBanner(loja: Int?): Observable<Store> {
-        return runOnBackground(dataSource.getStoreBanner(loja))
+        return runOnBackground(dataSource.getStoreBanner("Bearer " + AllDeliveryApplication.USER?.token, loja))
     }
 
     override fun getPaymentMethods(loja: Int?): Observable<ArrayList<PaymentMethod>> {
-        return  runOnBackground(dataSource.getPaymentMethods(loja))
+        return  runOnBackground(dataSource.getPaymentMethods("Bearer " + AllDeliveryApplication.USER?.token, loja))
     }
 }
