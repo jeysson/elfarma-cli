@@ -1,22 +1,22 @@
 package hashtag.alldelivery.ui.search
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.jaeger.library.StatusBarUtil
-import hashtag.alldelivery.AllDeliveryApplication
 import hashtag.alldelivery.AllDeliveryApplication.Companion.SEARCH_ALL
+import hashtag.alldelivery.MainActivity
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.Product
 import hashtag.alldelivery.core.utils.OnBackPressedListener
@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.product_search_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import kotlinx.android.synthetic.main.search_fragment.loadingSearch
 import org.koin.android.viewmodel.ext.android.sharedViewModel
+
 
 class SearchFragment : Fragment(), OnBackPressedListener {
 
@@ -37,9 +38,9 @@ class SearchFragment : Fragment(), OnBackPressedListener {
     var filter: String? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.search_fragment, container, false)
     }
@@ -49,9 +50,10 @@ class SearchFragment : Fragment(), OnBackPressedListener {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
         //
+        loadingSearch.visibility = View.GONE
         list.layoutManager = GridLayoutManager(context, 2)
         list.setHasFixedSize(true)
-        list.addOnScrollListener(object : OnScrollListener(){
+        list.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val recyclerLayout = (list.layoutManager as GridLayoutManager)
@@ -71,6 +73,7 @@ class SearchFragment : Fragment(), OnBackPressedListener {
         })
 
         edit_search.focusable = View.FOCUSABLE
+        edit_search.showKeyboard()
         edit_search.doOnTextChanged { text, start, count, after ->
             if (text.isNullOrBlank()) {
                 getMoreItems()
@@ -89,6 +92,8 @@ class SearchFragment : Fragment(), OnBackPressedListener {
             } else {
                 edit_search.setText("")
             }
+
+            productViewModel.adapterProduct?.itens?.clear()
         }
 
         initAdapter()
@@ -97,7 +102,8 @@ class SearchFragment : Fragment(), OnBackPressedListener {
 
     fun initAdapter(){
         productViewModel.adapterProduct = ProductAdapter(
-            this, SEARCH_ALL, null)
+            this, SEARCH_ALL, null
+        )
         productViewModel.adapterProduct?.itens = ArrayList<Product>()
         list.adapter = productViewModel.adapterProduct
     }
@@ -156,8 +162,24 @@ class SearchFragment : Fragment(), OnBackPressedListener {
     }
 
     private fun back(){
+        try{
+            edit_search.hideKeyboard()
         activity!!.supportFragmentManager.popBackStack()
         activity!!.supportFragmentManager.beginTransaction()
             .remove(this).commit()
+        }catch (e: Exception){
+            (activity as MainActivity).select(R.id.navigation_home)
+        }
+    }
+
+    fun View.showKeyboard() {
+        this.requestFocus()
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    fun View.hideKeyboard() {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }

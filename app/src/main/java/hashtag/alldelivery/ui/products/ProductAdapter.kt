@@ -79,7 +79,8 @@ class ProductAdapter(
                 holder.bt.total = p?.quantity!!
             else
                 holder.bt.total = 0
-
+            holder.card_store.tag = position
+            holder.card_store.setOnClickListener(this)
             holder.card.tag = position
             holder.card.setOnClickListener(this)
             holder.name.text = product!!.nome
@@ -134,7 +135,7 @@ class ProductAdapter(
                 alpha(1f)
             }
 
-            if (product.productImages!!.size > 0) {
+            if (product.productImages != null && product.productImages!!.size > 0) {
                 val imageBytes =
                     android.util.Base64.decode(product.productImages!![0].fotoBase64, 0)
                 val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
@@ -156,7 +157,7 @@ class ProductAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (search == 0) {
+        if (search == 0 || search == 2) {
             return  TYPE_SEARCH_PRODUCT
         }else {
             return TYPE_STORE_SEARCH_PRODUCT
@@ -170,7 +171,7 @@ class ProductAdapter(
         val image = view.cross_selling_item_image
         val card = view.card_product
         val bt = view.btPlusMinus*/
-        val car_store = view.card_store
+        val card_store = view.card_store
        // val img_store = view.img_store
     }
 
@@ -185,24 +186,46 @@ class ProductAdapter(
     }
 
     override fun onClick(view: View?) {
+        when(view?.id){
+           R.id.card_store->{
+               var position = view!!.tag as Int
+               AllDeliveryApplication.STORE = itens?.get(position)?.store
+               val manager: FragmentManager = frag.activity!!.supportFragmentManager
+               manager.beginTransaction()
+               manager.commit(true) {
+                   setCustomAnimations(
+                       R.anim.enter_from_left,
+                       R.anim.exit_to_right,
+                       R.anim.enter_from_right,
+                       R.anim.exit_to_left
+                   )
+
+                   addToBackStack(null)
+                   replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
+               }
+           }
+           R.id.card_product -> {
+               var position = view!!.tag as Int
+               AllDeliveryApplication.PRODUCT = itens?.get(position)
+
+               val manager: FragmentManager = fragment.activity!!.supportFragmentManager
+               manager.beginTransaction()
+               manager.commit {
+                   setCustomAnimations(
+                       R.anim.enter_from_left,
+                       R.anim.exit_to_right,
+                       R.anim.enter_from_right,
+                       R.anim.exit_to_left
+                   )
+
+                   addToBackStack(null)
+                   replace(R.id.nav_host_fragment, ProductDetail::class.java, null)
+
+               }
+           }
+        }
         if (view is CardView) {
-            var position = view!!.tag as Int
-            AllDeliveryApplication.PRODUCT = itens?.get(position)
 
-            val manager: FragmentManager = fragment.activity!!.supportFragmentManager
-            manager.beginTransaction()
-            manager.commit {
-                setCustomAnimations(
-                    R.anim.enter_from_left,
-                    R.anim.exit_to_right,
-                    R.anim.enter_from_right,
-                    R.anim.exit_to_left
-                )
-
-                addToBackStack(null)
-                replace(R.id.nav_host_fragment, ProductDetail::class.java, null)
-
-            }
         }
     }
 

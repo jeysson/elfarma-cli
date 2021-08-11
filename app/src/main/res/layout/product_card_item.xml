@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/space_size_120dp"
             android:elevation="1dp"
-            android:scaleType="center"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:rotation="90"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_medicine" />
 
             </com.google.android.material.card.MaterialCardView>

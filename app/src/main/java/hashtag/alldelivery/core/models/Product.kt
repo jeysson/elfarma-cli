@@ -12,6 +12,8 @@ class Product{
     @SerializedName("preco")
     var preco : Double? = null
     @SerializedName("loja") val store : Store? = null
+
+    @SerializedName("produtoFotos")
     var productImages: ArrayList<ProductImage>? = ArrayList<ProductImage>()
     var carregouImagens: Boolean = false
     constructor()

@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -53,6 +54,7 @@ import java.util.*
  */
 class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
 
+    private lateinit var account: GoogleSignInAccount
     private val RC_SIGN_IN: Int = 9001
 
     private lateinit var auth: FirebaseAuth
@@ -75,6 +77,8 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).showBottomNavigation()
         //
         // [START config_signin]
         // Configure Google Sign In
@@ -86,10 +90,8 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
         googleSignInClient = GoogleSignIn.getClient(activity!!, gso)
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-
+        //
         loadView()
-
-
         // [END initialize_auth]
         //topbar_title.text = "Login"
         //
@@ -150,7 +152,7 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)!!
+                account = task.getResult(ApiException::class.java)!!
                 Log.d("ELFARMA", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
 
@@ -168,11 +170,11 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("ELFARMA", "signInWithCredential:success")
-                    val user = auth.currentUser
+
                     loading.visibility = View.VISIBLE
                     loadView()
 
-                    autenticar(user!!)
+                    autenticar()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("ELFARMA", "signInWithCredential:failure", task.exception)
@@ -181,12 +183,13 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
             }
     }
 
-    private fun autenticar(user: FirebaseUser) {
+    private fun autenticar() {
         try {
            // waitDialog!!.show()
             val login = Login()
-            login.email = user.email
-            login.nome = user.displayName
+            login.email = account.email
+            login.nome = account.givenName
+            login.sobrenome = account.familyName
             login.tokenFCM = AllDeliveryApplication.USER?.tokenFCM
 
             JsonPostData(

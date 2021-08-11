@@ -41,15 +41,15 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        for (grp in viewModelProduct.adapterGroup?.groups!!) {
+        product = PRODUCT!!
+        /*for (grp in viewModelProduct.adapterGroup?.groups!!) {
             var p = grp.products?.firstOrNull { p -> p.id == PRODUCT?.id }
 
             if (p != null) {
                 product = p
                 break
             }
-        }
+        }*/
 
         StatusBarUtil.setLightMode(activity)
 
@@ -71,7 +71,7 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
             back()
         }
 
-        if(product.productImages?.size!! > 0) {
+        if(product.productImages != null && product.productImages?.size!! > 0) {
             val imageBytes = android.util.Base64.decode(product.productImages!![0].fotoBase64, 0)
             val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             item_image.setImageBitmap(image)

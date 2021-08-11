@@ -18,7 +18,7 @@
     <string name="try_again">Tentar de novo</string>
     <string name="title_activity_delivery_address">Delivery Address</string>
     <string name="content_description_back">Voltar</string>
-    <string name="onboarding_no_location">Onde você quer\10receber seu pedido?</string>
+    <string name="onboarding_no_location">Onde você quer\nreceber seu pedido?</string>
     <string name="address_list_search_box_title">Endereço e número</string>
     <string name="logged_out_empty_state_title">Já tem um endereço salvo?</string>
     <string name="logged_out_empty_state_button">Entrar</string>
@@ -140,7 +140,7 @@
     <string name="order_card_track_order_one">Acompanhe seu pedido</string>
     <string name="help_button">Ajuda</string>
     <string name="help_button_content_description">Ajuda. Botão</string>
-    <string name="updated_real_time_title">Atualizado em10tempo real</string>
+    <string name="updated_real_time_title">Atualizado em\ntempo real</string>
     <string name="order_status_placed">Aguardando a confirmação do estabelecimento</string>
     <string name="order_loading_subtitle">Carregando as informações do pedido</string>
     <string name="see_more">Ver mais</string>
@@ -177,7 +177,7 @@
     <string name="money_change_dialog_step_one_title">Dinheiro</string>
     <string name="money_change_dialog_step_one_description">Você vai precisar de troco?</string>
     <string name="money_change_dialog_step_two_title">Troco pra quanto?</string>
-    <string name="money_change_dialog_step_two_description">Seu pedido deu %1$s.\10Digite quanto vai pagar em dinheiro para\10que o entregador leve o seu troco.</string>
+    <string name="money_change_dialog_step_two_description">Seu pedido deu %1$s.\nDigite quanto vai pagar em dinheiro para\nque o entregador leve o seu troco.</string>
     <string name="money_change_dialog_step_two_input_hint">0,00</string>
     <string name="money_change_dialog_no_change">Não quero troco</string>
     <string name="money_change_dialog_step_two_confirm_button">Confirmar</string>
