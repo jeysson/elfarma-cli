@@ -13,4 +13,8 @@ interface IOrderRepository {
     fun getOrder(id: Int): Observable<Message>
 
     fun getOrderHistory(user: Int, page: Int, total: Int): Observable<Message>
+
+    fun getOrdersWaitingEvaluate(user: Int): Observable<Message>
+
+    fun saveEvaluate(order: Order): Observable<Message>
 }

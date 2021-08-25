@@ -145,23 +145,22 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/delivery_card_alert"
+        android:id="@+id/delivery_card_alert_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_size_24dp"
-        android:layout_marginBottom="@dimen/space_size_24dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="1dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintBottom_toBottomOf="@+id/map_background"
+        app:layout_constraintBottom_toTopOf="@+id/delivery_card_alert"
         app:layout_constraintStart_toStartOf="@+id/map_background"
         app:layout_constraintTop_toBottomOf="@id/delivery_card_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/info_container"
-            android:background="@color/off_white"
+            android:background="@color/deprecated_papaya"
             android:paddingTop="8dp"
             android:paddingBottom="16dp"
             android:layout_width="match_parent"
@@ -182,11 +181,11 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintGuide_end="@dimen/space_size_16dp"/>
 
-            <TextView android:textColor="@color/black_overlay_70"
+            <TextView android:textColor="@color/black_overlay"
                 android:id="@+id/info_sec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/info_sec_title"
+                android:text="@string/cancel_alert"
                 android:importantForAccessibility="no"
                 app:layout_constraintStart_toStartOf="@+id/start_guideline1"
                 app:layout_constraintTop_toTopOf="parent"
@@ -202,6 +201,97 @@
                 app:layout_constraintStart_toEndOf="@+id/start_guideline1"
                 app:layout_constraintTop_toBottomOf="@+id/info_sec">
 
+                <TextView android:textColor="@color/black_overlay"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    app:layout_constraintTop_toTopOf="@+id/address_icon"
+                    style="@style/Text.Link_6"/>
+
+                <TextView android:textColor="@color/black_overlay"
+                    android:ellipsize="end"
+                    android:id="@+id/info_desc"
+                    android:paddingTop="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Para realizar o cancelamento ligue para o estabelecimento e solicite."
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toTopOf="@+id/address_description"
+                    app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                    app:layout_constraintStart_toEndOf="@+id/address_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/address_alias"
+                    style="@style/Text.Description"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/delivery_card_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_size_24dp"
+        android:layout_marginBottom="@dimen/space_size_24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="@+id/map_background"
+        app:layout_constraintStart_toStartOf="@+id/map_background"
+        app:layout_constraintTop_toBottomOf="@id/delivery_card_alert_cancel">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_container1"
+            android:background="@color/off_white"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/start_guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="@dimen/space_size_16dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/end_guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="@dimen/space_size_16dp"/>
+
+            <TextView android:textColor="@color/black_overlay_70"
+                android:id="@+id/info_sec1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/info_sec_title"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="@+id/start_guideline2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="8dp"
+                style="@style/Text.Toolbar"/>
+
+            <LinearLayout android:gravity="center"
+                android:orientation="horizontal"
+                android:id="@+id/info_sec_container1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/end_guideline2"
+                app:layout_constraintStart_toEndOf="@+id/start_guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/info_sec1">
+
                 <TextView android:textColor="@color/black"
                     android:ellipsize="end"
                     android:visibility="gone"
@@ -216,7 +306,7 @@
 
                 <TextView android:textColor="@color/heavy_grey"
                     android:ellipsize="end"
-                    android:id="@+id/info_desc"
+                    android:id="@+id/info_desc1"
                     android:paddingTop="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

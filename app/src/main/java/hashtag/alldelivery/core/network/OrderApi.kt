@@ -20,4 +20,12 @@ interface OrderApi {
     @GET("pedido/obter/")
     fun getOrder(@Header("Authorization") authHeader: String,
                  @Query("idPedido") user: Int): Observable<Message>
+
+    @GET("pedido/obteravaliacaopendente/")
+    fun getOrdersWaitingEvaluate(@Header("Authorization")authHeader: String,
+                                 @Query("codUser") user: Int): Observable<Message>
+
+    @POST("pedido/salvaravaliacao/")
+    fun saveEvaluate(@Header("Authorization")authHeader: String,
+                     @Body payload: Order): Observable<Message>
 }

@@ -5,14 +5,16 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import hashtag.alldelivery.AllDeliveryApplication
+import hashtag.alldelivery.AllDeliveryApplication.Companion.CONCLUIDO
 import hashtag.alldelivery.R
 import hashtag.alldelivery.core.models.OrderHistory
-import kotlinx.android.synthetic.main.order_history_item.view.*
 import kotlinx.android.synthetic.main.order_history_item_header.view.*
+import kotlinx.android.synthetic.main.order_list_previous_item.view.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -34,7 +36,7 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
         }
         else{
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.order_history_item, parent, false)
+            .inflate(R.layout.order_list_previous_item, parent, false)
         return OrderHistoryHolder(view)
         }
     }
@@ -62,17 +64,57 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
             }
             //
             holder.store_name.text = obj?.store
-            holder.order_number.text = String.format(fragment.getString(R.string.order_history_number),
+            //holder.status.text = obj?.status?.descricao
+            holder.order_number.text = String.format(fragment.getString(R.string.order_list_history_number),
                 obj.id.toString().padStart(6, '0'))
 
-            holder.store_item_name.text = String.format("%sx %s", obj.item_quantity, obj.first_item_name)
-
+            holder.first_order_item.text = String.format("%sx %s", obj.first_item_quantity, obj.first_item_name)
+            holder.first_order_item_quantity.text = obj.first_item_quantity.toString()
+            //
             if(obj?.itensSize!! > 1){
+                holder.second_order_item.text = String.format("%sx %s", obj.second_item_quantity, obj.second_item_name)
+                holder.second_order_item.visibility = VISIBLE
+                holder.second_order_item_quantity.text = obj.second_item_quantity.toString()
+                holder.second_order_item_quantity.visibility = VISIBLE
+            }
+            //
+            if(obj?.status?.id!! == CONCLUIDO){
+                holder.review_views_group.visibility = VISIBLE
+                if(obj?.diasavaliacao!! < 16) {
+                    if (obj?.avaliacao != null) {
+                        holder.order_rating_label.text = fragment.getString(R.string.label_evaluate)
+                        holder.criteria_rating.rating = obj?.avaliacao
+                    }else{
+                        holder.order_rating_label.text = fragment.getString(R.string.to_evaluate)
+                        holder.evaluated_button.tag = position
+                        holder.evaluated_button.setOnClickListener(fragment)
+                    }
+                }
+                //
+                if(obj?.diasavaliacao!! > 16) {
+                    if (obj?.avaliacao != null) {
+                        holder.order_rating_label.text = fragment.getString(R.string.label_evaluate)
+                        holder.order_rating_label.visibility = VISIBLE
+                        holder.order_review_expired.visibility = INVISIBLE
+
+                    } else {
+                        holder.order_rating_label.visibility = INVISIBLE
+                        holder.order_review_expired.visibility = VISIBLE
+                    }
+                }
+            }
+            //
+            if(obj?.itensSize!!-2 > 0){
                 holder.store_item_more.visibility = VISIBLE
                 holder.store_item_more.text = String.format(fragment.getString(R.string.order_history_more),
-                    (obj?.itensSize!! - 1))
-                holder.see.tag = position
-                holder.see.setOnClickListener(fragment)
+                    (obj?.itensSize!! - 2))
+            }
+
+            holder.details_button.tag = position
+            holder.details_button.setOnClickListener(fragment)
+
+            if(obj?.status?.id!! < 7){
+                holder.pulse.visibility = VISIBLE
             }
         }else{
             holder as OrderHistoryHeaderHolder
@@ -105,10 +147,22 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
     class OrderHistoryHolder(view: View) : RecyclerView.ViewHolder(view) {
         val logo = view.logo
         val store_name = view.store_name
+      //  val status = view.order_status
         val order_number = view.order_number
-        val store_item_name = view.store_item_name
-        val store_item_more = view.store_item_more
-        val see = view.order_see_more
+        val first_order_item = view.first_order_item
+        val first_order_item_quantity = view.first_order_item_quantity
+        val second_order_item = view.second_order_item
+        val second_order_item_quantity = view.second_order_item_quantity
+        val store_item_more = view.load_more
+        val order_rating_label = view.order_rating_label
+        val criteria_rating = view.criteria_rating
+        val order_review_expired = view.order_review_expired
+     //   val see = view.order_see_more
+        val card = view.order_list_previous_item
+        val pulse = view.pulse_animation
+        val details_button = view.details_button
+        val review_views_group = view.review_views_group
+        val evaluated_button = view.evaluated_button
     }
 
     fun addItens(it: ArrayList<Any>){

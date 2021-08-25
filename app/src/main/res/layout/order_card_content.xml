@@ -82,9 +82,11 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="20dp"
+            android:visibility="gone"
             layout="@layout/order_member_get_member_card"/>
 
         <include android:id="@+id/order_evaluate"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -93,11 +95,13 @@
         <include android:id="@+id/card_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             layout="@layout/order_card_notification_view"/>
 
         <include android:id="@+id/social"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             layout="@layout/social_view"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

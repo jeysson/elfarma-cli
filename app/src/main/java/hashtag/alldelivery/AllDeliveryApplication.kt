@@ -24,6 +24,8 @@ class AllDeliveryApplication : Application() {
 
 
     companion object {
+
+        const val CONCLUIDO = 7
         var pedidocheckout: Boolean = false
 
 
@@ -42,6 +44,7 @@ class AllDeliveryApplication : Application() {
         var USER: User? = null
         var Pedido: Order? = null
         var PedidoHistory: OrderHistory? = null
+        var OrderEvaluated: Order? = null
         var FIRST_VISIBLE = 0
         var LAST_VISIBLE = 0
 

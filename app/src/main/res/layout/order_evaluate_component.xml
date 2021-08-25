@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:id="@+id/rating_container" android:tag="layout/order_evaluate_component_0" android:background="@color/white" android:focusable="true" android:clickable="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:foreground="?attr/selectableItemBackground" app:cardCornerRadius="4dp" app:cardElevation="2dp">
+    <LinearLayout android:orientation="vertical"
+        android:id="@+id/rating_parent_layout"
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView android:textColor="@color/deprecated_dark_grey"
+            android:id="@+id/rating_title"
+            android:tag="binding_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textAlignment="textStart"
+            style="@style/Text.Page_Title"/>
+
+        <RatingBar
+            android:id="@+id/order_rating"
+            android:tag="binding_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_marginTop="14dp"
+            android:rating="3"
+            android:progressTint="@color/deprecated_yellow"
+            android:secondaryProgressTint="@color/black_overlay"
+            android:backgroundTintMode="screen"
+            android:stepSize="1"
+            android:numStars="5"/>
+
+        <TextView android:textColor="@color/medium_gray"
+            android:ellipsize="end"
+            android:id="@+id/rating_subtitle"
+            android:tag="binding_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/evaluate_choose_stars"
+            android:lines="1"
+            android:lineSpacingExtra="1sp"
+            android:textAlignment="textStart"
+            style="@style/Text.Description2"/>
+
+        <FrameLayout android:id="@+id/rating_comment_layout"
+            android:background="@drawable/shape_rating_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="64dp">
+            <TextView android:textColor="@color/heavy_grey"
+                android:id="@+id/rating_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginStart="12dp"
+                style="@style/Text.Description2"/>
+        </FrameLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

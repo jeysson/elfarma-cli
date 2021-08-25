@@ -20,9 +20,13 @@ class Order {
     var address: Address? = null
     @SerializedName("usuarioid")var userId: Int? = null
     @SerializedName("itens")var itens: ArrayList<OrderItem>? = null
+    @SerializedName("histStatus")var listStatus: ArrayList<StatusOrder>? = null
+    @SerializedName("avaliacoes")var evaluateds: ArrayList<Evaluated>? = null
+    @SerializedName("comentarioAvaliacao")var comment: String? = null
 
     constructor(){
         itens = ArrayList<OrderItem>()
     }
 
 }
+

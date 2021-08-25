@@ -32,15 +32,23 @@
 
                 <TextView
                     android:textColor="@color/deprecated_dark_grey"
-                    android:id="@+id/restaurant_name"
+                    android:id="@+id/store_name"
                     android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
+
+                <TextView
+                    android:textColor="@color/deprecated_dark_grey"
+                    android:id="@+id/order_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:textSize="18sp"/>
 
                 <include
                     android:id="@+id/content_delivery"

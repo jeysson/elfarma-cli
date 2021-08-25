@@ -546,4 +546,67 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="ds_lb_loadingColor">@color/white</item>
     </style>
+
+    <style name="OrderCard">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">6dp</item>
+    </style>
+    <style name="OrderCardSeparator">
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <style name="OrderCardText">
+        <item name="android:gravity">clip_horizontal</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+    <style name="OrderCardText.Action">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+    <style name="OrderCardText.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:fontFamily">@font/sul_sans_light</item>
+    </style>
+    <style name="OrderCardText.Content">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="OrderCardText.Dark">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="OrderCardText.Description">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/medium_gray</item>
+    </style>
+    <style name="OrderCardText.Header">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
+    <style name="OrderCardText.Light">
+        <item name="android:textColor">@color/medium_gray</item>
+    </style>
+    <style name="OrderCardText.Medium">
+        <item name="android:textColor">@color/heavy_grey</item>
+    </style>
+    <style name="OrderCardText.Quantity">
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
+        <item name="android:background">@drawable/order_complement_quantity_background</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">18dp</item>
+        <item name="android:minWidth">18dp</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
+    <style name="OrderCardText.Red">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="OrderCardText.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/sul_sans_medium</item>
+    </style>
 </resources>

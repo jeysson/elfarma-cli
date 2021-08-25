@@ -16,10 +16,12 @@ class OrderViewModel(private val _orderRep: IOrderRepository) : ViewModel() {
 
     var eventErro = SingleLiveEvent<String>()
     var eventOrder = SingleLiveEvent<Order>()
+    var eventOrders = SingleLiveEvent<ArrayList<Order>>()
     var eventLoading = SingleLiveEvent<Boolean>()
     var eventOrderHistory = SingleLiveEvent<ArrayList<Any>>()
     var eventRedirect = SingleLiveEvent<Boolean>()
     var adapter : OrderHistoryAdapter? = null
+    var adapterEvaluate: OrderEvaluateAdapter? = null
 
     fun checkoutOrder(order: Order){
         _orderRep.checkoutOrder(order).subscribe({
@@ -89,4 +91,35 @@ class OrderViewModel(private val _orderRep: IOrderRepository) : ViewModel() {
             })
     }
 
+
+    fun getOrdersWaitingEvaluate(user: Int){
+        eventLoading.postValue(true)
+        _orderRep.getOrdersWaitingEvaluate(user).subscribe({
+            if(it.code == 200) {
+                val type = object : TypeToken<List<Order>>() {}.type
+                var list = Gson().fromJson<ArrayList<Order>>(Gson().toJson(it.data), type)
+
+                adapterEvaluate?.addItens(list)
+                adapterEvaluate?.notifyDataSetChanged()
+                //
+                eventOrders.postValue(list)
+
+                eventLoading.postValue(false)
+            }
+            else
+                eventErro.postValue(it.message)
+        },
+            {
+                eventErro.postValue(it.message)
+            })
+    }
+
+    fun saveEvaluate(order: Order){
+
+        _orderRep.saveEvaluate(order).subscribe({
+              eventOrder.postValue(null)
+        },{
+            eventErro.postValue(it.message)
+        })
+    }
 }

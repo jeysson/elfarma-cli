@@ -50,6 +50,7 @@
                 android:id="@+id/logo_container"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
+                android:padding="@dimen/space_size_36dp"
                 android:importantForAccessibility="no"
                 android:src="@drawable/logo_transparent_background"
                 app:layout_constraintBottom_toBottomOf="@+id/header_image"
@@ -63,6 +64,7 @@
                 android:layout_height="33dp"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
+                android:src="@drawable/logo_white_background"
                 app:layout_constraintLeft_toLeftOf="@id/begin_guideline"
                 app:layout_constraintTop_toTopOf="@id/store_image"
                 app:layout_constraintBottom_toBottomOf="@id/store_image"/>
@@ -249,6 +251,7 @@
 
             <include layout="@layout/image_button_chat"
                 android:id="@+id/merchant_chat_layout"
+                android:visibility="gone"
                 android:tag="binding_13"
                 android:background="?attr/selectableItemBackground"
                 android:paddingTop="10dp"
@@ -264,6 +267,7 @@
 
             <View android:id="@+id/contact_separator"
                 android:background="@color/light_gray"
+                android:visibility="gone"
                 android:layout_width="1dp"
                 android:layout_height="28dp"
                 app:layout_constraintBottom_toTopOf="@+id/reversal_cash"
@@ -287,6 +291,7 @@
 
             <TextView android:textColor="@color/heavy_grey"
                 android:id="@+id/reversal_cash"
+                android:visibility="gone"
                 android:background="@color/off_white"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"

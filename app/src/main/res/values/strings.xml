@@ -172,6 +172,7 @@
     <string name="order_estimated_label">Previsão de entrega</string>
     <string name="info_sec_title">Dica de segurança</string>
     <string name="order_history_number">Pedido concluído • #%s</string>
+    <string name="order_list_history_number">#%s</string>
     <string name="order_history_more">mais %s item</string>
     <string name="order_history">Histórico</string>
     <string name="money_change_dialog_step_one_title">Dinheiro</string>
@@ -192,4 +193,12 @@
     <string name="no">Não</string>
     <string name="yes">Sim</string>
     <string name="authenticate_with_google">Continuar com o Google</string>
+    <string name="cancel_alert">Antenção</string>
+    <string name="evaluate_choose_stars">Escolha de 1 a 5 estrelas para classificar</string>
+    <string name="changed_order_label">A lista de itens foi atualizada pelo estabelecimento</string>
+    <string name="order_list_review_expired">Prazo de avaliação finalizado</string>
+    <string name="order_list_item_help_button_label">Ajuda</string>
+    <string name="order_list_item_details_button_label">Detalhes</string>
+    <string name="to_evaluate">Avalie seu pedido</string>
+    <string name="label_evaluate">Avaliação do pedido</string>
 </resources>

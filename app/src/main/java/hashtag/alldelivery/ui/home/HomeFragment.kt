@@ -80,8 +80,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener,
-    OnTaskCompleted {
+class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener
+{
 
     var PERMISSION_ID = 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -127,7 +127,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
         address.text = getString(R.string.address_list_location_activate)
-        loadUser(this)
+        //loadUser(this)
         //loadPubli()
 
         initAdapter(this)
@@ -143,72 +143,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         _swipeRefresh.setOnRefreshListener {
             Log.d("[ELFARMA]","Carregando itens após o refresh.")
             getItems()
-        }
-    }
-
-    fun loadUser(context: HomeFragment) = doAsync {
-
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-
-                    //  Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                val currentUser = FirebaseAuth.getInstance().currentUser
-
-                if (currentUser != null) {
-                    val login = Login()
-                    login.email = currentUser.email
-                    login.tokenFCM = task.result
-                    //
-                    JsonPostData(
-                        AllDeliveryApplication.APIAddress.LOGIN.toString(), login,
-                        context, ""
-                    ).execute()
-                } else {
-                    val login = Login()
-                    login.tokenFCM = task.result
-
-                    JsonPostData(
-                        AllDeliveryApplication.APIAddress.LOGINTOKEN.toString(), login,
-                        context, ""
-                    ).execute()
-                }
-            })
-
-    }
-
-    override fun onTaskCompleted(data: JSONObject?) {
-
-        if (data != null) {
-            try {
-                val mm: Message = Gson().fromJson<Any>(
-                    data.toString(),
-                    object : TypeToken<Message?>() {}.type
-                ) as Message
-                if (mm.code!! > 300) {
-                    throw Exception(mm.message)
-                } else {
-                    val gson = GsonBuilder().registerTypeAdapter(
-                        Date::class.java,
-                        DateDeserializer()
-                    ).create()
-                    val user: User = gson.fromJson(
-                        data.getJSONObject("dados").toString(),
-                        object : TypeToken<User?>() {}.type
-                    )
-                    //
-                    AllDeliveryApplication.USER = user
-                    getLastLocation()
-                }
-            } catch (e: JSONException) {
-
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-
-                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-            }
         }
     }
 

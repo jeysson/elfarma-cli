@@ -47,8 +47,9 @@
             <include android:id="@+id/card_content"
                 layout="@layout/order_card_content"/>
 
-            <!--include android:id="@+id/new_order_cancelled"
-                layout="@layout/order_delivery_cancelled"/-->
+            <include android:id="@+id/new_order_cancelled"
+                layout="@layout/order_delivery_cancelled"
+                android:visibility="gone"/>
 
         </com.google.android.material.card.MaterialCardView>
 

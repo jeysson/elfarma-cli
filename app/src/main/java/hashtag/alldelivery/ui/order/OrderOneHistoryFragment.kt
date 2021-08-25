@@ -29,9 +29,13 @@ import hashtag.alldelivery.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.bag_content_delivery.*
 import kotlinx.android.synthetic.main.bag_content_details.*
 import kotlinx.android.synthetic.main.bag_fragment.*
+import kotlinx.android.synthetic.main.bag_fragment.add_more_items
+import kotlinx.android.synthetic.main.bag_fragment.content_list
+import kotlinx.android.synthetic.main.bag_fragment.delivery_time
 import kotlinx.android.synthetic.main.bag_fragment_toolbar.*
 import kotlinx.android.synthetic.main.bag_payment_method_option.*
 import kotlinx.android.synthetic.main.checkout_button.*
+import kotlinx.android.synthetic.main.order_one_history_fragment.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
 import java.time.ZoneId
@@ -101,7 +105,9 @@ class OrderOneHistoryFragment : Fragment(), OnBackPressedListener {
            var locale = Locale(getString(R.string.language),
                getString(R.string.country))
            //
-           restaurant_name.text = it.store?.nomeFantasia
+           store_name.text = it.store?.nomeFantasia
+           order_number.text = String.format(getString(R.string.order_list_history_number),
+               it?.id!!.toString().padStart(6, '0'))
            delivery_time.text = data?.format(formatter)
            //
            val adapter = OrderOneHistoryAdapter(this)
@@ -150,8 +156,8 @@ class OrderOneHistoryFragment : Fragment(), OnBackPressedListener {
         activity!!.supportFragmentManager.beginTransaction()
             .remove(this).commit()
 
-        (activity as MainActivity).showBottomNavigation()
-        (activity as MainActivity).showBag()
+       // (activity as MainActivity).showBottomNavigation()
+       // (activity as MainActivity).showBag()
     }
 
     override fun onBackPressed() {
