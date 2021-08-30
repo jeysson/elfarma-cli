@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-    <hashtag.alldelivery.component.Loading
+    <hashtag.elfarma.component.Loading
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="0dp"

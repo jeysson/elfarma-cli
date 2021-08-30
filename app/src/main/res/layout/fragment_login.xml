@@ -5,7 +5,9 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/space_size_36dp"
+    android:layout_marginBottom="@dimen/space_size_36dp">
 
     <RelativeLayout android:id="@+id/toolbar"
         android:clipChildren="false"
@@ -23,7 +25,7 @@
             android:layout_height="match_parent"
             app:srcCompat="@drawable/img_dishes"/-->
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <!--androidx.appcompat.widget.AppCompatImageView
             android:layout_gravity="center_vertical"
             android:id="@+id/back_button"
             android:padding="8dp"
@@ -32,10 +34,10 @@
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/content_description_back"
             app:srcCompat="@drawable/ic_arrow_back"
-            app:tint="@color/colorPrimary"/>
+            app:tint="@color/colorPrimary"/-->
     </RelativeLayout>
 
-    <hashtag.alldelivery.component.Loading
+    <hashtag.elfarma.component.Loading
         android:id="@+id/authentication_loading_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -161,7 +163,7 @@
                         style="@style/TextAppearance.DesignSystem.Button.B3"/>
                 </LinearLayout>
 
-                <hashtag.alldelivery.component.Loading
+                <hashtag.elfarma.component.Loading
                     android:layout_gravity="center"
                     android:id="@+id/loading"
                     android:visibility="invisible"
@@ -191,7 +193,7 @@
                 app:layout_constraintStart_toStartOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView android:textSize="15sp"
+        <!--TextView android:textSize="15sp"
             android:textColor="@color/heavy_grey"
             android:layout_gravity="center_horizontal"
             android:id="@+id/skip_button"
@@ -202,6 +204,6 @@
             android:layout_marginBottom="20dp"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:text="@string/continue_as_guest"
-            style="@style/Text.ListTitleSmall"/>
+            style="@style/Text.ListTitleSmall"/-->
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

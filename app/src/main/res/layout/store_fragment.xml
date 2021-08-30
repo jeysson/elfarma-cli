@@ -248,7 +248,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <hashtag.alldelivery.component.Loading
+    <hashtag.elfarma.component.Loading
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

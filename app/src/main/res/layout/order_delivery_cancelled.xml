@@ -105,7 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/details_barrier"/>
 
-        <hashtag.alldelivery.component.Loading
+        <hashtag.elfarma.component.Loading
             android:layout_gravity="center"
             android:id="@+id/restaurant_list_loading"
             android:tag="binding_4"

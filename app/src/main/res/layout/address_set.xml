@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:orientation="vertical"
-    android:tag="layout/address_map_fragment_0"
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -42,8 +41,7 @@
         app:layout_constraintBottom_toTopOf="@+id/map_pin_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_map_pin"
-        />
+        app:srcCompat="@drawable/ic_map_pin"/>
 
     <View android:id="@+id/map_tooltip_shadow"
         android:background="@mipmap/bg_tooltip_shadow"

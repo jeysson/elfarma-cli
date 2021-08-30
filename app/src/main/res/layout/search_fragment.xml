@@ -100,7 +100,7 @@
         app:spanCount="2" />
 
 
-    <hashtag.alldelivery.component.Loading
+    <hashtag.elfarma.component.Loading
         android:id="@+id/loadingSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

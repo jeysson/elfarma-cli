@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <hashtag.alldelivery.component.CustomProgressBar
+    <hashtag.elfarma.component.CustomProgressBar
         android:id="@+id/confirmed"
         android:layout_width="0dp"
         android:layout_marginTop="8dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/LeftBar"/>
 
-    <hashtag.alldelivery.component.CustomProgressBar
+    <hashtag.elfarma.component.CustomProgressBar
         android:id="@+id/cooking"
         android:layout_width="0dp"
         android:layout_marginLeft="4dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="@+id/confirmed"
         style="@style/OrderProgressBar"/>
 
-    <hashtag.alldelivery.component.CustomProgressBar
+    <hashtag.elfarma.component.CustomProgressBar
         android:id="@+id/traveling"
         android:layout_width="0dp"
         android:layout_marginLeft="4dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="@+id/cooking"
         style="@style/OrderProgressBar"/>
 
-    <hashtag.alldelivery.component.CustomProgressBar
+    <hashtag.elfarma.component.CustomProgressBar
         android:id="@+id/completed"
         android:layout_width="0dp"
         android:max="100"

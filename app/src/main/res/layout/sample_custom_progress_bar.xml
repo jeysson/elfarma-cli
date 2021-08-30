@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <hashtag.alldelivery.component.CustomProgressBar
+    <hashtag.elfarma.component.CustomProgressBar
         style="@style/Widget.Theme.AllDelivery.MyView"
         android:layout_width="300dp"
         android:layout_height="300dp"

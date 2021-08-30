@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Elpharma</string>
+    <string name="app_name">Elfarma</string>
     <string name="title_home">Início</string>
     <string name="title_search">Busca</string>
     <string name="title_requests">Pedidos</string>
@@ -38,7 +38,7 @@
     <string name="address_search_map_title">Arraste para localizar o endereço</string>
     <string name="keep_going">Continuar</string>
     <string name="new_address_confirmation_button_text">Confirmar localização</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDrQtYEYkmdy2grRGoe74RC3B3R1OtXYCY</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAPp8VsNoke4QT9nRCdMVvQxcnkT74p5pk</string>
     <string name="new_address_reference_hint">Ponto de referência</string>
     <string name="state_hint">Estado</string>
     <string name="content_description_default_double_tap">Tocar duas vezes para ativar</string>

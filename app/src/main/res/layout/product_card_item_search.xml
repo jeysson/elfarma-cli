@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <hashtag.alldelivery.component.ButtonMinusPlus
+        <hashtag.elfarma.component.ButtonMinusPlus
             android:id="@+id/btPlusMinus"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image">
 
-        </hashtag.alldelivery.component.ButtonMinusPlus>
+        </hashtag.elfarma.component.ButtonMinusPlus>
 
         <TextView
             android:id="@+id/cross_selling_item_total_value"

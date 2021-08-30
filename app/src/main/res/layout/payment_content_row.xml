@@ -86,7 +86,7 @@
             android:layout_marginLeft="16dp"
             style="@style/Text.Link"/>
 
-        <hashtag.alldelivery.component.Loading
+        <hashtag.elfarma.component.Loading
             android:layout_gravity="center"
             android:id="@+id/loading"
             android:visibility="gone"

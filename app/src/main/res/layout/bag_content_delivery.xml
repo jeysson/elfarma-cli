@@ -183,7 +183,7 @@
         app:layout_constraintTop_toTopOf="@+id/mode_title"
         style="@style/Text.Body2"/>
 
-    <hashtag.alldelivery.component.Loading
+    <hashtag.elfarma.component.Loading
         android:id="@+id/mode_loading_view"
         android:visibility="gone"
         android:layout_width="wrap_content"

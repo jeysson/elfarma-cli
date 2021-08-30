@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="hashtag.alldelivery">
+    package="hashtag.elfarma">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -16,7 +16,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
     <application
-        android:name=".AllDeliveryApplication"
+        android:name="hashtag.elfarma.AllDeliveryApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,21 +24,21 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="true">
 
-        <service android:name=".core.service.FirebaseService"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <service android:name="hashtag.elfarma.core.service.FirebaseService"
+            android:exported="false">
             <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-                <action android:name="com.google.android.c2dm.permission.RECEIVE"/>
             </intent-filter>
         </service>
         <activity
-            android:name=".ui.filter.FiltersActivity"
+            android:name="hashtag.elfarma.ui.filter.FiltersActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.products.ProductView"
+            android:name="hashtag.elfarma.ui.products.ProductView"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="hashtag.elfarma.ui.splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.address.DetailAddress"
+            android:name="hashtag.elfarma.ui.address.DetailAddress"
             android:theme="@style/AppTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -64,31 +64,29 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="${MAPS_API_KEY}"/>
 
         <activity
-            android:name=".ui.address.AddressSet"
+            android:name="hashtag.elfarma.ui.address.AddressSet"
             android:label="@string/title_activity_address_set"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.address.FindAddress"
+            android:name="hashtag.elfarma.ui.address.FindAddress"
             android:theme="@style/AppTheme" />
 
-        <uses-library android:name="com.google.android.maps" />
-
         <activity
-            android:name=".ui.address.DeliveryAddress"
+            android:name="hashtag.elfarma.ui.address.DeliveryAddress"
             android:label="@string/title_activity_delivery_address"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".MainActivity"
+            android:name="hashtag.elfarma.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent2"
             android:windowSoftInputMode="adjustResize" />
 
         <receiver
-            android:name=".core.receiver.NetworkReceiver"
+            android:name="hashtag.elfarma.core.receiver.NetworkReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -96,4 +94,7 @@
         </receiver>
     </application>
 
+    <!--queries>
+        <package android:name="com.google.android.maps" />
+    </queries-->
 </manifest>

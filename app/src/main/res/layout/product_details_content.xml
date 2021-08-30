@@ -107,7 +107,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <hashtag.alldelivery.component.ButtonMinusPlus
+    <hashtag.elfarma.component.ButtonMinusPlus
         android:id="@+id/btMinusPlus"
         android:layout_width="match_parent"
         android:layout_height="70dp"

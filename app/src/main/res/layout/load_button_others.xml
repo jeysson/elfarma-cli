@@ -41,7 +41,7 @@
             style="@style/TextAppearance.DesignSystem.Button.B3"/>
     </LinearLayout>
 
-    <hashtag.alldelivery.component.Loading
+    <hashtag.elfarma.component.Loading
         android:layout_gravity="center"
         android:id="@+id/loading"
         android:visibility="invisible"

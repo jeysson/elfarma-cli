@@ -76,7 +76,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <hashtag.alldelivery.component.ButtonMinusPlus
+        <hashtag.elfarma.component.ButtonMinusPlus
             android:id="@+id/btPlusMinus"
             android:layout_width="match_parent"
             android:layout_height="40dp"
