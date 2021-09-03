@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -25,10 +27,10 @@ import hashtag.elfarma.R
 import hashtag.elfarma.core.async.JsonPostData
 import hashtag.elfarma.core.models.Login
 import hashtag.elfarma.core.models.Message
+import hashtag.elfarma.core.models.User
 import hashtag.elfarma.core.utils.DateDeserializer
 import hashtag.elfarma.core.utils.OnTaskCompleted
 import hashtag.elfarma.ui.address.AddressViewModel
-import hashtag.elfarma.ui.order.User
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.splash.*
 import org.jetbrains.anko.doAsync
@@ -96,7 +98,7 @@ class SplashActivity : AppCompatActivity(), OnTaskCompleted {
                 return@OnCompleteListener
             }
 
-            val currentUser = FirebaseAuth.getInstance().currentUser
+            val currentUser = Firebase.auth.currentUser
 
             if (currentUser != null) {
                 val login = Login()
@@ -221,7 +223,16 @@ class SplashActivity : AppCompatActivity(), OnTaskCompleted {
                         object : TypeToken<User?>() {}.type
                     )
                     //
-                    AllDeliveryApplication.USER = user
+                    if(Firebase.auth.currentUser != null){
+                        AllDeliveryApplication.USER = user
+                    }else {
+
+                        AllDeliveryApplication.USER = User()
+                        AllDeliveryApplication.USER?.token = user.token
+                        AllDeliveryApplication.USER?.tokenFCM = user.tokenFCM
+                        AllDeliveryApplication.USER?.anonimo = true
+                    }
+
                 }
 
                 val intent = Intent(this, MainActivity::class.java)

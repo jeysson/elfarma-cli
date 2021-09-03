@@ -77,4 +77,5 @@
     <color name="grey">#E5E5E5</color>
 
     <color name="deprecated_google_background">#4285f4</color>
+    <color name="deprecated_facebook_background">#4065b4</color>
 </resources>

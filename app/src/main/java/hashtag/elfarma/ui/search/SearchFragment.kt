@@ -70,7 +70,10 @@ class SearchFragment : Fragment(), OnBackPressedListener {
             }
         })
 
-        edit_search.focusable = View.FOCUSABLE
+        try {
+            edit_search.focusable = View.FOCUSABLE
+        }catch(e: Exception){}
+
         edit_search.showKeyboard()
         edit_search.doOnTextChanged { text, start, count, after ->
             if (text.isNullOrBlank()) {

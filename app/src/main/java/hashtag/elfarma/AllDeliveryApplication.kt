@@ -13,7 +13,6 @@ import hashtag.elfarma.core.di.repositoryModule
 import hashtag.elfarma.core.di.viewModelModule
 import hashtag.elfarma.core.models.*
 import hashtag.elfarma.core.network.networkModule
-import hashtag.elfarma.ui.order.User
 import org.koin.android.ext.android.startKoin
 import wiki.depasquale.mcache.Cache
 import java.util.*

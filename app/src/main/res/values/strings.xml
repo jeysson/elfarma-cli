@@ -192,7 +192,8 @@
     <string name="authentication_sign_out">Sair</string>
     <string name="no">Não</string>
     <string name="yes">Sim</string>
-    <string name="authenticate_with_google">Continuar com o Google</string>
+    <string name="authenticate_with_google">Entrar com o Google</string>
+    <string name="authenticate_with_facebook">Entrar com o Facebook</string>
     <string name="cancel_alert">Antenção</string>
     <string name="evaluate_choose_stars">Escolha de 1 a 5 estrelas para classificar</string>
     <string name="changed_order_label">A lista de itens foi atualizada pelo estabelecimento</string>
@@ -201,4 +202,6 @@
     <string name="order_list_item_details_button_label">Detalhes</string>
     <string name="to_evaluate">Avalie seu pedido</string>
     <string name="label_evaluate">Avaliação do pedido</string>
+    <string name="facebook_app_id">836470473515311</string>
+    <string name="fb_login_protocol_scheme">fb836470473515311</string>
 </resources>

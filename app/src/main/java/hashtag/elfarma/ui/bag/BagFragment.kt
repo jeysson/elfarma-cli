@@ -20,6 +20,7 @@ import hashtag.elfarma.R
 import hashtag.elfarma.core.utils.OnBackPressedListener
 import hashtag.elfarma.ui.address.DeliveryAddress
 import hashtag.elfarma.ui.paymentmethod.PaymentMethodFragment
+import hashtag.elfarma.ui.perfil.CadastrarFragment
 import hashtag.elfarma.ui.perfil.LoginFragment
 import hashtag.elfarma.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.bag_content_delivery.*
@@ -33,6 +34,7 @@ import java.util.*
 
 class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
 
+    private var vlrtotal: Double? = null
     private lateinit var locale: Locale
 
     override fun onCreateView(
@@ -53,8 +55,8 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
 
         refreshAddress()
         //
-        restaurant_name.text = STORE?.nomeFantasia
-        delivery_time.text = "Hoje, ${STORE?.tempoMinimo} - ${STORE?.tempoMaximo} min"
+        restaurant_name.text = Pedido?.store?.nomeFantasia
+        delivery_time.text = "Hoje, ${Pedido?.store?.tempoMinimo} - ${Pedido?.store?.tempoMaximo} min"
         //
         val adapter = BagAdapter(this)
         adapter.addItems(Pedido?.itens!!)
@@ -62,9 +64,13 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         //
         subtotal.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.itens?.sumByDouble { p-> p.price!! * p.quantity!! })
         delivery_fee_price.text = NumberFormat.getCurrencyInstance(locale).format(STORE?.taxaEntrega)
+
+        vlrtotal = Pedido?.itens?.sumByDouble {
+                p-> p.price!! * p.quantity!!}
+
         total_price.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.itens?.sumByDouble {
                 p-> p.price!! * p.quantity!!
-            }!! + STORE?.taxaEntrega!!)
+            }!! + Pedido?.store?.taxaEntrega!!)
         //
         if(Pedido?.paymentMethod != null){
             action_button.text = getString(R.string.bag_confirm_order_go)
@@ -105,11 +111,12 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
             }
         }
         //
-        if(STORE?.pedidoMinimo != null && STORE?.pedidoMinimo!! > 0) {
+        if(Pedido?.store?.pedidoMinimo != null && Pedido?.store?.pedidoMinimo!! > 0) {
             minimum_price_alert.text = String.format(locale,
                 resources.getString(R.string.payment_minimum_price),
-                NumberFormat.getCurrencyInstance(locale).format(STORE?.pedidoMinimo)
+                NumberFormat.getCurrencyInstance(locale).format(Pedido?.store?.pedidoMinimo)
             )
+
         }else
             minimum_price_alert.visibility = View.INVISIBLE
         //
@@ -151,6 +158,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
     override fun onClick(v: View?) {
         if(USER == null || USER?.anonimo!! ){
             pedidocheckout = true
+//            (activity as MainActivity).select(R.id.navigation_perfil)
             val manager: FragmentManager = activity!!.supportFragmentManager
             manager.beginTransaction()
             manager.commit(true) {
@@ -160,14 +168,34 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
                     R.anim.enter_from_right,
                     R.anim.exit_to_left
                 )
-               // addToBackStack(null)
+                addToBackStack(null)
                 replace(R.id.nav_host_fragment, LoginFragment::class.java, null)
             }
         }
-        else if (Pedido?.paymentMethod != null) {
-            Pedido?.userId = USER?.id
-            var modal = BagConfirmOrderDialog()
+        else if( Pedido?.store?.pedidoMinimo != null && vlrtotal!! < Pedido?.store?.pedidoMinimo!!) {
+            var modal = BagMinimumOrderDialog()
             modal.show(activity?.supportFragmentManager!!, "")
+        }
+        else if(USER?.cpf == null){
+            val manager: FragmentManager = activity!!.supportFragmentManager
+            manager.beginTransaction()
+            manager.commit(true) {
+                setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_left
+                )
+                addToBackStack(null)
+                replace(R.id.nav_host_fragment, CadastrarFragment::class.java, null)
+            }
+        }
+        else if (Pedido?.paymentMethod != null) {
+
+                Pedido?.userId = USER?.id
+                var modal = BagConfirmOrderDialog()
+                modal.show(activity?.supportFragmentManager!!, "")
+
         }
         else
             selectPayment()

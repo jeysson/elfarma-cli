@@ -21,6 +21,7 @@ import com.jaeger.library.StatusBarUtil
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
 import hashtag.elfarma.MainActivity
 import hashtag.elfarma.R
+import hashtag.elfarma.component.ButtonMinusPlus
 import hashtag.elfarma.core.models.*
 import hashtag.elfarma.core.utils.OnBackPressedListener
 import hashtag.elfarma.core.utils.OnChangedValueListener
@@ -341,9 +342,9 @@ class StoreFragment : Fragment(), OnBackPressedListener,
         back()
     }
 
-    override fun OnChangedValue(prod: Product, value: Int){
+    override fun OnChangedValue(obj: ButtonMinusPlus, prod: Product, value: Int){
 
-        (activity as MainActivity).changeValueBag(prod, value)
+        (activity as MainActivity).changeValueBag(obj, prod, value)
     }
 
     override fun onResume() {

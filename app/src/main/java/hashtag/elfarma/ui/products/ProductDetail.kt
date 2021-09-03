@@ -13,6 +13,7 @@ import hashtag.elfarma.AllDeliveryApplication.Companion.PRODUCT
 import hashtag.elfarma.AllDeliveryApplication.Companion.Pedido
 import hashtag.elfarma.MainActivity
 import hashtag.elfarma.R
+import hashtag.elfarma.component.ButtonMinusPlus
 import hashtag.elfarma.core.models.Product
 import hashtag.elfarma.core.utils.OnBackPressedListener
 import hashtag.elfarma.core.utils.OnChangedValueListener
@@ -96,8 +97,8 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
     }
 
 
-    override fun OnChangedValue(prod: Product, value: Int){
-        (activity as MainActivity).changeValueBag(prod, value)
+    override fun OnChangedValue(obj: ButtonMinusPlus, prod: Product, value: Int){
+        (activity as MainActivity).changeValueBag(obj, prod, value)
     }
 
     override fun onBackPressed() {

@@ -6,14 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -31,12 +33,18 @@ import hashtag.elfarma.core.models.Login
 import hashtag.elfarma.core.models.Message
 import hashtag.elfarma.core.utils.DateDeserializer
 import hashtag.elfarma.core.utils.OnTaskCompleted
-import hashtag.elfarma.ui.order.User
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+
+import com.facebook.AccessToken
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import hashtag.elfarma.AllDeliveryApplication.Companion.pedidocheckout
+import hashtag.elfarma.core.models.User
 
 
 /**
@@ -44,14 +52,15 @@ import java.util.*
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
-
-    private lateinit var account: GoogleSignInAccount
-    private val RC_SIGN_IN: Int = 9001
+class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted{
 
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var callbackManager: CallbackManager
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var loginManager: LoginManager
+
+    private val RC_SIGN_IN: Int = 9001
+    private val FB_SIGN_IN: Int = 64206
 
     var waitDialog: AlertDialog? = null
 
@@ -71,11 +80,18 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).showBottomNavigation()
+        (activity as MainActivity).hideBag()
+        //
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+        //
+        loginFacebook()
         //
         // [START config_signin]
         // Configure Google Sign In
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("144553100651-jsou9nfdgr1j52g5qirjunk6bubap2ok.apps.googleusercontent.com"/*getString(R.string.default_web_client_id)*/)
+            .requestIdToken("144553100651-jsou9nfdgr1j52g5qirjunk6bubap2ok.apps.googleusercontent.com")
             .requestEmail()
             .build()
         //
@@ -84,56 +100,59 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
         auth = FirebaseAuth.getInstance()
         //
         loadView()
-        // [END initialize_auth]
-        //topbar_title.text = "Login"
-        //
-        /*btLoggin.setOnClickListener(this)
-        btCadastrar.setOnClickListener(this)
-        btEsquiciSenha.setOnClickListener(this)*/
-        /*back_button.setOnClickListener {
-            back()
-        }*/
-        //
-        //
+
+        if(pedidocheckout){
+            topbar_title.text = ""
+            toolbar2.visibility = View.VISIBLE
+            back_button.setOnClickListener { back() }
+        }
+
         setWaitDialog("Validando as credenciais.")
     }
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
-       // autenticar(currentUser!!)
+        //
+       /* if( auth.currentUser != null)
+            autenticar()*/
     }
 
     override fun onClick(view: View?) {
-        val fragmentManager = activity!!.supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
 
         when (view!!.id) {
             R.id.btgoogle -> SingInGoogle()
-            R.id.other_button-> {
+            R.id.btfacebook -> SingInFacebook()
+            R.id.other_button -> {
                 auth.signOut()
+                LoginManager.getInstance().logOut()
+                googleSignInClient.signOut()
+                var user = User()
+                user.anonimo = true
+                user.token = USER?.token
+                user.tokenFCM = USER?.tokenFCM
+                USER = user
                 loadView()
             }
-          //  R.id.btLoggin -> autenticar()
-           /* R.id.btCadastrar -> {
-                val cadastrarFragment: Fragment = CadastrarFragment()
-                fragmentTransaction.remove(this@LoginFragment)
-                fragmentTransaction.add(R.id.frmLogin, cadastrarFragment)
-                fragmentTransaction.commit()
-            }
-            R.id.btEsquiciSenha -> {
-                val esqueciSenhaFragment: Fragment = EsqueciSenhaFragment()
-                fragmentTransaction.remove(this@LoginFragment)
-                fragmentTransaction.add(R.id.frmLogin, esqueciSenhaFragment)
-                fragmentTransaction.commit()
-            }*/
         }
     }
 
     private  fun SingInGoogle(){
-        loading.visibility = View.VISIBLE
-        val signInIntent = googleSignInClient?.signInIntent
+        loadinggoogle.visibility = View.VISIBLE
+        textgoogle.visibility = View.GONE
+        val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    private  fun SingInFacebook(){
+        loadingface.visibility = View.VISIBLE
+        textface.visibility = View.GONE
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+        if (!isLoggedIn) {
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
+        } else {
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -141,10 +160,12 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                account = task.getResult(ApiException::class.java)!!
+                val account = task.getResult(ApiException::class.java)!!
                 Log.d("ELFARMA", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
 
@@ -152,18 +173,21 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
                 // Google Sign In failed, update UI appropriately
                 Log.w("ELFARMA", "Google sign in failed", e)
             }
+        }else if(requestCode == FB_SIGN_IN){
+            // Pass the activity result back to the Facebook SDK
+            callbackManager.onActivityResult(requestCode, resultCode, data)
         }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
+
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(activity!!) { task ->
+            .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+                   // account = auth.currentUser
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("ELFARMA", "signInWithCredential:success")
-
-                    loading.visibility = View.VISIBLE
                     loadView()
 
                     autenticar()
@@ -175,13 +199,42 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
             }
     }
 
+    private fun handleFacebookAccessToken(token: AccessToken) {
+       // Log.d(TAG, "handleFacebookAccessToken:$token")
+       // showProgressBar()
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                  //  Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+                    //updateUI(user)
+                    autenticar()
+                } else {
+                   // // If sign in fails, display a message to the user.
+                   /* Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(context, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    updateUI(null)*/
+                }
+
+                //hideProgressBar()
+            }
+    }
+
     private fun autenticar() {
         try {
            // waitDialog!!.show()
             val login = Login()
-            login.email = account.email
-            login.nome = account.givenName
-            login.sobrenome = account.familyName
+            login.email = auth.currentUser?.email// account.email
+            var nomes = auth.currentUser?.displayName?.split(" ")
+            login.nome = nomes?.get(0)
+
+            if(nomes?.size!! > 1)
+                login.sobrenome = nomes.get(nomes.size -1 )
+
             login.tokenFCM = AllDeliveryApplication.USER?.tokenFCM
 
             JsonPostData(
@@ -215,56 +268,26 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
                     )
                     //
                     AllDeliveryApplication.USER = user
+                    loadView()
 
-                   /* if (user.validated!!) {
-                        if (user.senhaProv!!) {
+                    if(pedidocheckout){
+                        if(USER?.cpf == null) {
                             val manager: FragmentManager = activity!!.supportFragmentManager
                             manager.beginTransaction()
-                            manager.commit {
+                            manager.commit(true) {
                                 setCustomAnimations(
                                     R.anim.enter_from_left,
                                     R.anim.exit_to_right,
                                     R.anim.enter_from_right,
                                     R.anim.exit_to_left
                                 )
-                                replace(
-                                    R.id.nav_host_fragment,
-                                    AlterarSenhaFragment::class.java,
-                                    ActivityOptions.makeSceneTransitionAnimation(
-                                        activity
-                                    ).toBundle()
-                                )
                                 addToBackStack(null)
+                                replace(R.id.nav_host_fragment, CadastrarFragment::class.java, null)
                             }
-                        } else {*/
-                            val imm: InputMethodManager? =
-                                getSystemService<InputMethodManager>(activity!!, InputMethodManager::class.java)
-                            imm?.hideSoftInputFromWindow(view!!.windowToken, 0)
-                            //waitDialog!!.dismiss()
-                            //(activity as MainActivity).select(R.id.navigation_home)
-                    back()
-                        /*}
-                    } else {
-                        val manager: FragmentManager = activity!!.supportFragmentManager
-                        manager.beginTransaction()
-                        manager.commit {
-                            setCustomAnimations(
-                                R.anim.enter_from_left,
-                                R.anim.exit_to_right,
-                                R.anim.enter_from_right,
-                                R.anim.exit_to_left
-                            )
-                            replace(
-                                R.id.nav_host_fragment,
-                                VerificacaoFragment::class.java,
-                                ActivityOptions.makeSceneTransitionAnimation(
-                                    activity
-                                ).toBundle()
-                            )
-                            addToBackStack(null)
                         }
-                        waitDialog!!.dismiss()
-                    }*/
+                    }else {
+                        back()
+                    }
                 }
             } catch (e: JSONException) {
                 waitDialog!!.hide()
@@ -276,6 +299,25 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
         } else {
             waitDialog!!.hide()
         }
+    }
+
+    fun loginFacebook(){
+        // Initialize Facebook Login button
+        callbackManager = CallbackManager.Factory.create()
+        loginManager = LoginManager.getInstance();
+        loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+            override fun onSuccess(loginResult: LoginResult?) {
+                handleFacebookAccessToken(loginResult?.accessToken!!)
+            }
+
+            override fun onCancel() {
+                // App code
+            }
+
+            override fun onError(exception: FacebookException) {
+                // App code
+            }
+        })
     }
 
     private fun setWaitDialog(text: String) {
@@ -299,7 +341,7 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
     }
 
     private fun back(){
-        (activity as MainActivity).select(R.id.navigation_home)
+        activity!!.supportFragmentManager.popBackStackImmediate()
     }
 
     fun loadView(){
@@ -307,17 +349,27 @@ class LoginFragment : Fragment(), View.OnClickListener, OnTaskCompleted {
             title.visibility = View.INVISIBLE
             userName.visibility = View.VISIBLE
             userName.text = USER?.nome +" "+ USER?.sobrenome
-            btgoogle.visibility = View.INVISIBLE
-            //skip_button.visibility = View.INVISIBLE
+            btgoogle.visibility = View.GONE
+            btgoogle.visibility = View.GONE
+            loadingface.visibility = View.GONE
+            loadinggoogle.visibility = View.GONE
+            textgoogle.visibility = View.VISIBLE
+            textface.visibility = View.VISIBLE
             other_button.visibility = View.VISIBLE
             other_button.setOnClickListener(this)
         }else {
             title.visibility = View.VISIBLE
             userName.visibility = View.INVISIBLE
             btgoogle.visibility = View.VISIBLE
+            btgoogle.visibility = View.VISIBLE
             //skip_button.visibility = View.VISIBLE
             other_button.visibility = View.INVISIBLE
+            loadingface.visibility = View.GONE
+            loadinggoogle.visibility = View.GONE
+            textgoogle.visibility = View.VISIBLE
+            textface.visibility = View.VISIBLE
             btgoogle.setOnClickListener(this)
+            btfacebook.setOnClickListener(this)
         }
     }
 }

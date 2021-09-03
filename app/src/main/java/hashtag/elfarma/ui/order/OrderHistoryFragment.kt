@@ -59,7 +59,7 @@ class OrderHistoryFragment : Fragment(), View.OnClickListener {
                 if (!isLoading && !isLastPage) {
                     if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 1) {
                         isLoading = true
-                        loadingSearch.visibility = View.VISIBLE
+                        loading.visibility = View.VISIBLE
                         page += 1
 
                         getMoreItems()

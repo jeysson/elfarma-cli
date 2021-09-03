@@ -15,10 +15,13 @@ import com.jaeger.library.StatusBarUtil
 import hashtag.elfarma.AllDeliveryApplication.Companion.ADDRESS
 import hashtag.elfarma.AllDeliveryApplication.Companion.Pedido
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
+import hashtag.elfarma.component.ButtonMinusPlus
 import hashtag.elfarma.core.models.*
 import hashtag.elfarma.core.utils.OnBackPressedListener
+import hashtag.elfarma.ui.bag.BagChangeOrderDialog
 import hashtag.elfarma.ui.bag.BagFragment
 import kotlinx.android.synthetic.main.bag_bar.*
+import kotlinx.android.synthetic.main.bag_content_list_item.*
 import kotlinx.android.synthetic.main.stores_activity_main.*
 import java.text.NumberFormat
 import java.util.*
@@ -57,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_perfil
             )
         )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        //
         NavigationUI.setupWithNavController(navView, navController)
         //
         bag_container.setOnClickListener {
@@ -80,36 +83,11 @@ class MainActivity : AppCompatActivity() {
 
                         replace(R.id.nav_host_fragment, bag, bag.javaClass.simpleName)
                         addToBackStack(bag.javaClass.simpleName)
-                        //replace(R.id.nav_host_fragment, BagFragment::class.java, null)
-
                     }
                 }
             }
 
-           /* val manager = supportFragmentManager
-            manager.beginTransaction()
-            manager.commit {
-                setCustomAnimations(
-                    R.anim.enter_from_up,
-                    R.anim.exit_to_down,
-                    R.anim.enter_from_down,
-                    R.anim.exit_to_up
-                )
 
-                var bag = BagFragment()
-
-                replace(R.id.nav_host_fragment, bag, bag.javaClass.simpleName)
-                addToBackStack(bag.javaClass.simpleName)
-                //replace(R.id.nav_host_fragment, BagFragment::class.java, null)
-
-            }*/
-
-           /* changeFragment(
-                supportFragmentManager,
-                BagFragment::class.java,
-                R.id.bag_checkout_container,
-                2
-            )*/
         }
     }
 
@@ -168,7 +146,7 @@ class MainActivity : AppCompatActivity() {
         btSacola.translationY = 0f
     }
 
-    fun changeValueBag(prod: Product, value: Int) {
+    fun changeValueBag(obj: ButtonMinusPlus?, prod: Product, value: Int) {
         if (Pedido == null) {
             Pedido = Order()
             Pedido?.address = ADDRESS
@@ -177,45 +155,58 @@ class MainActivity : AppCompatActivity() {
             Pedido?.store?.nomeFantasia = STORE?.nomeFantasia
             Pedido?.store?.tempoMaximo = STORE?.tempoMaximo
             Pedido?.store?.tempoMinimo = STORE?.tempoMinimo
+            Pedido?.store?.pedidoMinimo = STORE?.pedidoMinimo
+            Pedido?.store?.taxaEntrega = STORE?.taxaEntrega
         }
-        //
-        var ix = Pedido?.itens?.firstOrNull { p: OrderItem -> p.produto?.id == prod?.id   }
 
-        if(ix == null) {
-            Pedido?.itens?.add(OrderItem(prod, value, prod?.preco))
-        } else {
-            if(value == 0)
-                Pedido?.itens?.remove(ix)
-            else{
+        if(prod?.store?.id == Pedido?.store?.id) {
+            //
+            var ix = Pedido?.itens?.firstOrNull { p: OrderItem -> p.produto?.id == prod?.id }
 
-                if(ix.quantity!! < value) {
-                    item_added.alpha = 0f
-                    item_added.animate().apply {
-                        alpha(1f)
-                        duration = 1000
-                        withStartAction {
-                            bag_container.visibility = View.INVISIBLE
-                        }
+            if (ix == null) {
+                Pedido?.itens?.add(OrderItem(prod, value, prod?.preco))
+            } else {
+                if (value == 0)
+                    Pedido?.itens?.remove(ix)
+                else {
 
-                        withEndAction {
-                            item_added.visibility = View.INVISIBLE
-                            bag_container.alpha = 0f
-                            bag_container.animate().apply {
-                                alpha(1f)
-                                duration = 600
+                    if (ix.quantity!! < value) {
+                        item_added.alpha = 0f
+                        item_added.animate().apply {
+                            alpha(1f)
+                            duration = 1000
+                            withStartAction {
+                                bag_container.visibility = View.INVISIBLE
                             }
 
-                            bag_container.visibility = View.VISIBLE
+                            withEndAction {
+                                item_added.visibility = View.INVISIBLE
+                                bag_container.alpha = 0f
+                                bag_container.animate().apply {
+                                    alpha(1f)
+                                    duration = 600
+                                }
+
+                                bag_container.visibility = View.VISIBLE
+                            }
                         }
+
+                        item_added.visibility = View.VISIBLE
                     }
 
-                    item_added.visibility = View.VISIBLE
+                    ix.quantity = value
                 }
-
-                ix.quantity = value
+            }
+        }else{
+            if(value > 0) {
+                Pedido?.userId = AllDeliveryApplication.USER?.id
+                var modal = BagChangeOrderDialog()
+                modal.product = prod
+                modal.quantity = value
+                modal.obj = obj!!
+                modal.show(supportFragmentManager!!, "")
             }
         }
-
         showBag()
     }
 

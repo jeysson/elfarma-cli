@@ -1,13 +1,17 @@
 package hashtag.elfarma.ui.perfil
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import hashtag.elfarma.core.models.User
+import hashtag.elfarma.core.repository.IUserRepository
 
-class PerfilViewModel: ViewModel() {
+class PerfilViewModel(private val _userRep: IUserRepository): ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is perfil Fragment"
+    fun update(user: User){
+        _userRep.update(user).subscribe({
+
+        },{
+
+        })
     }
-    val text: LiveData<String> = _text
+
 }

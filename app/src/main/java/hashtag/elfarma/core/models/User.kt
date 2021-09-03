@@ -1,4 +1,4 @@
-package hashtag.elfarma.ui.order
+package hashtag.elfarma.core.models
 
 class User {
 
@@ -21,6 +21,10 @@ class User {
     var token: String? = null
 
     var tokenFCM: String? = null
+
+    var cpf: Long? = null
+
+    var telefone: Long? = null
 
     constructor(){
         id = 1

@@ -50,9 +50,9 @@ import hashtag.elfarma.ui.store.StoreFragment
 import hashtag.elfarma.ui.store.StoresAdapter
 import hashtag.elfarma.ui.store.StoresViewModel
 import kotlinx.android.synthetic.main.address_list_item.*
+import kotlinx.android.synthetic.main.address_with_scheduling_layout.*
 import kotlinx.android.synthetic.main.filter_bar_container.*
 import kotlinx.android.synthetic.main.filter_fragment.*
-import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.publi_home.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.runOnUiThread
@@ -74,9 +74,6 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     private var isConnected: Boolean = false
     private lateinit var _view: View
     private var _currentAddress: MutableLiveData<Address> = MutableLiveData()
-    private val _swipeRefresh by lazy { _view.findViewById<SwipeRefreshLayout>(R.id.swipe_refresh) }
-    private val _homeCards by lazy { _view.findViewById<RecyclerView>(R.id.home_cards) }
-    private val _homeLoading by lazy { _view.findViewById<Loading>(R.id.loading) }
 
     var isLastPage: Boolean = false
     var isLoading: Boolean = false
@@ -99,10 +96,10 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         StatusBarUtil.setLightMode(activity)
 
         _view = view
-        _homeCards.layoutManager = LinearLayoutManager(context)
-        _homeCards.itemAnimator = DefaultItemAnimator()
-        _homeCards.setHasFixedSize(true)
-        _swipeRefresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
+        home_cards.layoutManager = LinearLayoutManager(context)
+        home_cards.itemAnimator = DefaultItemAnimator()
+        home_cards.setHasFixedSize(true)
+        swipe_refresh.setColorSchemeColors(getColor(view.context, R.color.colorPrimary))
         addressViewModel  = ViewModelProvider(this).get(AddressViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
         address.text = getString(R.string.address_list_location_activate)
@@ -116,7 +113,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             selectAddress()
         }
         //
-        _swipeRefresh.setOnRefreshListener {
+        swipe_refresh.setOnRefreshListener {
             Log.d("[ELFARMA]","Carregando itens após o refresh.")
             getItems()
         }
@@ -130,14 +127,14 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         )
 
         _storeViewModel.adapter?.itens = ArrayList<Store>()
-        _homeCards.adapter = _storeViewModel.adapter
+        home_cards.adapter = _storeViewModel.adapter
     }
 
     private fun scrollListener() = doAsync {
-        _homeCards.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        home_cards.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val recyclerLayout = (_homeCards.layoutManager as LinearLayoutManager)
+                val recyclerLayout = (home_cards.layoutManager as LinearLayoutManager)
 
                 if (!isLoading && !isLastPage) {
                     if (recyclerLayout.findLastCompletelyVisibleItemPosition() == (itemsPerPage * page) - 1) {
@@ -185,14 +182,14 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 isLoading = it
 
                 if (it) {
-                    _homeLoading.visibility = View.VISIBLE
+                    loading.visibility = View.VISIBLE
 
                     if (page == 1)
-                        _homeCards.visibility = View.GONE
+                        home_cards.visibility = View.GONE
                 } else {
-                    _swipeRefresh.isRefreshing = false
-                    _homeLoading.visibility = View.INVISIBLE
-                    _homeCards.visibility = View.VISIBLE
+                    swipe_refresh.isRefreshing = false
+                    loading.visibility = View.INVISIBLE
+                    home_cards.visibility = View.VISIBLE
                 }
             }
         }
@@ -213,7 +210,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     private fun getCurrentAddress() {
 
-        if (ADDRESS != null) {
+        if (ADDRESS != null && ADDRESS?.lat != null && ADDRESS?.longi != null) {
             address.text = AllDeliveryApplication.getShortAddress(
                 _view.context,
                 ADDRESS?.lat!!,
@@ -250,8 +247,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             if (resultCode == Activity.RESULT_OK) {
                 Log.d("[ELFARMA]","Carregando itens a partir do resulte.")
 //              Busca realizada por outras páginas
-                _homeLoading.visibility = VISIBLE
-                _homeCards.visibility = GONE
+                loading.visibility = VISIBLE
+                home_cards.visibility = GONE
                 page = 1
                 getItems()
             }
@@ -261,7 +258,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     override fun onResume() {
         super.onResume()
 
-        if (ADDRESS?.id != null) {
+        if (ADDRESS?.id != null && ADDRESS!!.lat != null && ADDRESS!!.longi != null) {
             LAT_LONG?.let {
                 address.text = AllDeliveryApplication.getShortAddress(
                     _view.context, ADDRESS!!.lat!!,
@@ -287,7 +284,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         if(LAT_LONG != null){
             page = 1
             isLastPage = false
-            _homeCards.visibility = GONE
+            home_cards.visibility = GONE
             //config adapter
             _storeViewModel.getPagingStores(
                 page,
@@ -297,7 +294,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 SORT_FILTER
             )
         }else{
-            _swipeRefresh.isRefreshing = false
+            swipe_refresh.isRefreshing = false
             selectAddress()
         }
     }

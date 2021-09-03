@@ -1,6 +1,7 @@
 package hashtag.elfarma.ui.address
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
@@ -28,6 +29,7 @@ import hashtag.elfarma.core.models.Address
 import kotlinx.android.synthetic.main.address_list_item.*
 import kotlinx.android.synthetic.main.common_toolbar.*
 import kotlinx.android.synthetic.main.address_delivery_activity.*
+import org.jetbrains.anko.toast
 
 class DeliveryAddress : AppCompatActivity() {
 
@@ -56,13 +58,16 @@ class DeliveryAddress : AppCompatActivity() {
         }
 
         location.setOnClickListener {
+            /*
+            val value: String? = null
 
-            val value = getShortAddress(
-                this, LAT_LONG?.latitude!!,
-                LAT_LONG?.longitude!!,
-                null
-            )
-
+            if(LAT_LONG != null) {
+                val value = getShortAddress(
+                    this, LAT_LONG?.latitude!!,
+                    LAT_LONG?.longitude!!,
+                    null
+                )
+            }
 //            Verifica se o endereço é válido, do contrário direciona o usuário para definir endereço manualmente
             if (value != null) {
                 ADDRESS = null
@@ -79,7 +84,7 @@ class DeliveryAddress : AppCompatActivity() {
                 val intent = Intent(this, AddressSet::class.java)
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             }
-
+        */
         }
 
         search_box.setOnClickListener {
@@ -113,6 +118,7 @@ class DeliveryAddress : AppCompatActivity() {
                     // for ActivityCompat#requestPermissions for more details.
                     return
                 }
+
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     var location: Location? = task.result
 
@@ -129,17 +135,14 @@ class DeliveryAddress : AppCompatActivity() {
                     }
                 }
             } else {
-                Toast.makeText(
-                    this,
-                    "Por favor, habilite seu serviço de localização!",
-                    Toast.LENGTH_SHORT
-                )
+                toast("Por favor, habilite seu serviço de localização!")
             }
         } else {
             RequestPermission()
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun getNewLocation() {
         locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY

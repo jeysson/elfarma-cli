@@ -65,4 +65,5 @@ val networkModule = module {
     single { createWebService<StoreApi>(get(BASE_URL), get()) }
     single { createWebService<ProductApi>(get(BASE_URL), get()) }
     single { createWebService<OrderApi>(get(BASE_URL), get()) }
+    single { createWebService<UserApi>(get(BASE_URL), get()) }
 }

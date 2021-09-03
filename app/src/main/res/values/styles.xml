@@ -539,6 +539,13 @@
         <item name="android:fontFamily">@font/sul_sans_regular</item>
     </style>
 
+    <style name="ButtonFacebook">
+        <item name="android:background">@drawable/shape_facebook_button</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="ds_lb_drawableLeft">@drawable/ic_facebook</item>
+        <item name="ds_lb_loadingColor">@color/white</item>
+    </style>
+
     <style name="ButtonGoogle">
         <item name="ds_lb_drawableLeft">@drawable/ic_google</item>
         <item name="android:textSize">@dimen/text_size_h3</item>

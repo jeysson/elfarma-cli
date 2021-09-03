@@ -7,6 +7,7 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,6 +18,7 @@ import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.R
 import kotlinx.android.synthetic.main.address_map_toolbar.*
 import kotlinx.android.synthetic.main.address_set.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMoveStartedListener, GoogleMap.OnCameraIdleListener {
@@ -42,11 +44,14 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
         }
 
         continue_button.setOnClickListener{
-
-            val intent = Intent(this, DetailAddress::class.java)
-            // start your next activity
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-            finish()
+            if(AllDeliveryApplication.LAT_LONG != null) {
+                val intent = Intent(this, DetailAddress::class.java)
+                // start your next activity
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                finish()
+            }else{
+                toast("Selecione um endereço!")
+            }
         }
     }
 
@@ -60,14 +65,17 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.setOnCameraMoveStartedListener(this)
-        mMap.setOnCameraIdleListener(this)
-        // Add a marker in Sydney and move the camera
-        latLng = AllDeliveryApplication.LAT_LONG!!
-        val sydney = LatLng(latLng!!.latitude, latLng!!.longitude)
-        //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f))
+        if(AllDeliveryApplication.LAT_LONG != null) {
+            mMap = googleMap
+            mMap.setOnCameraMoveStartedListener(this)
+            mMap.setOnCameraIdleListener(this)
+
+            // Add a marker in Sydney and move the camera
+            latLng = AllDeliveryApplication.LAT_LONG!!
+            val sydney = LatLng(latLng!!.latitude, latLng!!.longitude)
+            //mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sydney, 18.0f))
+        }
     }
 
     @SuppressLint("RestrictedApi")

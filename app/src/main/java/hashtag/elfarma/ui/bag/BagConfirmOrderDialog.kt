@@ -41,7 +41,7 @@ class BagConfirmOrderDialog: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        scheduling_time.text = "Hoje, ${STORE?.tempoMinimo} - ${STORE?.tempoMaximo} min"
+        scheduling_time.text = "Hoje, ${Pedido?.store?.tempoMinimo} - ${Pedido?.store?.tempoMaximo} min"
         //
         val formatter = DateTimeFormatter.ofPattern(
             "E", Locale(
@@ -53,7 +53,7 @@ class BagConfirmOrderDialog: BottomSheetDialogFragment() {
         day_of_week.text = LocalDate.now().format(formatter)
         day_of_month.text = LocalDate.now().dayOfMonth.toString()
         //
-        address_title.text = "${ADDRESS?.address}, ${ADDRESS?.number}"
+        address_title.text = "${Pedido?.address?.address}, ${Pedido?.address?.number}"
         address_description.text = if (Pedido?.address?.complement == "")
             Pedido?.address?.neighborhood
         else

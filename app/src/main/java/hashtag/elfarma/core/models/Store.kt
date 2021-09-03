@@ -37,8 +37,10 @@ class Store{
     @SerializedName("hFecha") val hFecha : Int? = null
     @SerializedName("lat") val lat : String? = null
     @SerializedName("long") val long : String? = null
-    @SerializedName("taxaEntrega") val taxaEntrega : Float? = null
-    @SerializedName("pedidoMinimo") val pedidoMinimo: Float? = null
+    @SerializedName("taxaEntrega")
+    var taxaEntrega : Float? = null
+    @SerializedName("pedidoMinimo")
+    var pedidoMinimo: Float? = null
     @SerializedName("distancia") val distancia : String? = null
 
     var logoCarregado: Boolean = false

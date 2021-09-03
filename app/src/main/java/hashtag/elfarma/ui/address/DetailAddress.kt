@@ -46,11 +46,13 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
         var latlong = AllDeliveryApplication.LAT_LONG
         var geoCoder = Geocoder(baseContext, Locale.getDefault())
 
-        address = geoCoder.getFromLocation(latlong!!.latitude, latlong.longitude, 1)
-        header_title_address.text = address[0].thoroughfare //+ ", " + address[0].featureName
-        header_subtitle_address.text =
-            address[0].subLocality + ", " + address[0].subAdminArea + " - " + address[0].adminArea
-
+       // if (AllDeliveryApplication.ADDRESS != null && AllDeliveryApplication.ADDRESS?.lat != null) {
+            address = geoCoder.getFromLocation(latlong!!.latitude, latlong.longitude, 1)
+            header_title_address.text = address[0].thoroughfare //+ ", " + address[0].featureName
+            header_subtitle_address.text =
+                address[0].subLocality + ", " + address[0].subAdminArea + " - " + address[0].adminArea
+       // }
+        //
         if (AllDeliveryApplication.ADDRESS != null && AllDeliveryApplication.EDIT) {
             var add = AllDeliveryApplication.ADDRESS
             header_title_address.text = add!!.address + ", " + add.number
@@ -77,7 +79,9 @@ class DetailAddress : AppCompatActivity(), OnMapReadyCallback {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    header_title_address.text = address[0].thoroughfare + ", " + s.toString()
+                    if(address != null && address.size > 0) {
+                        header_title_address.text = address[0].thoroughfare + ", " + s.toString()
+                    }
                 }
             }
         )

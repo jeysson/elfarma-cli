@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:background="@drawable/simple_rounded_layout_background"
+    android:paddingBottom="@dimen/space_size_36dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="vertical"
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="24dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="vertical"
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="24dp"/>
+
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/TextAppearance.DesignSystem.Title.H2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:paddingBottom="@dimen/space_size_12dp"
+        android:text="Pedido mínimo"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/warning"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView android:textColor="@color/black"
+        android:gravity="center"
+        android:id="@+id/warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        style="@style/TextAppearance.DesignSystem.Form.F3"/>
+
+
+    <TextView android:gravity="center"
+        android:id="@+id/action_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/space_size_16dp"
+        android:minHeight="50dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:text="Ok"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/warning"
+        style="@style/Button.Dark"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

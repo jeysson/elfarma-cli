@@ -51,7 +51,7 @@
             android:id="@+id/edit_search"
             style="@style/Text.Body2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:background="@android:color/transparent"
@@ -59,14 +59,13 @@
             android:imeOptions="actionSearch"
             android:inputType="textCapSentences"
             android:maxLines="1"
-            android:tag="binding_1"
             android:textColor="@color/black"
             android:textColorHint="@color/medium_gray"
-            app:layout_constraintBottom_toBottomOf="@+id/search_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/view_search_background"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/search_icon"
             app:layout_constraintRight_toLeftOf="@+id/btn_cancel"
-            app:layout_constraintTop_toTopOf="@+id/search_icon" />
+            app:layout_constraintTop_toTopOf="@+id/view_search_background" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"

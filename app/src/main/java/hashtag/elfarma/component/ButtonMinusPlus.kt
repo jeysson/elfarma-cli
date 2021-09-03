@@ -53,7 +53,7 @@ class ButtonMinusPlus : ConstraintLayout{
             isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, isOpen)
 
         textItemCount?.text = _total.toString()
-        evento?.OnChangedValue(_produto!!, _total)
+        evento?.OnChangedValue(this, _produto!!, _total)
     }
 
     constructor(context: Context) : super(context) {
@@ -90,12 +90,12 @@ class ButtonMinusPlus : ConstraintLayout{
             if(animado)
                 isOpen = animationListener(plusButton!!, cardViewIncrementItem!!, isOpen)
 
-            evento?.OnChangedValue(_produto!!, _total)
+            evento?.OnChangedValue(this, _produto!!, _total)
         }
         incrementButton.setOnClickListener {
             _total += 1
             textItemCount?.text = _total.toString()
-            evento?.OnChangedValue(_produto!!, _total)
+            evento?.OnChangedValue(this, _produto!!, _total)
         }
         decrementButton.setOnClickListener {
             if(_total > 0)
@@ -109,7 +109,7 @@ class ButtonMinusPlus : ConstraintLayout{
 
             textItemCount?.text = _total.toString()
 
-            evento?.OnChangedValue(_produto!!, _total)
+            evento?.OnChangedValue(this, _produto!!, _total)
         }
         //
         val set = ConstraintSet()
