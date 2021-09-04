@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "144553100651-3r3l3bcdq6ks4cgf4duptapmgq7ovrsv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hashtag.elfarma",
+            "certificate_hash": "0e0a30f5c532d46e3df8b6983766a30217968207"
+          }
+        },
+        {
           "client_id": "144553100651-79k48o9jc9rlgrdnttcves3iic6s823d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

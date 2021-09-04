@@ -24,15 +24,15 @@ android {
         applicationId "hashtag.elfarma"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 10214
-        versionName "1.0.2a14"
+        versionCode 10215
+        versionName "1.0.2a15"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-           // debuggable true
+            debuggable true
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
