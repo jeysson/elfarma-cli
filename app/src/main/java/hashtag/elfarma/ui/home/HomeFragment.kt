@@ -284,7 +284,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         if(LAT_LONG != null){
             page = 1
             isLastPage = false
-            home_cards.visibility = GONE
+            runOnUiThread {
+                home_cards.visibility = GONE
+            }
             //config adapter
             _storeViewModel.getPagingStores(
                 page,
@@ -294,7 +296,9 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
                 SORT_FILTER
             )
         }else{
-            swipe_refresh.isRefreshing = false
+            runOnUiThread {
+                swipe_refresh.isRefreshing = false
+            }
             selectAddress()
         }
     }

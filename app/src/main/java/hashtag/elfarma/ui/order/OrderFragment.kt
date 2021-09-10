@@ -19,6 +19,7 @@ import androidx.transition.TransitionManager
 import com.jaeger.library.StatusBarUtil
 import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.OrderEvaluated
+import hashtag.elfarma.AllDeliveryApplication.Companion.Pedido
 import hashtag.elfarma.AllDeliveryApplication.Companion.PedidoHistory
 import hashtag.elfarma.MainActivity
 import hashtag.elfarma.R
@@ -140,8 +141,9 @@ class OrderFragment: Fragment(), OnBackPressedListener, OnClickListener {
                 replace(R.id.nav_host_fragment, OrderOneHistoryFragment::class.java, null)
             }
         }
-
-
+        //
+        Pedido = null
+        //
         (activity as MainActivity).hideBag()
         (activity as MainActivity).hideBottomNavigation()
     }
