@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jaeger.library.StatusBarUtil
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.SEARCH_STORE
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
 import hashtag.elfarma.MainActivity
@@ -45,7 +46,8 @@ class ProductSearch : Fragment(), OnBackPressedListener, OnChangedValueListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
-
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
         //config rv
         recycler_product_list_search.layoutManager = GridLayoutManager(context, 2)
         recycler_product_list_search.setHasFixedSize(true)

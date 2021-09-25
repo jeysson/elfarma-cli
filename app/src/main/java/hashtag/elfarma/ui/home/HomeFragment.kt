@@ -94,7 +94,8 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
-
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
         _view = view
         home_cards.layoutManager = LinearLayoutManager(context)
         home_cards.itemAnimator = DefaultItemAnimator()

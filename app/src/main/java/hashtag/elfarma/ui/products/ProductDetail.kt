@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jaeger.library.StatusBarUtil
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.PRODUCT
 import hashtag.elfarma.AllDeliveryApplication.Companion.Pedido
 import hashtag.elfarma.MainActivity
@@ -40,6 +41,8 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
         product = PRODUCT!!
         /*for (grp in viewModelProduct.adapterGroup?.groups!!) {
             var p = grp.products?.firstOrNull { p -> p.id == PRODUCT?.id }

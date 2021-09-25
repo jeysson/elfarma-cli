@@ -20,6 +20,7 @@ import hashtag.elfarma.core.models.*
 import hashtag.elfarma.core.utils.OnBackPressedListener
 import hashtag.elfarma.ui.bag.BagChangeOrderDialog
 import hashtag.elfarma.ui.bag.BagFragment
+import hashtag.elfarma.ui.products.ProductDetail
 import kotlinx.android.synthetic.main.bag_bar.*
 import kotlinx.android.synthetic.main.bag_content_list_item.*
 import kotlinx.android.synthetic.main.stores_activity_main.*
@@ -147,7 +148,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeValueBag(obj: ButtonMinusPlus?, prod: Product, value: Int) {
-        if (Pedido == null) {
+
+        if(!STORE?.disponivel!!) return;
+
+        if (Pedido == null || Pedido?.itens?.size == 0) {
             Pedido = Order()
             Pedido?.address = ADDRESS
             Pedido?.store = Store()
@@ -248,10 +252,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun select(id: Int) {
-        //Volta para o fragmento da loja
-        supportFragmentManager.popBackStackImmediate()
-        //volta para o fragmento home
-        supportFragmentManager.popBackStackImmediate()
+        try {
+            //Volta para o fragmento da loja
+            supportFragmentManager.popBackStackImmediate()
+            //
+            if(!AllDeliveryApplication.addMaisItem) {
+                //volta para o fragmento home
+                supportFragmentManager.popBackStackImmediate()
+
+                if (!AllDeliveryApplication.fragmentoAnterior.isNullOrEmpty() &&
+                    AllDeliveryApplication.fragmentoAnterior.equals("ProductDetail") ||
+                    AllDeliveryApplication.fragmentoAnterior.equals("ProductSearch")
+                ) {
+
+                    supportFragmentManager.popBackStackImmediate()
+                }
+            }
+        } catch (ex: Exception) {
+
+        }
         //Exibe os botões de navegação
         showBottomNavigation()
         //Navega para o histórico

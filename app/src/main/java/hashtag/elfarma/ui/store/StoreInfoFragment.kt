@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.jaeger.library.StatusBarUtil
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
+import hashtag.elfarma.MainActivity
 import hashtag.elfarma.R
 import hashtag.elfarma.core.utils.OnBackPressedListener
 import kotlinx.android.synthetic.main.common_toolbar.*
@@ -37,7 +39,8 @@ class StoreInfoFragment : Fragment(), OnBackPressedListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
         StatusBarUtil.setLightMode(activity)
 
 //        _viewModel = ViewModelProviders.of(this).get(StoreViewModel::class.java)
@@ -60,6 +63,7 @@ class StoreInfoFragment : Fragment(), OnBackPressedListener {
             back()
         }
 
+        (activity as MainActivity).hideBag()
     }
 
     fun returnHour (number: Int?): String {

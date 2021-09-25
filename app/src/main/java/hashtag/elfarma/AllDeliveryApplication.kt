@@ -23,7 +23,9 @@ class AllDeliveryApplication : Application() {
 
 
     companion object {
-
+        var addMaisItem: Boolean = false
+        var fragmentoAnterior: String? = null
+        var fragmento: String? = null
         const val CONCLUIDO = 7
         var pedidocheckout: Boolean = false
 

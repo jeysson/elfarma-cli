@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.jaeger.library.StatusBarUtil
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.BAG_ORDER_ADDRESS_CHANGE
 import hashtag.elfarma.AllDeliveryApplication.Companion.Pedido
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
@@ -52,7 +53,8 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         locale = Locale(getString(R.string.language),
             getString(R.string.country))
         StatusBarUtil.setLightMode(activity)
-
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
         refreshAddress()
         //
         restaurant_name.text = Pedido?.store?.nomeFantasia
@@ -96,6 +98,9 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         }
         //
         add_more_items.setOnClickListener {
+
+            AllDeliveryApplication.addMaisItem = true
+
             val manager: FragmentManager = activity!!.supportFragmentManager
             manager.beginTransaction()
             manager.commit {
@@ -129,6 +134,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         }
 
         clear_bag.setOnClickListener {
+            AllDeliveryApplication.addMaisItem = false
             Pedido?.itens?.clear()
             Pedido = null
             back()

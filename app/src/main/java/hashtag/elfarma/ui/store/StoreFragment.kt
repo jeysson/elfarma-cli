@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
 import hashtag.elfarma.MainActivity
 import hashtag.elfarma.R
@@ -55,6 +56,9 @@ class StoreFragment : Fragment(), OnBackPressedListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setDarkMode(activity)
+
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
 
         (activity as MainActivity).hideBottomNavigation()
         (activity as MainActivity).showBag()

@@ -15,8 +15,12 @@ class OrderItem {
         produto = Product()
         produto?.id = prod?.id
         produto?.nome = prod?.nome
+        produto?.descricao = prod?.descricao
         produto?.preco = vlr
         quantity = qtd
         price = vlr
+        produto?.store = Store()
+        produto?.store?.id = prod?.store?.id
+        produto?.productImages = prod?.productImages
     }
 }

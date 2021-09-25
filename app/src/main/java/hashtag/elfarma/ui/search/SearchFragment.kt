@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.jaeger.library.StatusBarUtil
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.SEARCH_ALL
 import hashtag.elfarma.MainActivity
 import hashtag.elfarma.R
@@ -48,6 +49,9 @@ class SearchFragment : Fragment(), OnBackPressedListener {
         super.onViewCreated(view, savedInstanceState)
         StatusBarUtil.setLightMode(activity)
         //
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
+        AllDeliveryApplication.fragmento = this.javaClass.simpleName
         loadingSearch.visibility = View.GONE
         list.layoutManager = GridLayoutManager(context, 2)
         list.setHasFixedSize(true)

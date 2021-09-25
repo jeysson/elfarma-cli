@@ -8,10 +8,12 @@ class Product{
     var id : Int? = null
     @SerializedName("nome")
     var nome : String? = null
-    @SerializedName("descricao") val descricao : String? = null
+    @SerializedName("descricao")
+    var descricao : String? = null
     @SerializedName("preco")
     var preco : Double? = null
-    @SerializedName("loja") val store : Store? = null
+    @SerializedName("loja")
+    var store : Store? = null
 
     @SerializedName("produtoFotos")
     var productImages: ArrayList<ProductImage>? = ArrayList<ProductImage>()
