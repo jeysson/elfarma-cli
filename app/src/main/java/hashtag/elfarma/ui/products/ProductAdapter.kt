@@ -203,6 +203,7 @@ class ProductAdapter(
            }
            R.id.card_product -> {
                var position = view!!.tag as Int
+               AllDeliveryApplication.STORE = itens?.get(position)?.store
                AllDeliveryApplication.PRODUCT = itens?.get(position)
 
                val manager: FragmentManager = fragment.activity!!.supportFragmentManager
