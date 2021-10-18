@@ -89,6 +89,8 @@
             android:id="@+id/cross_selling_item_total_value"
             style="@style/TextAppearance.DesignSystem.Button.B1"
             android:layout_width="0dp"
+            android:text="999,99"
+            android:padding="5dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_size_12dp"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
@@ -97,23 +99,56 @@
             app:layout_constraintVertical_bias="1" />
 
         <TextView
+            android:id="@+id/cross_selling_item_total_value2"
+            style="@style/TextAppearance.DesignSystem.Button.B1"
+            android:layout_width="0dp"
+            android:text="999,99"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/deprecated_forest"
+            android:layout_marginTop="@dimen/space_size_12dp"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_image"
+            app:layout_constraintVertical_bias="1" />
+
+        <TextView
+            android:id="@+id/cross_selling_item_percentage"
+            android:text="100%"
+            style="@style/TextAppearance.DesignSystem.Button.B1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_price_background"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_total_value"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_total_value" />
+
+        <TextView
             android:id="@+id/cross_selling_item_original_value"
             style="@style/TextAppearance.DesignSystem.Form.S1"
+            android:text="999,99"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/medium_gray"
-            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
-            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
-            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_total_value" />
+            android:background="@drawable/strikethrough"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toEndOf="@+id/cross_selling_item_percentage"
+            app:layout_constraintTop_toTopOf="@+id/cross_selling_item_percentage" />
 
         <TextView
             android:id="@+id/cross_selling_item_description"
             style="@style/TextAppearance.DesignSystem.Button.B2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_size_8dp"
             android:ellipsize="end"
             android:maxLines="2"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
             app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_original_value" />

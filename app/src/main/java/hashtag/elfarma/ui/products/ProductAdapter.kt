@@ -2,6 +2,7 @@ package hashtag.elfarma.ui.products
 
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,18 @@ import hashtag.elfarma.core.utils.OnChangedValueListener
 import hashtag.elfarma.core.utils.ProductDiffCallback
 import hashtag.elfarma.ui.store.StoreFragment
 import kotlinx.android.synthetic.main.product_card_item.view.*
+import kotlinx.android.synthetic.main.product_card_item.view.btPlusMinus
+import kotlinx.android.synthetic.main.product_card_item.view.card_product
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_description
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_details
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_image
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_original_value
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_percentage
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_total_value
+import kotlinx.android.synthetic.main.product_card_item.view.cross_selling_item_total_value2
+import kotlinx.android.synthetic.main.product_card_item_search.view.*
 import org.jetbrains.anko.support.v4.runOnUiThread
+import org.jetbrains.anko.textColor
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -82,12 +94,43 @@ class ProductAdapter(
             holder.card.setOnClickListener(this)
             holder.name.text = product!!.nome
             holder.detalhe.text = product.descricao
-            holder.preco.text = NumberFormat.getCurrencyInstance(
-                Locale(
-                    fragment.getString(R.string.language),
-                    fragment.getString(R.string.country)
-                )
-            ).format(product.preco)
+            //
+            if(product.precoPromocional != null && product.precoPromocional!! > 0 ){
+               // holder.preco.textColor = R.color.deprecated_forest
+                holder.preco.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.precoPromocional)
+
+                holder.preco2.visibility = View.VISIBLE
+                holder.preco2.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.precoPromocional)
+
+                holder.precooriginal.visibility = View.VISIBLE
+                holder.precooriginal.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.preco)
+                holder.percentual.visibility = View.VISIBLE
+                holder.percentual.text = NumberFormat.getPercentInstance().format (product.precoPromocional!!/product.preco!!)
+
+            }else{
+                //holder.preco.textColor = R.color.heavy_grey
+                holder.preco.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.preco)
+            }
             //
             holder.image.alpha = 0f
             holder.image.animate().apply {
@@ -119,12 +162,43 @@ class ProductAdapter(
             holder.card.setOnClickListener(this)
             holder.name.text = product!!.nome
             holder.detalhe.text = product.descricao
-            holder.preco.text = NumberFormat.getCurrencyInstance(
-                Locale(
-                    fragment.getString(R.string.language),
-                    fragment.getString(R.string.country)
-                )
-            ).format(product.preco)
+
+            if(product.precoPromocional != null && product.precoPromocional!! > 0 ){
+                //holder.preco.textColor = R.color.deprecated_forest
+                holder.preco.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.precoPromocional)
+
+                holder.preco2.visibility = View.VISIBLE
+                holder.preco2.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.precoPromocional)
+
+                holder.precooriginal.visibility = View.VISIBLE
+                holder.precooriginal.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.preco)
+                holder.percentual.visibility = View.VISIBLE
+                holder.percentual.text = NumberFormat.getPercentInstance().format (product.precoPromocional!!/product.preco!!)
+
+            }else{
+               // holder.preco.textColor = R.color.heavy_grey
+                holder.preco.text = NumberFormat.getCurrencyInstance(
+                    Locale(
+                        fragment.getString(R.string.language),
+                        fragment.getString(R.string.country)
+                    )
+                ).format(product.preco)
+            }
             //
             holder.image.alpha = 0f
             holder.image.animate().apply {
@@ -174,12 +248,15 @@ class ProductAdapter(
 
     open class StoreProductItemCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val preco = view.cross_selling_item_total_value
+        val preco2 = view.cross_selling_item_total_value2
         val name = view.cross_selling_item_description
         val detalhe = view.cross_selling_item_details
         val image = view.cross_selling_item_image
         val card = view.card_product
         val bt = view.btPlusMinus
         val img_store = view.img_store
+        val percentual = view.cross_selling_item_percentage
+        val precooriginal = view.cross_selling_item_original_value
     }
 
     override fun onClick(view: View?) {

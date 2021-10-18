@@ -12,6 +12,8 @@ class Product{
     var descricao : String? = null
     @SerializedName("preco")
     var preco : Double? = null
+    @SerializedName("precoPromocional")
+    var precoPromocional : Double? = null
     @SerializedName("loja")
     var store : Store? = null
 

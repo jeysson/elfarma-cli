@@ -24,8 +24,8 @@ android {
         applicationId "hashtag.elfarma"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 10219
-        versionName "1.0.2a19"
+        versionCode 10301
+        versionName "1.0.3a01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -22,7 +22,8 @@ class Store{
     @SerializedName("telefoneAlternativo") val telefoneAlternativo : Long? = null
     @SerializedName("telefoneCelular") val telefoneCelular : Long? = null
     @SerializedName("contato") val contato : String? = null
-    @SerializedName("disponivel") val disponivel : Boolean = false
+    @SerializedName("disponivel")
+    var disponivel : Boolean = false
     @SerializedName("ativo") val ativo : Boolean = false
     @SerializedName("logo")
     var logo : String? = null

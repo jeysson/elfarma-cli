@@ -65,7 +65,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
         content_list.adapter = adapter
         //
         subtotal.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.itens?.sumByDouble { p-> p.price!! * p.quantity!! })
-        delivery_fee_price.text = NumberFormat.getCurrencyInstance(locale).format(STORE?.taxaEntrega)
+        delivery_fee_price.text = NumberFormat.getCurrencyInstance(locale).format(Pedido?.store?.taxaEntrega)
 
         vlrtotal = Pedido?.itens?.sumByDouble {
                 p-> p.price!! * p.quantity!!}

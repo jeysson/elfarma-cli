@@ -44,14 +44,6 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
         AllDeliveryApplication.fragmentoAnterior = AllDeliveryApplication.fragmento
         AllDeliveryApplication.fragmento = this.javaClass.simpleName
         product = PRODUCT!!
-        /*for (grp in viewModelProduct.adapterGroup?.groups!!) {
-            var p = grp.products?.firstOrNull { p -> p.id == PRODUCT?.id }
-
-            if (p != null) {
-                product = p
-                break
-            }
-        }*/
 
         StatusBarUtil.setLightMode(activity)
 
@@ -86,6 +78,14 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
 
         item_title.text = product.nome
         item_unit_description.text = product.descricao
+        //
+        if(product?.precoPromocional != null && product?.precoPromocional!! > 0){
+            item_weighable_price_promotional.visibility = View.VISIBLE
+            item_weighable_price_promotional.text = getFormatedPrice(product.precoPromocional)
+            item_weighable_price2.visibility = View.VISIBLE
+            item_weighable_price2.text = getFormatedPrice(product.preco)
+            item_weighable_price.visibility = View.INVISIBLE
+        }
         //
         item_weighable_price.text = getFormatedPrice(product.preco)
     }

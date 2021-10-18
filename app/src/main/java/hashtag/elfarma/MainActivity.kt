@@ -161,6 +161,7 @@ class MainActivity : AppCompatActivity() {
             Pedido?.store?.tempoMinimo = STORE?.tempoMinimo
             Pedido?.store?.pedidoMinimo = STORE?.pedidoMinimo
             Pedido?.store?.taxaEntrega = STORE?.taxaEntrega
+            Pedido?.store?.disponivel = STORE?.disponivel!!
         }
 
         if(prod?.store?.id == Pedido?.store?.id) {
@@ -168,9 +169,12 @@ class MainActivity : AppCompatActivity() {
             var ix = Pedido?.itens?.firstOrNull { p: OrderItem -> p.produto?.id == prod?.id }
 
             if (ix == null) {
-                Pedido?.itens?.add(OrderItem(prod, value, prod?.preco))
+                if(prod?.precoPromocional != null && prod?.precoPromocional!! > 0)
+                    Pedido?.itens?.add(OrderItem(prod, value, prod?.precoPromocional))
+                else
+                    Pedido?.itens?.add(OrderItem(prod, value, prod?.preco))
             } else {
-                if (value == 0)
+                if (value < 1)
                     Pedido?.itens?.remove(ix)
                 else {
 
