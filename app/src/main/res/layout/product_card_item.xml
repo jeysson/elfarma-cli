@@ -106,6 +106,7 @@
             android:padding="5dp"
             android:layout_height="wrap_content"
             android:textColor="@color/deprecated_forest"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/space_size_12dp"
             app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
             app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"

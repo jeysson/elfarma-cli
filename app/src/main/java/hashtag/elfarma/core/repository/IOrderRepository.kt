@@ -15,4 +15,6 @@ interface IOrderRepository {
     fun getOrdersWaitingEvaluate(user: Int): Observable<Message>
 
     fun saveEvaluate(order: Order): Observable<Message>
+
+    fun getLastOrder(user: Int): Observable<Message>
 }

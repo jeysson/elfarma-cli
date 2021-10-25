@@ -12,6 +12,9 @@
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/drawable/shape_facebook_button.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/drawable/strikethrough.xml" value="0.2203125" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_delivery_activity.xml" value="0.11775362318840579" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_detail_activity.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_find_activity.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_list_item.xml" value="0.18" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_set.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_with_scheduling_layout.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_change_order.xml" value="0.20416666666666666" />
@@ -23,7 +26,9 @@
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/fragment_alterar_senha.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/fragment_cadastrar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/fragment_login.xml" value="0.18" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/location_address_list_item.xml" value="0.15" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_evaluate_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_fragment.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_history_fragment.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/perfil_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/product_card_item.xml" value="0.33" />

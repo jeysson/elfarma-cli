@@ -28,4 +28,8 @@ interface OrderApi {
     @POST("pedido/salvaravaliacao/")
     fun saveEvaluate(@Header("Authorization")authHeader: String,
                      @Body payload: Order): Observable<Message>
+
+    @GET("pedido/ultimopedido/")
+    fun getLastOrder(@Header("Authorization")authHeader: String,
+    @Query("codUser") user: Int): Observable<Message>
 }

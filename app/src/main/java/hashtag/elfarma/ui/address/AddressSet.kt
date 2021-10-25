@@ -43,6 +43,7 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
             finish()
         }
 
+        continue_button.isEnabled = false
         continue_button.setOnClickListener{
             if(AllDeliveryApplication.LAT_LONG != null) {
                 val intent = Intent(this, DetailAddress::class.java)
@@ -104,5 +105,7 @@ class AddressSet : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMo
 
         AllDeliveryApplication.LAT_LONG = latlong
         AllDeliveryApplication.EDIT = false
+
+        continue_button.isEnabled = !title_address.text.toString().contains("null")
     }
 }

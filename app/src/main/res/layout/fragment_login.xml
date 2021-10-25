@@ -72,7 +72,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="220dp"
         android:id="@+id/logo_background"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -198,6 +198,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="@dimen/space_size_20dp"
                 android:animateLayoutChanges="true"
+                android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/btgoogle"
                 app:layout_constraintStart_toStartOf="parent"
                 style="@style/ButtonFacebook"
@@ -256,7 +257,8 @@
                 layout="@layout/load_button_others"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

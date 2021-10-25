@@ -22,10 +22,10 @@ android {
 
     defaultConfig {
         applicationId "hashtag.elfarma"
-        minSdkVersion 25
+        minSdkVersion 28
         targetSdkVersion 30
-        versionCode 10301
-        versionName "1.0.3a01"
+        versionCode 10302
+        versionName "1.0.3a02"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -11,6 +11,7 @@ import hashtag.elfarma.AllDeliveryApplication.Companion.Pedido
 import hashtag.elfarma.AllDeliveryApplication.Companion.STORE
 import hashtag.elfarma.R
 import kotlinx.android.synthetic.main.payment_method_change_dialog.*
+import org.jetbrains.anko.support.v4.toast
 import java.text.NumberFormat
 import java.util.*
 
@@ -43,9 +44,20 @@ class PaymentMethodChangeDialog: BottomSheetDialogFragment() {
         )
 
         bttroco.setOnClickListener {
-            AllDeliveryApplication.Pedido?.vlrtroco = editvlrtroco.text.toString().replace(",", ".").toDouble()
-            dismiss()
-            back()
+            var valor = Pedido?.itens?.sumByDouble {
+                    p-> p.price!! * p.quantity!!
+            }!! + STORE?.taxaEntrega!!
+
+            var troco = editvlrtroco.text.toString().replace(",", ".").toDouble()
+            if(valor <= troco ) {
+
+                AllDeliveryApplication.Pedido?.vlrtroco =
+                    editvlrtroco.text.toString().replace(",", ".").toDouble()
+                dismiss()
+                back()
+            }else{
+                toast("O troco informado é menor que o valor total do pedido!")
+            }
         }
 
         no_change_button.setOnClickListener {

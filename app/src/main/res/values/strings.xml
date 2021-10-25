@@ -25,7 +25,7 @@
     <string name="content_description_share_restaurant_button">Compartilhar</string>
     <string name="address_list_more_options">Mais opções</string>
     <string name="address_list_title">Endereço de entrega</string>
-    <string name="address_list_location_item_title">Usar localização atual</string>
+    <string name="address_list_location_item_title">Localização atual</string>
     <string name="address_found_near">Próximo a %s</string>
     <string name="address_list_location_activate">Ativar localização</string>
     <string name="address_search_empty_state_title">Não encontramos esse endereço</string>

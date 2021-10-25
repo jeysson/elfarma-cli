@@ -116,7 +116,7 @@ class OrderFragment: Fragment(), OnBackPressedListener, OnClickListener {
             call()
         }
 
-        timerorder = fixedRateTimer("getorder", true, 10000, 15000){
+        timerorder = fixedRateTimer("getorder", true, 5000, 10000){
             timerGetOrder()
         }
 
@@ -276,7 +276,11 @@ class OrderFragment: Fragment(), OnBackPressedListener, OnClickListener {
     }
 
     fun timerGetOrder(){
+        if(order != null && order?.id != null){
         orderViewModel.getOrder(order?.id!!)
+        }else{
+            orderViewModel.getLastOrder(AllDeliveryApplication.USER?.id!!)
+        }
     }
 
     fun call() {

@@ -121,4 +121,12 @@ class OrderViewModel(private val _orderRep: IOrderRepository) : ViewModel() {
             eventErro.postValue(it.message)
         })
     }
+
+    fun getLastOrder(id: Int){
+        _orderRep.getLastOrder(id).subscribe({
+            eventOrder.postValue(null)
+        },{
+            eventErro.postValue(it.message)
+        })
+    }
 }

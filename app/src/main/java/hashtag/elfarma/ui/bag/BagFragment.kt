@@ -111,7 +111,7 @@ class BagFragment : Fragment(), OnBackPressedListener, View.OnClickListener {
                     R.anim.exit_to_left
                 )
 
-                addToBackStack(null)
+                //addToBackStack(null)
                 replace(R.id.nav_host_fragment, StoreFragment::class.java, null)
             }
         }

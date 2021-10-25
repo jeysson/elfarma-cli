@@ -14,7 +14,7 @@ abstract class MaskEditUtil {
     companion object {
 
         val FORMAT_CPF = "###.###.###-##"
-        val FORMAT_FONE = "(##)####-#####"
+        val FORMAT_FONE = "(##)#####-####"
         val FORMAT_CEP = "#####-###"
         val FORMAT_DATE = "##/##/####"
         val FORMAT_HOUR = "##:##"

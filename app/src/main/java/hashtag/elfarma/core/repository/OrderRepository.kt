@@ -27,4 +27,8 @@ class OrderRepository(private val dataSrouce: OrderApi): IOrderRepository, BaseR
     override fun saveEvaluate(order: Order): Observable<Message> {
         return  runOnBackground(dataSrouce.saveEvaluate("Bearer " + AllDeliveryApplication.USER?.token, order))
     }
+
+    override fun getLastOrder(user: Int): Observable<Message> {
+        return  runOnBackground(dataSrouce.getLastOrder("Bearer " + AllDeliveryApplication.USER?.token, user))
+    }
 }
