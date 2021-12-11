@@ -120,7 +120,7 @@ class ProductAdapter(
                     )
                 ).format(product.preco)
                 holder.percentual.visibility = View.VISIBLE
-                holder.percentual.text = NumberFormat.getPercentInstance().format (product.precoPromocional!!/product.preco!!)
+                holder.percentual.text = NumberFormat.getPercentInstance().format (1-(product.precoPromocional!!/product.preco!!))
 
             }else{
                 //holder.preco.textColor = R.color.heavy_grey
@@ -188,7 +188,7 @@ class ProductAdapter(
                     )
                 ).format(product.preco)
                 holder.percentual.visibility = View.VISIBLE
-                holder.percentual.text = NumberFormat.getPercentInstance().format (product.precoPromocional!!/product.preco!!)
+                holder.percentual.text = NumberFormat.getPercentInstance().format (1-(product.precoPromocional!!/product.preco!!))
 
             }else{
                // holder.preco.textColor = R.color.heavy_grey
