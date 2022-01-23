@@ -161,7 +161,7 @@ class OrderFragment: Fragment(), OnBackPressedListener, OnClickListener {
             PedidoHistory = OrderHistory()
             PedidoHistory?.id = order?.id
             //
-            if(it.itens?.size!! > 0) {
+            if(it.itens != null && it.itens!!.size!! > 0) {
                 loadData()
             }
             else {
