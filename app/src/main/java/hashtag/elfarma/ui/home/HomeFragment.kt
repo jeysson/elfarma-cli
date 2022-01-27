@@ -109,6 +109,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         scrollListener()
         setupObservers()
         loadFilters()
+        loadPubli()
         //
         address_with_scheduling.setOnClickListener {
             selectAddress()

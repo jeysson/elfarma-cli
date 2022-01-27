@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
@@ -85,11 +86,19 @@ class SearchFragment : Fragment(), OnBackPressedListener {
                 btn_cancel.text = getString(R.string.cancelar)
             } else {
                 btn_cancel.text = getString(R.string.limpar)
-                if (text.length > 2) {
+               /* if (text.length > 2) {
                     findItemByName(text!!)
-                }
+                }*/
             }
         }
+
+        edit_search.setOnEditorActionListener { textView, i, keyEvent ->
+            if(i == EditorInfo.IME_ACTION_SEARCH){
+                findItemByName(textView.text)
+                true
+            }else false
+        }
+
 
         btn_cancel.setOnClickListener {
             if (edit_search.text.isNullOrBlank()) {

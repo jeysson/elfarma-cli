@@ -20,5 +20,8 @@ class Product{
     @SerializedName("produtoFotos")
     var productImages: ArrayList<ProductImage>? = ArrayList<ProductImage>()
     var carregouImagens: Boolean = false
+
+    @SerializedName("retemReceita")
+    var retemReceita : Boolean = false
     constructor()
 }

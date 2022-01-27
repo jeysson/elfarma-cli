@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/space_size_36dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -21,7 +22,7 @@
     <include android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toTopOf="parent"
 
         layout="@layout/common_toolbar"/>
@@ -48,7 +49,7 @@
                 android:importantForAccessibility="noHideDescendants"
                 android:visibility="visible"
                 app:cardCornerRadius="4dp"
-                app:layout_constraintDimensionRatio="2:1"
+                app:layout_constraintDimensionRatio="2:1.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -58,7 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/light_gray"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_box_medicine"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -94,6 +96,7 @@
                 app:layout_constraintStart_toStartOf="@+id/item_title"
                 app:layout_constraintTop_toBottomOf="@+id/item_info" />
 
+
             <include
                 android:id="@+id/item_observation"
                 layout="@layout/product_observation"
@@ -104,6 +107,37 @@
                 app:layout_constraintEnd_toEndOf="@+id/item_title"
                 app:layout_constraintStart_toStartOf="@+id/item_title"
                 app:layout_constraintTop_toBottomOf="@+id/info_divider" />
+
+            <TextView
+                android:id="@+id/info_retem_receita_titulo"
+                style="@style/TextAppearance.DesignSystem.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/deprecated_papaya"
+                android:text="Medicamento Controlado"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_info"
+                android:layout_marginTop="30dp"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/space_size_16dp"
+                android:layout_marginEnd="@dimen/space_size_16dp"/>
+
+            <TextView
+                android:id="@+id/info_retem_receita"
+                style="@style/TextAppearance.DesignSystem.Paragraph.P2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/deprecated_papaya"
+                android:visibility="gone"
+                android:text="O medicamento é vendido somente com receita médica. Você precisa anexar a receita na sacola do pedido."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_retem_receita_titulo"
+                android:layout_marginStart="@dimen/space_size_16dp"
+                android:layout_marginEnd="@dimen/space_size_16dp"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

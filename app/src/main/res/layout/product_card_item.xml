@@ -25,7 +25,7 @@
             android:layout_height="@dimen/space_size_120dp"
             android:elevation="1dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_background"
+            android:src="@mipmap/ic_box_medicine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

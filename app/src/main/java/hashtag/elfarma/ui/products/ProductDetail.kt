@@ -74,6 +74,8 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity,
                     item_image, "robot").toBundle())
             }
+        }else{
+            item_image.setImageResource(R.mipmap.ic_box_medicine)
         }
 
         item_title.text = product.nome
@@ -88,6 +90,12 @@ class ProductDetail : Fragment(), OnBackPressedListener, OnChangedValueListener 
         }
         //
         item_weighable_price.text = getFormatedPrice(product.preco)
+
+        if(product?.retemReceita)
+        {
+            info_retem_receita_titulo.visibility = View.VISIBLE
+            info_retem_receita.visibility = View.VISIBLE
+        }
     }
 
     fun getFormatedPrice(valor: Double?): String{
