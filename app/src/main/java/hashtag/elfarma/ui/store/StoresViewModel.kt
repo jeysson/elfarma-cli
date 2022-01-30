@@ -26,11 +26,11 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
     private var _controlIndice = 10
 
     @SuppressLint("CheckResult")
-    fun getActiveStores(
+    fun getActiveStores(segmento: Int?,
         lat: Double?, lon: Double?, tipoOrdenacao: Int
     ): MutableLiveData<ArrayList<Store>> {
 
-        _storeRep.getActiveStores(_page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
+        _storeRep.getActiveStores(segmento, _page, _controlIndice, lat, lon, tipoOrdenacao).subscribe({
             stores.postValue(it)
             if (it.isNullOrEmpty()) {
                 eventErro.postValue(BusinessEvent("Nenhuma loja encontrada."))
@@ -43,6 +43,7 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
     }
 
     fun getPagingStores(
+        segmento: Int?,
         page: Int?,
         total: Int?,
         lat: Double?,
@@ -51,18 +52,18 @@ class StoresViewModel(private val _storeRep: IStoreRepository) : ViewModel(){
     ): MutableLiveData<ArrayList<Store>> {
         loading.postValue(true)
 
-        _storeRep.getPagingStores(page, total, lat, lon, tipoordenacao).subscribe ({
+        _storeRep.getPagingStores(segmento, page, total, lat, lon, tipoordenacao).subscribe ({
           //  var countInicio = adapter?.itens!!.size-1
 
             if(page == 1){
                 val arr = ArrayList<Store>()
-                /*val mch = Store()
+                val mch = Store()
                 mch.publi = true
                 arr.add(mch)
                 val st = Store()
                 st.nomeFantasia = "Farmácias e Drogarias"
                 st.head = true
-                arr.add(st)*/
+                arr.add(st)
                 arr.addAll(it)
 
              //   adapter?.setHasStableIds(true)

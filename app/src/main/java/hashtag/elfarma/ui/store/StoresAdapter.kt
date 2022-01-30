@@ -26,6 +26,7 @@ import hashtag.elfarma.ui.products.ProductViewModel
 import kotlinx.android.synthetic.main.publi_home.view.*
 import kotlinx.android.synthetic.main.store_item_adapter.view.*
 import kotlinx.android.synthetic.main.store_list_header.view.*
+import kotlinx.android.synthetic.main.topbar_tabs.view.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import java.text.NumberFormat
@@ -59,7 +60,7 @@ class StoresAdapter(
         }
         else if (viewType == TYPE_HEADER) {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.store_list_header, parent, false)
+                .inflate(R.layout.topbar_tabs, parent, false)
             return StoreHeaderViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
@@ -126,7 +127,7 @@ class StoresAdapter(
         }
         else if (item?.head!!) {
             holder as StoreHeaderViewHolder
-            holder.name.text = item?.nomeFantasia
+            holder.tabsHeader.addOnTabSelectedListener(fragment as HomeFragment)
         }
         else{
             holder as StoreItemViewHolder
@@ -211,7 +212,7 @@ class StoresAdapter(
     }
 
     class StoreHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name = view.store_title
+        val tabsHeader = view.tabs_header
     }
 
     class StoreItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {

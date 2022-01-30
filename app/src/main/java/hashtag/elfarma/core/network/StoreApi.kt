@@ -10,6 +10,7 @@ import retrofit2.http.Query
 interface StoreApi {
     @GET("loja/paginar?")
     fun getActiveStores(@Header("Authorization") authHeader: String,
+                        @Query("segmento") segmento: Int?,
                         @Query("indice") indice: Int,
                         @Query("tamanho") tamanho: Int,
                         @Query("lat") lat: Double,
@@ -19,6 +20,7 @@ interface StoreApi {
 
     @GET("loja/paginar?")
     fun getPagingStores(@Header("Authorization") authHeader: String,
+        @Query("segmento") segmento: Int?,
         @Query("indice") indice: Int?,
         @Query("tamanho") tamanho: Int?,
         @Query("lat") lat: Double?,

@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.tabs.TabLayout
 import com.jaeger.library.StatusBarUtil
 import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.AllDeliveryApplication.Companion.ADDRESS
@@ -61,9 +62,8 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import kotlin.collections.ArrayList
 
 
-class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener
+class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverListener, View.OnClickListener, TabLayout.OnTabSelectedListener
 {
-
     var PERMISSION_ID = 1000
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
@@ -79,6 +79,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
     var isLoading: Boolean = false
     var page = 1
     var itemsPerPage = 10
+    private var segmento: Int? = 1
 
     var adapter: PubliSliderAdapter? = null
     lateinit var list: IntArray
@@ -109,7 +110,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
         scrollListener()
         setupObservers()
         loadFilters()
-        loadPubli()
+       // loadPubli()
         //
         address_with_scheduling.setOnClickListener {
             selectAddress()
@@ -291,6 +292,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             }
             //config adapter
             _storeViewModel.getPagingStores(
+                segmento,
                 page,
                 itemsPerPage,
                 LAT_LONG?.latitude,
@@ -307,6 +309,7 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
 
     fun getMoreItems() = doAsync{
         _storeViewModel.getPagingStores(
+            segmento,
             page,
             itemsPerPage,
             LAT_LONG?.latitude,
@@ -500,5 +503,24 @@ class HomeFragment : Fragment(), NetworkReceiver.NetworkConnectivityReceiverList
             dots.get(i)?.setTextSize(18f)
             dots_container.addView(dots.get(i))
         }
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        segmento = when(tab?.position){
+            0-> 1
+            1-> 2
+            2-> 3
+            else -> -1
+        }
+
+        getItems()
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+
     }
 }

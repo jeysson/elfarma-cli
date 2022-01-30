@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root_container"
+    android:id="@+id/topbar_tabs"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,10 +14,10 @@
         android:layout_marginStart="@dimen/space_size_12dp"
         android:layout_marginEnd="@dimen/space_size_12dp"
         android:background="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/tabs2" />
+        app:layout_constraintBottom_toBottomOf="@+id/tabs_header" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs2"
+        android:id="@+id/tabs_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -32,14 +32,14 @@
         app:tabPaddingStart="@dimen/space_size_12dp"
         app:tabPaddingTop="@dimen/space_size_4dp"
         app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextAppearance="@style/TextAppearance.DesignSystem.Title.H1"
+        app:tabTextAppearance="@style/TextAppearance.DesignSystem.Title.H0"
         app:tabTextColor="@color/medium_gray">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_geral"
+            android:id="@+id/tab_farmacias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Farmácias"/>
+            android:text="Farmácias "/>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_suplemento"
@@ -51,7 +51,7 @@
             android:id="@+id/tab_pets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Farma Pet"/>
+            android:text="Farma Pet "/>
 
     </com.google.android.material.tabs.TabLayout>
 

@@ -22,7 +22,9 @@
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_fragment.xml" value="0.25" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_minimum_order.xml" value="0.25" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/common_toolbar.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/filter_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/filter_activity.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/filter_bar_container.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/filter_fragment.xml" value="0.1696014828544949" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/fragment_alterar_senha.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/fragment_cadastrar.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/fragment_login.xml" value="0.18" />
@@ -40,6 +42,7 @@
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/publi_home.xml" value="0.19537037037037036" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/search_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/splash.xml" value="0.1" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/topbar_tabs.xml" value="0.16944444444444445" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/mipmap-anydpi-v26/ic_login.xml" value="0.19583333333333333" />
       </map>
     </option>
