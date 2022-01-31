@@ -19,6 +19,7 @@
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/address_with_scheduling_layout.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_change_order.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_content_details.xml" value="0.33" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_content_list_item.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_fragment.xml" value="0.25" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/bag_minimum_order.xml" value="0.25" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/common_toolbar.xml" value="0.20416666666666666" />
@@ -33,6 +34,7 @@
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_evaluate_fragment.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_fragment.xml" value="0.1" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_history_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/order_list_previous_item.xml" value="0.33" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/perfil_fragment.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/product_card_item.xml" value="0.33" />
         <entry key="..\:/Users/jeyss/source/repos/eletronic-pharma-cli/app/src/main/res/layout/product_card_item_search.xml" value="0.75" />

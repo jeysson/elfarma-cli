@@ -34,25 +34,6 @@
             android:importantForAccessibility="no"
             app:layout_constraintGuide_end="16dp"/>
 
-        <!--FrameLayout android:layout_gravity="center"
-            android:id="@+id/store_logo_container"
-            android:background="@drawable/logo_background"
-            android:layout_width="41dp"
-            android:layout_height="41dp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/first_separator">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_gravity="center"
-                android:id="@+id/logo"
-                android:layout_width="39dp"
-                android:layout_height="39dp"
-                android:src="@drawable/ic_medicine"
-                android:scaleType="centerCrop"/>
-
-        </FrameLayout-->
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/store_logo_container"
             android:layout_width="41dp"
@@ -119,14 +100,6 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/pulse_animation" />
 
-        <!--TextView android:id="@+id/order_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@+id/store_logo_container"
-            app:layout_constraintTop_toBottomOf="@+id/store_name"
-            style="@style/OrderCardText.Description"/-->
-
         <TextView android:id="@+id/order_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,29 +108,6 @@
             app:layout_constraintStart_toStartOf="@+id/store_name"
             app:layout_constraintTop_toBottomOf="@+id/store_name"
             style="@style/OrderCardText.Description"/>
-
-        <!--View android:id="@+id/changed_order_top_separator"
-            android:layout_width="0dp"
-            android:layout_marginTop="16dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-            app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/store_logo_container"
-            style="@style/OrderCardSeparator"/>
-
-        <TextView
-            android:textColor="@color/medium_gray"
-            android:id="@+id/changed_order_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="@string/changed_order_label"
-            android:textAlignment="textStart"
-            android:visibility="invisible"
-            app:layout_constraintLeft_toLeftOf="@+id/guideline_start"
-            app:layout_constraintRight_toRightOf="@+id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@+id/changed_order_top_separator"
-            style="@style/TextAppearance.DesignSystem.Button.B3"/-->
 
         <View android:id="@+id/first_separator"
             android:layout_width="0dp"
@@ -232,8 +182,8 @@
             android:id="@+id/review_views_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="order_rating_label,criteria_rating"/>
+            android:visibility="visible"
+            app:constraint_referenced_ids="order_rating_label"/>
 
         <TextView android:id="@+id/evaluated_button"
             android:layout_width="0dp"
@@ -245,6 +195,7 @@
             style="@style/OrderCardText.Button"/>
 
         <TextView android:id="@+id/order_rating_label"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="42dp"
             android:gravity="center_vertical"
@@ -255,6 +206,7 @@
             style="@style/OrderCardText.Content"/>
 
         <RatingBar android:id="@+id/criteria_rating"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/ratingBarStyleSmall"
@@ -262,28 +214,16 @@
             android:stepSize="0.1"
             android:progressTint="@color/deprecated_yellow"
             android:secondaryProgressTint="@color/deprecated_yellow"
-            app:layout_constraintBottom_toTopOf="@+id/order_rating_label"
+            app:layout_constraintTop_toTopOf="@+id/order_rating_label"
             app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@+id/order_rating_label"/>
-
-        <TextView android:textColor="@color/deprecated_medium_grey"
-            android:visibility="gone"
-            android:gravity="center_vertical"
-            android:id="@+id/order_review_expired"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:text="@string/order_list_review_expired"
-            app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-            app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/second_separator"
-            style="@style/TextAppearance.DesignSystem.Paragraph.P3"/>
+            app:layout_constraintBottom_toBottomOf="@id/order_rating_label"/>
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/order_review_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="criteria_rating,order_rating_label,order_review_expired"/>
+            app:constraint_referenced_ids="criteria_rating,order_rating_label"/>
 
         <View android:id="@+id/review_bottom_separator"
             android:layout_width="0dp"
@@ -300,7 +240,7 @@
             app:constraint_referenced_ids="review_bottom_separator,second_separator"/>
 
         <TextView android:id="@+id/help_button"
-            android:tag="binding_15"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:text="@string/order_list_item_help_button_label"
             android:gravity="center_horizontal|center_vertical"

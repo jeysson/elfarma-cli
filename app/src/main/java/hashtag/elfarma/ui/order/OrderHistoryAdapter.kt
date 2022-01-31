@@ -77,8 +77,12 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
                 holder.second_order_item_quantity.visibility = VISIBLE
             }
             //
+            holder.review_views_group.visibility = GONE
+            //
             if(obj?.status?.id!! == CONCLUIDO){
                 holder.review_views_group.visibility = VISIBLE
+                holder.criteria_rating.visibility = VISIBLE
+                //
                 if(obj?.diasavaliacao!! < 16) {
                     if (obj?.avaliacao != null) {
                         holder.order_rating_label.text = fragment.getString(R.string.label_evaluate)
@@ -93,12 +97,9 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
                 if(obj?.diasavaliacao!! > 16) {
                     if (obj?.avaliacao != null) {
                         holder.order_rating_label.text = fragment.getString(R.string.label_evaluate)
-                        holder.order_rating_label.visibility = VISIBLE
-                        holder.order_review_expired.visibility = INVISIBLE
-
                     } else {
-                        holder.order_rating_label.visibility = INVISIBLE
-                        holder.order_review_expired.visibility = VISIBLE
+                        holder.order_rating_label.text = fragment.getString(R.string.order_list_review_expired)
+                        holder.criteria_rating.visibility = INVISIBLE
                     }
                 }
             }
@@ -155,7 +156,6 @@ class OrderHistoryAdapter(frag: OrderHistoryFragment): RecyclerView.Adapter<Recy
         val store_item_more = view.load_more
         val order_rating_label = view.order_rating_label
         val criteria_rating = view.criteria_rating
-        val order_review_expired = view.order_review_expired
      //   val see = view.order_see_more
         val card = view.order_list_previous_item
         val pulse = view.pulse_animation
