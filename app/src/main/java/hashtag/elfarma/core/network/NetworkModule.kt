@@ -1,5 +1,6 @@
 package hashtag.elfarma.core.network
 
+import hashtag.elfarma.AllDeliveryApplication
 import hashtag.elfarma.core.network.NetworkProperties.BASE_URL
 import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
@@ -17,7 +18,8 @@ object NetworkProperties {
     const val BASE_URL = "BASE_URL"
 }
 
-fun createBaseURL() = "https://elfarmaapi.hashtagmobile.com.br/api/"
+//fun createBaseURL() = "https://elfarmaapi.hashtagmobile.com.br/api/"
+fun createBaseURL() = AllDeliveryApplication.URL
 
 fun createConverterFactory(): Converter.Factory {
     return GsonConverterFactory.create()

@@ -31,11 +31,14 @@ class AllDeliveryApplication : Application() {
 
 
         // public      static      String      tokenFCM            = FirebaseInstanceId.getInstance().getToken();
-        private const val URLADDRESS = "elfarmaapi.hashtagmobile.com.br"
+        //private const val URLADDRESS = "elfarmaapi.hashtagmobile.com.br"
+        private const val URLADDRESS = "api.elfarma.com.br/api/"
 
         // private     static      String      URLADDRESS          = "192.168.0.16/mybb.api";
         private const val PROTOCOL = "https://"
         //private     static      String      URLADDRESS          = "192.168.0.38/mybb.api";
+
+        public  const val URL = PROTOCOL + URLADDRESS
 
         const val SEARCH_NO = 0
         const val SEARCH_STORE = 1
@@ -235,9 +238,9 @@ class AllDeliveryApplication : Application() {
     ) {
         /*NEW(PROTOCOL + URLADDRESS + "/api/users/new/"),*/
 
-        LOGIN(PROTOCOL + URLADDRESS + "/api/usuario/autenticar/"),
-        LOGINTOKEN(PROTOCOL + URLADDRESS + "/api/usuario/autenticartoken/"),
-        VERIFICATION(PROTOCOL + URLADDRESS + "/api/usuario/verificar/")/*,
+        LOGIN(URL + "usuario/autenticar/"),
+        LOGINTOKEN(URL + "usuario/autenticartoken/"),
+        VERIFICATION(URL + "usuario/verificar/")/*,
         PASSWORDRECORVER(
             com.lovers.cherie.constants.Application.PROTOCOL + com.lovers.cherie.constants.Application.URLADDRESS + "/api/users/passwordrecover/"
         ),
