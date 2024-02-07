@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_product"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_size_8dp"
+    android:background="@drawable/checkout_cross_selling_item_background"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="245dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/cross_selling_item_image"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_size_120dp"
+            android:scaleType="fitXY"
+            android:elevation="1dp"
+            android:src="@mipmap/ic_box_medicine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <hashtag.elfarma.component.ButtonMinusPlus
+            android:id="@+id/btPlusMinus"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:elevation="4dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/cross_selling_item_image"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image">
+
+        </hashtag.elfarma.component.ButtonMinusPlus>
+
+        <TextView
+            android:id="@+id/cross_selling_item_total_value"
+            style="@style/TextAppearance.DesignSystem.Button.B1"
+            android:text="999,99"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_size_12dp"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_image"
+            app:layout_constraintVertical_bias="1" />
+
+        <TextView
+            android:id="@+id/cross_selling_item_total_value2"
+            style="@style/TextAppearance.DesignSystem.Button.B1"
+            android:text="999,99"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/deprecated_forest"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/space_size_12dp"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_image"
+            app:layout_constraintVertical_bias="1" />
+
+        <TextView
+            android:id="@+id/cross_selling_item_percentage"
+            android:text="100%"
+            style="@style/TextAppearance.DesignSystem.Button.B1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_price_background"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_total_value"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_total_value" />
+
+        <TextView
+            android:id="@+id/cross_selling_item_original_value"
+            style="@style/TextAppearance.DesignSystem.Form.S1"
+            android:text="999,99"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/medium_gray"
+            android:background="@drawable/strikethrough"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintStart_toEndOf="@+id/cross_selling_item_percentage"
+            app:layout_constraintTop_toTopOf="@+id/cross_selling_item_percentage" />
+
+        <TextView
+            android:id="@+id/cross_selling_item_description"
+            style="@style/TextAppearance.DesignSystem.Button.B2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_original_value" />
+
+        <TextView
+            android:id="@+id/cross_selling_item_details"
+            style="@style/TextAppearance.DesignSystem.Button.B3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/medium_gray"
+            app:layout_constraintEnd_toEndOf="@+id/cross_selling_item_image"
+            app:layout_constraintStart_toStartOf="@+id/cross_selling_item_image"
+            app:layout_constraintTop_toBottomOf="@+id/cross_selling_item_description" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintGuide_begin="150dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

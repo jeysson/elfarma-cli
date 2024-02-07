@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView android:id="@+id/map_background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_map_color"
+        android:scaleType="centerCrop"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <include android:id="@+id/multidrop_alert"
+        app:layout_constraintTop_toTopOf="@+id/map_background"
+        layout="@layout/order_multidrop_alert"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/delivery_card_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="1dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="@+id/map_background"
+        app:layout_constraintStart_toStartOf="@+id/map_background"
+        app:layout_constraintTop_toBottomOf="@+id/multidrop_alert">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <TextView android:textColor="@color/heavy_grey"
+                android:id="@+id/title"
+                android:text="Entregar em"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TextAppearance.DesignSystem.Paragraph.P3"/>
+
+            <TextView android:textColor="@color/deprecated_dark_grey"
+                android:id="@+id/delivery_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/order_delivered_title"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reference_text"
+                style="@style/Text.Page_Title"/>
+
+            <TextView android:textColor="@color/black"
+                android:id="@+id/address_text"
+                android:text="Av. Constantino Nery, 25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:importantForAccessibility="no"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/take_away_view_route"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                style="@style/TextAppearance.DesignSystem.Button.B1"/>
+
+            <TextView android:textColor="@color/colorPrimary"
+                android:id="@+id/take_away_view_route"
+                android:tag="binding_3"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trackout_view_route"
+                android:lineSpacingExtra="2sp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/address_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/address_text"
+                style="@style/TextHomeHeader"/>
+
+            <TextView android:textColor="@color/medium_gray"
+                android:id="@+id/reference_text"
+                android:text="Chapada"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:importantForAccessibility="no"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/reference_blockquote"
+                app:layout_constraintTop_toBottomOf="@+id/address_text"
+                style="@style/Text.Description6"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/reference_blockquote"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/reference_blockquote"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/reference_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/reference_text"/>
+
+            <TextView android:textColor="@color/medium_gray"
+                android:id="@+id/delivery_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/order_delivered_subtitle"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/delivery_title"
+                style="@style/Text.Link_6"/>
+
+            <View android:id="@+id/tracking_background"
+                android:background="@color/off_white"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vertical_barrier"/>
+
+            <TextView android:textColor="@color/heavy_grey"
+                android:id="@+id/tracking_status_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:maxWidth="250dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/info_button"
+                app:layout_constraintStart_toEndOf="@+id/location_icon"
+                app:layout_constraintTop_toTopOf="@+id/tracking_background"
+                style="@style/Text.Description2"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/location_icon"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/ic_tracking_status_green"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tracking_status_text"
+                app:layout_constraintEnd_toStartOf="@+id/tracking_status_text"
+                app:layout_constraintStart_toStartOf="@+id/left_guideline"
+                app:layout_constraintTop_toTopOf="@+id/tracking_status_text"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/info_button"
+                android:tag="binding_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_info_button"
+                android:contentDescription="@string/content_description_info"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tracking_status_text"
+                app:layout_constraintStart_toEndOf="@+id/tracking_status_text"
+                app:layout_constraintTop_toTopOf="@+id/tracking_status_text"/>
+
+            <FrameLayout android:id="@+id/confirm_button"
+                android:background="@drawable/selector_button_dark_background"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/delivery_subtitle">
+
+                <TextView android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:foreground="@null"
+                    android:text="@string/confirm_delivery_button"
+                    android:textAlignment="gravity"
+                    style="@style/Button.Dark"/>
+            </FrameLayout>
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/delivery_group"
+                android:tag="binding_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="confirm_button,delivery_subtitle,delivery_title"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/left_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="16dp"/>
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="reference_text,reference_blockquote"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/vertical_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="confirm_button,address_text,reference_text"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

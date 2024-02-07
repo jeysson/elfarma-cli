@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--
+    <fragment android:name="p102br.com.ifood.address.search.view.CustomMapFragment"
+        android:id="@+id/search_map"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="0"
+        app:layout_constraintLeft_toLeftOf="0"
+        app:layout_constraintRight_toRightOf="0"
+        app:layout_constraintTop_toTopOf="0"/> -->
+
+    <fragment android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/search_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="horizontal"
+        android:id="@+id/map_pin_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <ImageView android:id="@+id/map_pin"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toTopOf="@+id/map_pin_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_map_pin"/>
+
+    <View android:id="@+id/map_tooltip_shadow"
+        android:background="@mipmap/bg_tooltip_shadow"
+        android:layout_width="180dp"
+        android:layout_height="81dp"
+        app:layout_constraintBottom_toBottomOf="@+id/map_tooltip"
+        app:layout_constraintEnd_toEndOf="@+id/map_tooltip"
+        app:layout_constraintStart_toStartOf="@+id/map_tooltip"
+        app:layout_constraintTop_toTopOf="@+id/map_tooltip"/>
+
+    <include android:id="@+id/map_tooltip"
+        android:layout_width="170dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintBottom_toTopOf="@+id/map_pin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        layout="@layout/address_map_tooltip"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/map_tooltip_group"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="map_tooltip,map_tooltip_shadow"/>
+
+    <include android:id="@+id/toolbar" layout="@layout/address_map_toolbar"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/location_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginBottom="30dp"
+        app:backgroundTint="@color/white"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/continue_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_location"/>
+
+    <Button
+        android:id="@+id/continue_button"
+        style="@style/Button.AddressMapContinue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/keep_going"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+    <!--
+    <p102br.com.ifood.core.toolkit.view.LoadingButton android:id="@+id/continue_button" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/default_margin" android:layout_marginRight="@dimen/default_margin" android:layout_marginBottom="@dimen/default_margin" android:foreground="?attr/selectableItemBackground" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintLeft_toLeftOf="0" app:layout_constraintRight_toRightOf="0" app:lb_text="@string/keep_going" style="@style/Button.AddressMapContinue"/>
+   -->
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/interactions_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="continue_button,toolbar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

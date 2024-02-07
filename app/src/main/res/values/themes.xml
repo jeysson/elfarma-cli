@@ -1,0 +1,24 @@
+<resources>
+
+    <style name="AppTheme.Fullscreen" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/Theme.AppCompat.Light.NoActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="fullscreenBackgroundColor">@color/colorAccent</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <style name="ThemeOverlay.AllDelivery.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <style name="Theme.AllDelivery" parent="Theme.MaterialComponents.Light" />
+
+    <style name="Theme.AllDelivery.Fullscreen" parent="Theme.AllDelivery">
+        <item name="android:actionBarStyle">@style/Widget.Theme.AllDelivery.ActionBar.Fullscreen
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+</resources>

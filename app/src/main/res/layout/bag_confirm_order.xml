@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:background="@drawable/simple_rounded_layout_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="vertical"
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="24dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="vertical"
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="24dp"/>
+
+    <ImageView android:id="@+id/drag_bar"
+        android:layout_width="32dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_drag_bar"
+        android:importantForAccessibility="no"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView android:textColor="@color/black"
+        android:id="@+id/title"
+        android:text="@string/bag_confirm_dialog_title"
+        android:paddingBottom="@dimen/space_size_12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/drag_bar"
+        style="@style/TextAppearance.DesignSystem.Title.H2"/>
+
+    <TextView android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:id="@+id/warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        style="@style/TextAppearance.DesignSystem.Form.F3"/>
+
+    <include android:id="@+id/scheduled_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_size_12dp"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/warning"
+        layout="@layout/bag_confirm_order_time"/>
+
+    <View android:id="@+id/divider_scheduled"
+        android:background="@color/light_gray"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/scheduled_container"/>
+
+    <include android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/divider_scheduled"
+        layout="@layout/bag_confirm_order_address"/>
+
+    <View android:id="@+id/divider_address"
+        android:background="@color/light_gray"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/address"/>
+
+    <include android:id="@+id/payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/divider_address"
+        layout="@layout/bag_confirm_order_payment"/>
+
+    <TextView android:gravity="center"
+        android:id="@+id/action_button"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/space_size_16dp"
+        android:minHeight="50dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:text="@string/bag_confirm_dialog_button"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/payment"
+        style="@style/Button.Dark"/>
+
+    <TextView android:id="@+id/dismiss_button"
+        android:padding="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/bag_confirm_order_change"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/action_button"
+        android:textColor="@color/colorPrimary"
+        style="@style/Text.Button.Borderless"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_scheduled"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="scheduled_container,divider_scheduled"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

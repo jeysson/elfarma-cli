@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="12dp"
+    android:tag="layout/address_list_item_0">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_view_addess_item"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="12dp"
+        android:elevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/deprecated_white_transparent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/icon_address"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:tint="@color/deprecated_medium_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_pin" />
+
+            <LinearLayout
+                android:id="@+id/info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="start"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/icon_address"
+                app:layout_constraintRight_toLeftOf="@+id/selected_icon"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/title_address"
+                    style="@style/Text.ListTitleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/deprecated_dark_grey" />
+
+                <TextView
+                    android:id="@+id/description_address"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/deprecated_medium_grey" />
+
+                <TextView
+                    android:id="@+id/second_description"
+                    style="@style/Text.Description2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/deprecated_medium_grey" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/selected_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:tint="@color/colorPrimary"
+                android:visibility="invisible"
+                app:layout_constraintRight_toLeftOf="@+id/kebab"
+                app:layout_constraintTop_toTopOf="@+id/info"
+                app:srcCompat="@drawable/ic_check_circle" />
+
+            <ImageView
+                android:id="@+id/kebab"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
+                android:contentDescription="@string/address_list_more_options"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="15dp"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_kebab" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:id="@+id/rating_container"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout android:orientation="vertical"
+        android:id="@+id/rating_parent_layout"
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView android:textColor="@color/deprecated_dark_grey"
+            android:id="@+id/rating_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textAlignment="textStart"
+            style="@style/Text.Page_Title"/>
+
+        <hashtag.elfarma.component.CustomRatingBar
+            android:id="@+id/order_rating"
+            android:tag="binding_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:crb_emptyIcon="@drawable/ic_star_empty"
+            app:crb_emptyIconTint="@color/deprecated_cream"
+            app:crb_filledHalfIcon="@drawable/ic_star_filled_half"
+            app:crb_filledIcon="@drawable/ic_star_filled"
+            app:crb_filledIconTint="@color/deprecated_yellow"
+            app:crb_iconHeight="24dp"
+            app:crb_margin="5dp"
+            app:crb_maxRating="5"
+            app:layout_constraintBottom_toBottomOf="@+id/restaurant_image"
+            app:layout_constraintStart_toEndOf="@+id/restaurant_image"
+            app:layout_constraintTop_toBottomOf="@+id/restaurant_name"/>
+
+        <TextView android:textColor="@color/medium_gray"
+            android:ellipsize="end"
+            android:id="@+id/rating_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/order_rating_choose_stars"
+            android:lines="1" android:lineSpacingExtra="1sp"
+            android:textAlignment="textStart"
+            style="@style/Text.Description2"/>
+
+        <FrameLayout android:id="@+id/rating_comment_layout"
+            android:background="@drawable/shape_rating_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rating_title"
+            app:layout_constraintStart_toStartOf="@+id/rating_title"
+            app:layout_constraintTop_toBottomOf="@+id/order_rating">
+
+            <TextView android:textColor="@color/heavy_grey"
+                android:id="@+id/rating_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginStart="12dp"
+                style="@style/Text.Description2"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

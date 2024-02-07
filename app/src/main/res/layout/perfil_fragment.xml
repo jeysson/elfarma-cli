@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include android:id="@+id/toolbar"
+            layout="@layout/deprecated_common_simple_toolbar"/>
+
+        <include android:id="@+id/name"
+            layout="@layout/edit_account_list_item"/>
+
+        <include android:id="@+id/document" layout="@layout/edit_account_list_item"/>
+        <include android:id="@+id/phone" layout="@layout/edit_account_list_item"/>
+        <include android:id="@+id/email" layout="@layout/edit_account_list_item"/>
+    </LinearLayout>
+    <FrameLayout android:id="@+id/edit_container" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent"/>
+</RelativeLayout>

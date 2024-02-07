@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:tag="layout/checkout_content_details_0"
+    android:background="@color/white"
+    android:paddingLeft="20dp"
+    android:paddingTop="13dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="13dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/subtotal_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subtotal_label"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" style="@style/Text.Body"/>
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/subtotal_label"
+        style="@style/Text.Link_3"/>
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/coupon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/payment_coupon"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtotal_label"
+        style="@style/Text.Body"/>
+
+    <TextView
+        android:textColor="@color/deprecated_forest"
+        android:id="@+id/discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coupon"
+        style="@style/Text.Link_3"/>
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/delivery_fee_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/payment_delivery_fee"
+        android:lineSpacingExtra="7sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coupon"
+        style="@style/Text.Body"/>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/delivery_fee_info"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/delivery_fee_info_content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/delivery_fee_label"
+        app:layout_constraintLeft_toRightOf="@+id/delivery_fee_label"
+        app:layout_constraintTop_toTopOf="@+id/delivery_fee_label"
+        app:srcCompat="@drawable/ic_disclaimer_help"/>
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/delivery_fee_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="7sp"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@+id/plus_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/delivery_fee_label"
+        app:layout_constrainedWidth="true"
+        style="@style/Text.Link_3"/>
+
+    <hashtag.elfarma.component.Loading
+        android:layout_gravity="center"
+        android:id="@+id/delivery_fee_loading"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/delivery_fee_label"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/delivery_fee_label"
+        app:lv_color="@color/colorPrimary"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/plus_icon"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="4dp"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/delivery_fee_label"
+        app:layout_constraintLeft_toRightOf="@+id/delivery_fee_label"
+        app:layout_constraintTop_toTopOf="@+id/delivery_fee_label"
+        />
+
+    <ImageView
+        android:id="@+id/plus_status_icon"
+        android:visibility="gone"
+        android:layout_width="11dp"
+        android:layout_height="11dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="@+id/troco"
+        app:layout_constraintStart_toStartOf="@+id/delivery_fee_label"
+        app:layout_constraintTop_toTopOf="@+id/troco"
+        app:srcCompat="@drawable/ic_deactivated"/>
+
+    <TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/troco"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Troco"
+        app:layout_constraintLeft_toLeftOf="parent"
+        style="@style/Text.Body"
+        app:layout_constraintLeft_toRightOf="@+id/plus_status_icon"
+        app:layout_constraintTop_toBottomOf="@+id/delivery_fee_label"
+        />
+
+    <TextView
+        android:textSize="@dimen/tab_layout_text_size"
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/troco_vlr"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:lineSpacingExtra="7sp"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@+id/troco"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/troco"
+        app:layout_constrainedWidth="true"
+        style="@style/Text.Link_3"/>
+
+    <!--TextView
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/plus_status"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintLeft_toRightOf="@+id/plus_status_icon"
+        app:layout_constraintTop_toBottomOf="@+id/delivery_fee_label"
+        style="@style/Text.Description2"/-->
+
+    <!--TextView
+        android:textSize="@dimen/tab_layout_text_size"
+        android:textColor="@color/deprecated_medium_grey"
+        android:id="@+id/movilepay_balance"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/payment_movilepay_balance"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plus_status"
+        style="@style/TextAppearance.DesignSystem.Title.H2.Light"/-->
+
+    <!--TextView
+        android:textSize="@dimen/tab_layout_text_size"
+        android:textColor="@color/deprecated_forest"
+        android:id="@+id/movilepay_balance_fee"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="7dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/movilepay_balance"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P1"/-->
+
+    <TextView
+        android:textColor="@color/deprecated_dark_grey"
+        android:id="@+id/total_price_label"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/payment_total"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/troco"
+        app:layout_goneMarginBottom="10dp" style="@style/Text.Sub_Heading_1"/>
+
+    <TextView
+        android:textColor="@color/deprecated_dark_grey"
+        android:id="@+id/total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/total_price_label"
+        style="@style/Text.Sub_Heading_1"/>
+
+    <TextView
+        android:textColor="@color/deprecated_dark_grey"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/minimum_price_alert"
+        android:background="@drawable/bg_notification_disclaimer"
+        android:padding="15dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/payment_minimum_price"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_price"
+        style="@style/Text"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/coupon_container"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="coupon,discount"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

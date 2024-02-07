@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "144553100651",
+    "project_id": "elfarma-app",
+    "storage_bucket": "elfarma-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144553100651:android:88161d3c0acfdf1a5a782e",
+        "android_client_info": {
+          "package_name": "hashtag.elfarma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144553100651-3r3l3bcdq6ks4cgf4duptapmgq7ovrsv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hashtag.elfarma",
+            "certificate_hash": "0e0a30f5c532d46e3df8b6983766a30217968207"
+          }
+        },
+        {
+          "client_id": "144553100651-79k48o9jc9rlgrdnttcves3iic6s823d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hashtag.elfarma",
+            "certificate_hash": "420cb14de8ea330f5ce0c161b6b3bef40ff8e6a4"
+          }
+        },
+        {
+          "client_id": "144553100651-nsuuumgv4149lo2v0sja177o5lq4bira.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hashtag.elfarma",
+            "certificate_hash": "505b913b8fc47ae91db9a3e607108a5b58b940c4"
+          }
+        },
+        {
+          "client_id": "144553100651-jsou9nfdgr1j52g5qirjunk6bubap2ok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPp8VsNoke4QT9nRCdMVvQxcnkT74p5pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144553100651-jsou9nfdgr1j52g5qirjunk6bubap2ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

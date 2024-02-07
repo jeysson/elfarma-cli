@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:id="@+id/waiting_card_scroll"
+    android:tag="layout/waiting_card_content_0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="vertical"
+        android:id="@+id/container"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <include android:id="@+id/order_concluded"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            layout="@layout/order_delivery_concluded"/>
+
+        <include android:id="@+id/order_waiting_cancel_confirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            layout="@layout/order_card_cancel_confirm"/>
+
+        <include android:id="@+id/driver_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            layout="@layout/order_driver"/>
+
+        <include android:id="@+id/takeout_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            layout="@layout/order_take_away"/>
+
+        <include android:id="@+id/tracking_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            layout="@layout/order_delivery_address"/>
+
+        <include android:id="@+id/tracking_view"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            layout="@layout/order_delivery_details"/>
+
+        <include android:id="@+id/rating_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone"
+            layout="@layout/order_rating"/>
+
+        <include android:id="@+id/qrcode_delivery"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/qr_delivery"/>
+
+        <include android:id="@+id/order_detail_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/order_detail"/>
+
+        <include android:id="@+id/member_get_member_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            layout="@layout/order_member_get_member_card"/>
+
+        <include android:id="@+id/order_evaluate"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            layout="@layout/order_evaluate"/>
+
+        <include android:id="@+id/card_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            layout="@layout/order_card_notification_view"/>
+
+        <include android:id="@+id/social"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            layout="@layout/social_view"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

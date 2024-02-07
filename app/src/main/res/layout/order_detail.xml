@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_container"
+            android:background="@drawable/store_details_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/deprecated_dark_grey"
+                android:id="@+id/order_detail_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/order_details"
+                android:lineSpacingExtra="2sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/begin_guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/Text.Toolbar"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/store_image"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_store_placeholder"
+                android:scaleType="centerCrop"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toEndOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/order_detail_title"/>
+
+            <ImageView
+                android:id="@+id/logo_container"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:padding="@dimen/space_size_36dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/logo_transparent_background"
+                app:layout_constraintBottom_toBottomOf="@+id/header_image"
+                app:layout_constraintLeft_toLeftOf="@+id/header_image"
+                app:layout_constraintRight_toRightOf="@+id/header_image"
+                app:layout_constraintTop_toTopOf="@+id/header_image" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/header_image"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo_white_background"
+                app:layout_constraintLeft_toLeftOf="@id/begin_guideline"
+                app:layout_constraintTop_toTopOf="@id/store_image"
+                app:layout_constraintBottom_toBottomOf="@id/store_image"/>
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/deprecated_dark_grey"
+                android:ellipsize="end"
+                android:id="@+id/store_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:maxLines="1"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/order_number"
+                app:layout_constraintStart_toEndOf="@+id/store_image"
+                app:layout_constraintTop_toBottomOf="@+id/order_detail_title"
+                style="@style/TextHomeHeader"/>
+
+            <TextView android:textColor="@color/colorPrimary"
+                android:id="@+id/see_more_merchant_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/see_more"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="@+id/store_name"
+                app:layout_constraintTop_toBottomOf="@+id/store_name"
+                style="@style/TextAppearance.DesignSystem.Button.B3"/>
+
+            <View android:id="@+id/waiting_order_info_click_area"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="@+id/store_image"
+                app:layout_constraintEnd_toStartOf="@+id/order_number"
+                app:layout_constraintStart_toStartOf="@+id/store_image"
+                app:layout_constraintTop_toTopOf="@+id/store_image"/>
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/medium_gray"
+                android:id="@+id/order_number"
+                android:text="#123456"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/store_image"
+                app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+                app:layout_constraintTop_toTopOf="@+id/store_image"
+                style="@style/Text.Link_6"/>
+
+            <View android:id="@+id/separator"
+                android:background="@color/deprecated_light_grey"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+                app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/restaurant_image"/>
+
+            <View android:id="@+id/payment_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+                app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/separator"/>
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/medium_gray"
+                android:id="@+id/selected_payment_method"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/payment_spacing"
+                style="@style/Text.Link_6"/>
+
+            <TextView
+                android:id="@+id/money_change_label"
+                style="@style/Text.Link_6"
+                android:layout_width="0dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:text="@string/money_change"
+                android:textColor="@color/medium_gray"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/money_change"
+                app:layout_constraintStart_toEndOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/store_image" />
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/deprecated_medium_grey"
+                android:id="@+id/money_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+                app:layout_constraintTop_toTopOf="@+id/money_change_label"
+                style="@style/Text.Link_6"/>
+
+            <TextView android:textColor="@color/black"
+                android:id="@+id/total_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/total"
+                app:layout_constraintEnd_toStartOf="@+id/store_name"
+                app:layout_constraintStart_toEndOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/payment_method_title"
+                style="@style/TextHomeHeader"/>
+
+            <TextView android:textColor="@color/black"
+                android:id="@+id/total"
+                android:text="R$ 0,00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+                app:layout_constraintTop_toTopOf="@+id/total_label"
+                style="@style/TextHomeHeader"/>
+
+            <View android:id="@+id/office_separator"
+                android:background="@color/light_gray"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/money_change_label"/>
+
+            <TextView android:textSize="14sp"
+                android:textColor="@color/black"
+                android:id="@+id/payment_method_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/office_payment_title"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toEndOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/office_separator"
+                style="@style/Text.Link_6"/>
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/payment_method_icon"
+                android:layout_width="24dp"
+                android:layout_height="0dp"
+                android:layout_marginRight="@dimen/space_size_16dp"
+                android:importantForAccessibility="no"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_office"
+                app:layout_constraintBottom_toBottomOf="@+id/payment_method_title"
+                app:layout_constraintEnd_toStartOf="@id/payment_method_name"
+                app:layout_constraintTop_toBottomOf="@+id/office_separator"
+                app:layout_constraintTop_toTopOf="@+id/payment_method_title" />
+
+            <TextView android:id="@+id/payment_method_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/payment_method_title"
+                app:layout_constraintEnd_toStartOf="@id/end_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/office_separator"/>
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="payment_method_title,payment_method_icon,payment_method_name"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/office_payment_barrier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="total,office_separator,payment_method_title,payment_method_icon"/>
+
+            <View android:id="@+id/cancel_order_separator"
+                android:background="@color/light_gray"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="18dp"
+                app:layout_constraintEnd_toStartOf="@+id/end_guideline"
+                app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/office_payment_barrier"/>
+
+            <include layout="@layout/image_button_chat"
+                android:id="@+id/merchant_chat_layout"
+                android:visibility="gone"
+                android:tag="binding_13"
+                android:background="?attr/selectableItemBackground"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/reversal_cash"
+                app:layout_constraintEnd_toStartOf="@+id/merchant_call_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/office_payment_barrier"/>
+
+            <View android:id="@+id/contact_separator"
+                android:background="@color/light_gray"
+                android:visibility="gone"
+                android:layout_width="1dp"
+                android:layout_height="28dp"
+                app:layout_constraintBottom_toTopOf="@+id/reversal_cash"
+                app:layout_constraintEnd_toEndOf="@+id/end_guideline"
+                app:layout_constraintStart_toStartOf="@+id/begin_guideline"
+                app:layout_constraintTop_toBottomOf="@+id/office_payment_barrier"/>
+
+            <include layout="@layout/image_button_phone"
+                android:id="@+id/merchant_call_layout"
+                android:background="?attr/selectableItemBackground"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/reversal_cash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/merchant_chat_layout"
+                app:layout_constraintTop_toBottomOf="@+id/office_payment_barrier"/>
+
+            <TextView android:textColor="@color/heavy_grey"
+                android:id="@+id/reversal_cash"
+                android:visibility="gone"
+                android:background="@color/off_white"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/reversal_cash_requested"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/office_payment_barrier"
+                app:layout_constraintVertical_bias="0"
+                style="@style/Text.Description2"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/begin_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="16dp"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:id="@+id/end_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

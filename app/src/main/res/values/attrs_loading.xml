@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="Loading">
+        <attr name="lv_color" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="ButtonMinusPlus">
+        <attr name="open" format="boolean" />
+    </declare-styleable>
+</resources>

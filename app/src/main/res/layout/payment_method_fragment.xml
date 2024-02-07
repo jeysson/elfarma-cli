@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/space_size_36dp">
+
+    <RelativeLayout android:id="@+id/lv"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"></RelativeLayout>
+
+    <include android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"
+        app:layout_constraintTop_toTopOf="@id/lv"/>
+
+    <TextView android:textColor="@color/medium_gray"
+        android:gravity="center"
+        android:id="@+id/title"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_size_32dp"
+        android:text="@string/offline_payments_fragment_disclaimer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        style="@style/TextAppearance.DesignSystem.Paragraph.P3"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/payment_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/space_size_20dp"
+        android:layout_marginRight="@dimen/space_size_20dp"
+        android:tag="binding_2"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <hashtag.elfarma.component.Loading
+        android:id="@+id/loading"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <!--include android:id="@+id/generic_error"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="0"
+        app:layout_constraintEnd_toEndOf="0"
+        app:layout_constraintStart_toStartOf="0"
+        app:layout_constraintTop_toTopOf="0"
+        layout="@layout/deprecated_common_error_state"/-->
+
+    <include app:layout_constraintBottom_toTopOf="@+id/add_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        layout="@layout/payment_method_empty"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/deprecated_light_grey"
+        app:layout_constraintBottom_toBottomOf="@+id/lv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

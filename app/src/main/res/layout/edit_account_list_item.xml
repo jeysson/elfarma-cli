@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:tag="layout/edit_account_list_item_0" android:background="@color/white" android:paddingLeft="20dp" android:paddingRight="20dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:foreground="?attr/selectableItemBackground">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="15dp" android:baselineAligned="false">
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1">
+            <TextView android:textColor="@color/deprecated_dark_grey" android:id="@+id/title" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/Text.ListTitle"/>
+            <TextView android:textColor="@color/deprecated_medium_grey" android:ellipsize="end" android:id="@+id/sub_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:maxLines="1" android:lineSpacingExtra="7dp" style="@style/Text.Description"/>
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatImageView android:id="@+id/button" android:layout_width="wrap_content" android:layout_height="wrap_content" app:srcCompat="@drawable/ic_elfarma_arrow_right"/>
+    </LinearLayout>
+    <View android:background="@color/deprecated_light_grey" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="15dp"/>
+</LinearLayout>

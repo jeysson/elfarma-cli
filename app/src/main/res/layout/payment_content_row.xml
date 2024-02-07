@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:id="@+id/payment_content"
+    android:tag="layout/payment_content_row_0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+
+                <RelativeLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:textColor="@color/deprecated_dark_grey"
+                        android:id="@+id/title"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkout_payment_options"
+                        android:importantForAccessibility="no"
+                        style="@style/Text.Link"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/validation_info_icon"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/title"
+                        android:contentDescription="@string/card_validation_content_description"
+                        android:importantForAccessibility="yes"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_validation_info" />
+
+                    <TextView
+                        android:textColor="@color/deprecated_medium_grey"
+                        android:id="@+id/description"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/title"
+                        android:lineSpacingExtra="7sp"
+                        android:importantForAccessibility="no"
+                        style="@style/Text.Body"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/payment_type_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:visibility="invisible" />
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center"
+            android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            style="@style/Text.Link"/>
+
+        <hashtag.elfarma.component.Loading
+            android:layout_gravity="center"
+            android:id="@+id/loading"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lv_color="@color/red"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/online_card_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:id="@+id/credit_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                style="@style/Text.ListTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/checkout_payment_options_credit"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/credit_option_radio"
+                style="@style/CustomRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/debit_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                style="@style/Text.ListTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/checkout_payment_options_debit"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/debit_option_radio"
+                style="@style/CustomRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/bottom_divider"
+        android:background="@color/deprecated_light_grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</LinearLayout>
